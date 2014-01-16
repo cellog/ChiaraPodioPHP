@@ -4,10 +4,14 @@ use Chiara\PodioApp as App;
 class AppFieldIterator extends \ArrayIterator
 {
     protected $app;
+    protected $map = array();
     function __construct(App $app)
     {
         $this->app = $app;
         parent::__construct($app->info['fields']);
+        foreach ($this->getArrayCopy() as $i => $field) {
+            $this->map[$field['field_id']] = $this->map[$field['external_id']] = $i;
+        }
     }
 
     function current()
@@ -19,10 +23,11 @@ class AppFieldIterator extends \ArrayIterator
 
     function offsetGet($index)
     {
-        if (is_int($index)) {
+        if (is_int($index) && $index < 30) {
             return $this->offsetGet($index);
         }
-        // TODO: return field by name by iterating over the array to find it.  Set up map on the first request
-        // to speed up subsequent requests, or perhaps in construction of App object?
+        $info = parent::offsetGet($this->map[$index]);
+        // TODO: return a field object
+        return $info;
     }
 }
