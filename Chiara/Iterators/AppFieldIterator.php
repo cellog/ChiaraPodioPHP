@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\Iterators;
-use Chiara\PodioApp as App;
+use Chiara\PodioApp as App, Chiara\PodioApp\Field;
 class AppFieldIterator extends \ArrayIterator
 {
     protected $app;
@@ -18,7 +18,7 @@ class AppFieldIterator extends \ArrayIterator
     {
         $info = parent::current();
         // TODO: return a field object
-        return $info;
+        return Field::newField($info);
     }
 
     function offsetGet($index)
@@ -27,7 +27,6 @@ class AppFieldIterator extends \ArrayIterator
             return $this->offsetGet($index);
         }
         $info = parent::offsetGet($this->map[$index]);
-        // TODO: return a field object
-        return $info;
+        return Field::newField($info);
     }
 }

@@ -42,116 +42,116 @@ class PodioApplicationStructure
         return var_export($this->structure, 1);
     }
 
-    function addField($name, $type, $config = null)
+    function addTextField($name, $id)
     {
-        $this->structure[$name] = array('type' => $type, 'config' => $config);
+        $this->addField('text', $name, $id);
     }
 
-    function addTextField($name)
+    function addNumberField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'text', 'config' => null);
+        $this->addField('number', $name, $id);
     }
 
-    function addNumberField($name)
+    function addImageField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'number', 'config' => null);
+        $this->addField('image', $name, $id);
     }
 
-    function addImageField($name)
+    function addDateField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'image', 'config' => null);
+        $this->addField('file', $name, $id);
     }
 
-    function addDateField($name)
+    function addAppField($name, $id, array $referenceable_types)
     {
-        $this->structure[$name] = array('type' => 'date', 'config' => null);
+        $this->addField('app', $name, $id, $referenceable_types);
     }
 
-    function addAppField($name, array $referenceable_types)
+    function addMoneyField($name, $id, array $allowed_currencies)
     {
-        $this->structure[$name] = array('type' => 'app', 'config' => $referenceable_types);
+        $this->addField('money', $name, $id, $allowed_currencies);
     }
 
-    function addMoneyField($name, array $allowed_currencies)
+    function addProgressField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'money', 'config' => $allowed_currencies);
-        
+        $this->addField('progress', $name, $id);
     }
 
-    function addProgressField($name)
+    function addLocationField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'progress', 'config' => null);
+        $this->addField('location', $name, $id);
     }
 
-    function addLocationField($name)
+    function addDurationField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'location', 'config' => null);
+        $this->addField('duration', $name, $id);
     }
 
-    function addDurationField($name)
+    function addContactField($name, $id, $type)
     {
-        $this->structure[$name] = array('type' => 'duration', 'config' => null);
-    }
-
-    function addContactField($name, $type)
-    {
-        if (!in_array(array('space_users', 'all_users', 'space_contacts', 'space_users_and_contacts'))) {
+        if (!in_array($type, array('space_users', 'all_users', 'space_contacts', 'space_users_and_contacts'))) {
             // TODO: convert to custom Chiara exception
             throw new \Exception('Invalid type for contact field "' . $name . '" in app ' . static::APPNAME);
         }
-        $this->structure[$name] = array('type' => 'contact', 'config' => $type);
+        $this->addField('contact', $name, $id, $type);
     }
 
-    function addCalculationField($name)
+    function addCalculationField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'calculation', 'config' => null);
+        $this->addField('calculation', $name, $id);
     }
 
-    function addEmbedField($name)
+    function addEmbedField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'embed', 'config' => null);
+        $this->addField('embed', $name, $id);
     }
 
-    function addQuestionField($name, array $options, $multiple)
+    function addQuestionField($name, $id, array $options, $multiple)
     {
-        $this->structure[$name] = array('type' => 'question', 'config' => array('options' => $options, 'multiple' => $multiple));
+        $this->addField('file', $name, $id, array('options' => $options, 'multiple' => $multiple));
     }
 
-    function addCategoryField($name, array $options, $multiple)
+    function addCategoryField($name, $id, array $options, $multiple)
     {
-        $this->structure[$name] = array('type' => 'question', 'config' => array('options' => $options, 'multiple' => $multiple));
+        $this->addField('category', $name, $id, array('options' => $options, 'multiple' => $multiple));
     }
 
     /**
      * The "file" field type only exists in legacy Podio apps
      */
-    function addFileField($name)
+    function addFileField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'file', 'config' => null);
+        $this->addField('file', $name, $id);
     }
 
     /**
      * The "video" field type only exists in legacy Podio apps
      */
-    function addVideoField($name)
+    function addVideoField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'video', 'config' => null);
+        $this->addField('video', $name, $id);
     }
 
     /**
      * The "state" field type only exists in legacy Podio apps
      */
-    function addStateField($name, array $allowed_values)
+    function addStateField($name, $id, array $allowed_values)
     {
-        $this->structure[$name] = array('type' => 'state', 'config' => $allowed_values);
+        $this->addField('state', $name, $id, $allowed_values);
     }
 
     /**
      * The "media" field type only exists in legacy Podio apps
      */
-    function addMediaField($name)
+    function addMediaField($name, $id)
     {
-        $this->structure[$name] = array('type' => 'media', 'config' => null);
+        $this->addField('media', $name, $id);
+    }
+
+    function addField($type, $name, $id, $config = null)
+    {
+        $this->structure[$name] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => null);
+        $this->structure[$id] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => null);
     }
 
     /**
@@ -160,24 +160,25 @@ class PodioApplicationStructure
     function structureFromApp(PodioApp $app)
     {
         foreach ($app->fields as $field) {
-            switch ($field->type) {
+            switch ($field->type()) {
                 case 'state' :
-                    $this->addStateField($field->name, $field->allowed_values);
+                    $this->addStateField($field->external_id, $field->id, $field->allowed_values);
                     break;
                 case 'app' :
-                    $this->addAppField($field->name, $field->referenceable_types);
+                    $this->addAppField($field->external_id, $field->id, $field->referenceable_types);
                     break;
                 case 'money' :
-                    $this->addMoneyField($field->name, $field->allowed_currencies);
+                    $this->addMoneyField($field->external_id, $field->id, $field->allowed_currencies);
                     break;
                 case 'contact' :
-                    $this->addMoneyField($field->name, $field->allowed_currencies);
+                    $this->addContactField($field->external_id, $field->id, $field->contact_type);
                     break;
                 case 'question' :
-                    $this->addQuestionField($field->name, $field->options, $field->multiple);
+                    $this->addQuestionField($field->external_id, $field->id, $field->options, $field->multiple);
                     break;
                 case 'category' :
-                    $this->addCategoryField($field->name, $field->options, $field->multiple);
+                    $this->addCategoryField($field->external_id, $field->id, $field->options, $field->multiple);
+                    break;
                 case 'text' :
                 case 'number' :
                 case 'image' :
@@ -191,11 +192,11 @@ class PodioApplicationStructure
                 case 'embed' :
                 case 'file' :
                 default :
-                    $this->addField($field->name, $field->type);
+                    $this->addField($field->external_id, $field->id, $field->type);
                     break;
             }
         }
-        self::$structures[$app->workspace_url . '/' . $app->external_id] = array($this->structure, get_class($this));
+        self::$structures[$app->space_id . '/' . $app->app_id] = array($this->structure, get_class($this));
     }
 
     static function getStructure($appname, $strict = false, $overrideclassname = false)
@@ -225,5 +226,10 @@ class PodioApplicationStructure
             return $this->structure[$field]['config'];
         }
         throw new \Exception('Unknown field: "' . $field . '" configuration requested for app ' . static::APPNAME);
+    }
+
+    function dump()
+    {
+        var_export($this->structure);
     }
 }
