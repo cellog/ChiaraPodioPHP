@@ -1,16 +1,16 @@
 <?php
 namespace Chiara\Iterators;
-use Chiara\PodioItem;
+use Chiara\PodioItem, Chiara\PodioItem\Field;
 
-class ItemFieldIterator extends ArrayIterator
+class ItemFieldIterator extends \ArrayIterator
 {
     protected $item;
     protected $map = array();
     function __construct(PodioItem $item)
     {
         $this->item = $item;
-        parent::__construct($item->info['fields']);
-        foreach ($this->getArrayCopy() as $i => $field) {
+        parent::__construct($f = $item->info['fields']);
+        foreach ($f as $i => $field) {
             $this->map[$field['field_id']] = $this->map[$field['external_id']] = $i;
         }
     }
@@ -18,14 +18,17 @@ class ItemFieldIterator extends ArrayIterator
     function current()
     {
         $info = parent::current();
+        return Field::newField($info);
     }
 
     function offsetGet($index)
     {
         if (is_int($index) && $index < 30) {
-            return $this->offsetGet($index);
+            $info = parent::offsetGet($index);
+        } else {
+            $info = parent::offsetGet($this->map[$index]);
         }
-        $info = parent::offsetGet($this->map[$index]);
+        return Field::newField($this->item, $info);
     }
 
     function offsetSet($index, $value)

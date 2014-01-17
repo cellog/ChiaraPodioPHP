@@ -1,11 +1,15 @@
 <?php
 namespace Chiara\PodioItem;
+use Chiara\PodioItem;
+
 abstract class Field
 {
     protected $info;
-    function __construct(array $info = array())
+    protected $parent;
+    function __construct(PodioItem $parent, array $info = array())
     {
         $this->info = $info;
+        $this->parent = $parent;
         if (!isset($info['type']) && get_class($this) !== 'Chiara\\PodioItem\\Field') {
             $this->info['type'] = str_replace('Chiara\\PodioItem\\Fields\\', '', get_class($this));
         }
@@ -31,9 +35,9 @@ abstract class Field
         return $this->info['type'];
     }
 
-    static function newField(array $info)
+    static function newField(PodioItem $parent, array $info)
     {
         $class = __NAMESPACE__ . '\\Fields\\' . ucfirst($info['type']);
-        return new $class($info);
+        return new $class($parent, $info);
     }
 }

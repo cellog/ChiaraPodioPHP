@@ -17,16 +17,16 @@ class AppFieldIterator extends \ArrayIterator
     function current()
     {
         $info = parent::current();
-        // TODO: return a field object
         return Field::newField($info);
     }
 
     function offsetGet($index)
     {
         if (is_int($index) && $index < 30) {
-            return $this->offsetGet($index);
+            $info = parent::offsetGet($index);
+        } else {
+            $info = parent::offsetGet($this->map[$index]);
         }
-        $info = parent::offsetGet($this->map[$index]);
         return Field::newField($info);
     }
 }
