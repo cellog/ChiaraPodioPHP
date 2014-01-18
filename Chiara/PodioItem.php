@@ -65,7 +65,7 @@ class PodioItem
         $this->info[$var] = $value;
     }
 
-    function setFieldByIndex($index, $value)
+    function setFieldValue($index, $value)
     {
         $this->info['fields'][$index]['values'] = $value;
     }

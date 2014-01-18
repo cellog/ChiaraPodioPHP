@@ -6,12 +6,14 @@ class ItemFieldIterator extends \ArrayIterator
 {
     protected $item;
     protected $map = array();
+    protected $reverse_map = array();
     function __construct(PodioItem $item)
     {
         $this->item = $item;
         parent::__construct($f = $item->info['fields']);
         foreach ($f as $i => $field) {
             $this->map[$field['field_id']] = $this->map[$field['external_id']] = $i;
+            $this->reverse_map[$i] = $field['external_id'];
         }
     }
 
@@ -33,9 +35,9 @@ class ItemFieldIterator extends \ArrayIterator
 
     function offsetSet($index, $value)
     {
-        if (is_int($index) && $index > 30) {
-            $index = $this->map[$index];
+        if (is_int($index) && isset($this->reverse_map[$index])) {
+            $index = $this->reverse_map[$index];
         }
-        $this->item->setFieldByIndex($index, $value);
+        $this->item->setFieldValue($index, $value);
     }
 }
