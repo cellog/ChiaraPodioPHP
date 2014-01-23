@@ -10,14 +10,15 @@ class PodioItem
      * Note that fields may exist that are not in the definition (legacy deleted fields)
      * @var Chiara\PodioApplicationStructure
      */
-    protected $app;
+    protected $structure;
+    /**
+     * @var Chiara\PodioApp
+     */
+    protected $app = null;
 
     function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true)
     {
-        if (!$structure) {
-            $structure = new PodioApplicationStructure;
-        }
-        $this->app = $structure;
+        $this->structure = $structure;
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
             return;
@@ -42,6 +43,7 @@ class PodioItem
         } else {
             $this->info = Podio::get('/item/' . $this->info['item_id'])->json_body();
         }
+        $this->app = null;
     }
 
     function __get($var)
@@ -55,6 +57,17 @@ class PodioItem
         if ($var == 'id') {
             return $this->info['item_id'];
         }
+        if ($var == 'app') {
+            if (!$this->app) {
+                if (isset($this->info['app'])) {
+                    $appinfo = $this->info['app'];
+                } else {
+                    $appinfo = null;
+                }
+                $this->app = new PodioApp($appinfo, false);
+            }
+            return $this->app;
+        }
     }
 
     function __set($var, $value)
@@ -65,8 +78,19 @@ class PodioItem
         $this->info[$var] = $value;
     }
 
+    function getFieldType($field, array $info = null)
+    {
+        if ($this->structure) {
+            $info = $this->structure->getConfig($field);
+            
+        }
+    }
+
     function setFieldValue($index, $value)
     {
+        if (!$this->structure) {
+            $this->structure = PodioApplicationStructure::fromItem($this);
+        }
         $this->info['fields'][$index]['values'] = $value;
     }
 

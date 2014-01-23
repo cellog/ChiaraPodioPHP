@@ -6,12 +6,16 @@ abstract class Field
 {
     protected $info;
     protected $parent;
+    protected $mytype;
     function __construct(PodioItem $parent, array $info = array())
     {
         $this->info = $info;
         $this->parent = $parent;
         if (!isset($info['type']) && get_class($this) !== 'Chiara\\PodioItem\\Field') {
             $this->info['type'] = str_replace('Chiara\\PodioItem\\Fields\\', '', get_class($this));
+        }
+        if (isset($this->mytype)) {
+            $this->info['type'] = $this->mytype;
         }
     }
 

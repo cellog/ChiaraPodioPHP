@@ -154,10 +154,30 @@ class PodioApplicationStructure
         $this->structure[$id] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => null);
     }
 
+    static function fromItem(PodioItem $item)
+    {
+        $app = $item->app;
+        $id = $app->space_id . '/' . $app->app_id;
+        if (isset(self::$structures[$id])) {
+            return self::$structures[$id];
+        }
+        return $this->structureFromItem($item);
+    }
+
     /**
      * translate a Podio app downloaded from the API into a structure object
      */
     function structureFromApp(PodioApp $app)
+    {
+        return $this->genericStructure($app);
+    }
+
+    function structureFromItem(PodioItem $item)
+    {
+        return $this->genericStructure($item, false);
+    }
+    
+    protected function genericStructure($app, $addToList = true)
     {
         foreach ($app->fields as $field) {
             switch ($field->type()) {
@@ -196,6 +216,7 @@ class PodioApplicationStructure
                     break;
             }
         }
+        if (!$addToList) return;
         self::$structures[$app->space_id . '/' . $app->app_id] = array($this->structure, get_class($this));
     }
 

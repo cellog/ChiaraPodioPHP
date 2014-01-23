@@ -26,6 +26,7 @@ class PodioApp
     {
         if ($var === 'info') return $this->info;
         if ($var === 'fields') return new Iterators\AppFieldIterator($this);
+        if ($var === 'id') return $this->info['app_id'];
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }
