@@ -11,12 +11,12 @@ class Contact extends Reference
     function getIndices()
     {
         return array(
-            $this->info['value']['user_id']
+            $this->info['value']['profile_id']
         );
     }
 
     function isSpaceContact()
     {
-        return isset($this->info['value']['space_id']);
+        return $this->info['value']['type'] == 'space';
     }
 }

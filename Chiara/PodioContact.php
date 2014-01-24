@@ -3,6 +3,7 @@ namespace Chiara;
 class PodioContact
 {
     protected $info;
+    protected $is_space = false;
 
     function __construct($info = null, $retrieve = true)
     {
@@ -12,7 +13,7 @@ class PodioContact
             return;
         }
         if (is_int($info)) {
-            $info = array('user_id' => $info);
+            $info = array('profile_id' => $info);
         }
         if (!$retrieve) return;
         $this->retrieve();
@@ -20,5 +21,19 @@ class PodioContact
 
     function retrieve()
     {
+        $this->info = Podio::get('/contact/' . $this->info['profile_id'] . '/v2')->json_body;
+        $this->is_space = $this->info['type'] == 'space';
+    }
+
+    function __get($var)
+    {
+        if (isset($this->info[$var])) {
+            return $this->info[$var];
+        }
+    }
+
+    function __set($var, $value)
+    {
+        $this->info[$var] = $value;
     }
 }

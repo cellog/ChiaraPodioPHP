@@ -11,7 +11,7 @@ abstract class Field
     {
         $this->info = $info;
         $this->parent = $parent;
-        if (!isset($info['type']) && get_class($this) !== 'Chiara\\PodioItem\\Field') {
+        if (!isset($info['type'])) {
             $this->info['type'] = str_replace('Chiara\\PodioItem\\Fields\\', '', get_class($this));
         }
         if (isset($this->mytype)) {
