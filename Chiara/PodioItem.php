@@ -91,7 +91,12 @@ class PodioItem
         if (!$this->structure) {
             $this->structure = PodioApplicationStructure::fromItem($this);
         }
-        $this->info['fields'][$index]['values'] = $value;
+        $this->info['fields'][$index]['values'] = $this->structure->formatValue($this->info['fields'][$index]['field_id'], $value);
+    }
+
+    function toArray()
+    {
+        return $this->info;
     }
 
     function dump()

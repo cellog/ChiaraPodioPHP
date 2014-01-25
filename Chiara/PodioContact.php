@@ -28,6 +28,7 @@ class PodioContact
 
     function __get($var)
     {
+        if ($var === 'id') return $this->info['profile_id'];
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }

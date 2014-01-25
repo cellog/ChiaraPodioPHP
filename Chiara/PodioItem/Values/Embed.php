@@ -1,11 +1,16 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem;
-class Embed extends Reference
+use Chiara\PodioItem\Field;
+class Embed extends Field
 {
-    function retrieveReference()
+    function __construct($info = null)
     {
-        return new PodioEmbed($this->info, null, 'force');
+        $this->info = $info;
+    }
+
+    function getValue()
+    {
+        return new PodioEmbed($this->info);
     }
 
     function getIndices()
@@ -17,11 +22,19 @@ class Embed extends Reference
 
     function __get($var)
     {
-        // do this next
+        return new \ArrayObject($this->info[$var]);
     }
 
     function __set($var, $value)
     {
-        
+        if ($var == 'id' || $var == 'embed_id') {
+            $this->info['embed']['embed_id'] = $value;
+            return;
+        }
+        if ($var == 'file_id') {
+            $this->info['file']['file_id'] = $value;
+            return;
+        }
+        $this->info[$var] = $value;
     }
 }

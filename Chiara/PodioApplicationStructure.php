@@ -233,6 +233,97 @@ class PodioApplicationStructure
         return new $class;
     }
 
+    /**
+     * Format a value for creating a new item
+     */
+    function formatValue($id, $value)
+    {
+        $type = $this->structure[$id]['type'];
+        $structure = $this->structure[$id];
+        $id_name = null;
+        switch ($type) {
+            case 'state' :
+                break;
+            case 'app' :
+                $idname = 'app_id';
+            case 'contact' :
+                if (!isset($idname)) {
+                    $idname = 'profile_id';
+                }
+                if (is_int($value)) {
+                    $value = array($idname => $value);
+                } elseif (is_array($value)) {
+                    foreach ($value as $a => $b) {
+                        if (is_int($b)) {
+                            $b = array($idname => $value);
+                        } elseif (is_object($b)) {
+                            $b = $b->toArray();
+                        }
+                        $value[$a] = array('value' => $b);
+                    }
+                } elseif (is_object($value)) {
+                    $value = array(array('value' => $value->toArray()));
+                } elseif ($value instanceof PodioItem\Values\Collection) {
+                    $value = array_map(function ($a) {return array('value' => $a->toArray());}, $value);
+                }
+                break;
+            case 'embed' :
+                if (is_int($value)) {
+                    $value = array(array('embed' => array('embed_id' => $value), 'file' => array('file_id' => 0)));
+                } elseif (is_string($value)) {
+                    $value = array(array('embed' => array('embed_id' => 0, 'url' => $value), 'file' => array('file_id' => 0)));
+                } elseif (is_object($value)) {
+                    $value = array($value->toArray());
+                } elseif (is_array($value) || $value instanceof PodioItem\Values\Collection) {
+                    if (isset($value['embed'])) {
+                        $value = array($value);
+                    } else {
+                        if (isset($value[0]) && is_object($value[0])) {
+                            $value = array_map(function($a) {return $a->toArray();}, $value);
+                        }
+                    }
+                }
+                break;
+            case 'image' :
+                if (is_int($value)) {
+                    $value = array('value' => array('file_id' => $value));
+                } elseif (is_string($value)) {
+                    $value = array('value' => array('link' => $value));
+                }
+            case 'question' :
+            case 'category' :
+                foreach ($structure['config']['options'] as $option) {
+                    if ($option['id'] == $value) {
+                        $value = $option;
+                        break;
+                    }
+                }
+            case 'money' :
+                if ($type == 'money' && is_number($value)) {
+                    $value = array('currency' => 'USD', 'value' => $value);
+                }
+            case 'text' :
+            case 'number' :
+            case 'media' :
+            case 'date' :
+                if ($value instanceof \DateTime) {
+                    $value = $value->format('Y-m-d H:i:s');
+                }
+            case 'progress' :
+            case 'location' :
+            case 'video' :
+            case 'duration' :
+            case 'calculation' :
+            case 'file' :
+                if (is_object($value)) {
+                    $value = $value->toArray();
+                }
+                $value = array(array('value' => $value));
+                break;
+        }
+        return $value;
+    }
+
     function getType($field)
     {
         if (isset($this->structure[$field])) {
