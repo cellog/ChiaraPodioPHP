@@ -42,8 +42,12 @@ class Collection extends \ArrayObject
     {
         $ret = array();
         $wrapperClass = $this->wrapperClass;
-        $current = $this->offsetGet($index);
         if (is_int($var)) {
+            if (isset($this[$index])) {
+                $current = $this->offsetGet($index);
+            } else {
+                $current = new $wrapperClass(array());
+            }
             $current->id = $var;
         } elseif (is_array($var)) {
             $this[$index] = new $wrapperClass($var);

@@ -32,7 +32,10 @@ abstract class Field
         }
     }
 
-    abstract function getValue();
+    function getValue()
+    {
+        return $this->info['values'][0]['value'];
+    }
 
     function type()
     {
