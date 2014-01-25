@@ -4,10 +4,12 @@ use Chiara\PodioItem\Field;
 class Collection extends \ArrayObject
 {
     protected $parentObject;
+    protected $wrapperClass;
     protected $map = array();
     function __construct(Field $parentObject, $objects, $wrapperClass = null)
     {
         $this->parentObject = $parentObject;
+        $this->wrapperClass = $wrapperClass;
         if (!is_array($objects)) {
             $objects = array($objects);
         }
@@ -39,7 +41,19 @@ class Collection extends \ArrayObject
     function offsetSet($index, $var)
     {
         $ret = array();
+        $wrapperClass = $this->wrapperClass;
         $current = $this->offsetGet($index);
-        
+        if (is_int($var)) {
+            $current->id = $var;
+        } elseif (is_array($var)) {
+            $this[$index] = new $wrapperClass($var);
+        } elseif ($var instanceof $wrapperClass) {
+            $this[$index] = $var;
+        }
+    }
+
+    function saveValue()
+    {
+        return array_map(function($a) {return $a->saveValue();}, $this);
     }
 }

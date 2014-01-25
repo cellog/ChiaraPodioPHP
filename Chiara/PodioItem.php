@@ -99,6 +99,25 @@ class PodioItem
         return $this->info;
     }
 
+    function toJsonArray()
+    {
+        $ret = array();
+        foreach ($this->fields as $field) {
+            $ret[] = array($field->external_id => $field->saveValue);
+        }
+    }
+
+    function save(array $options = array())
+    {
+        if (!$this->id) {
+            $result = Podio::post('/item/app/' . $this->app['app_id'], $this->toJsonArray(), $options);
+            $this->id = $result['item_id'];
+        } else {
+            Podio::post('/item/' . $this->id . '/values', $this->toJsonArray(), $options);
+        }
+        return $this;
+    }
+
     function dump()
     {
         var_export($this->info);

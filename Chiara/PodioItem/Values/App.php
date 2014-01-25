@@ -14,4 +14,9 @@ class App extends Reference
             $this->info['value']['item_id']
         );
     }
+
+    function saveValue()
+    {
+        return $this->info['value']['item_id'];
+    }
 }

@@ -19,4 +19,9 @@ class Contact extends Reference
     {
         return $this->info['value']['type'] == 'space';
     }
+
+    function saveValue()
+    {
+        return $this->info['value']['profile_id'];
+    }
 }
