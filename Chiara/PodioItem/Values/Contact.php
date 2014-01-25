@@ -5,18 +5,18 @@ class Contact extends Reference
 {
     function retrieveReference()
     {
-        return new PodioContact($this->info, 'force');
+        return new PodioContact($this->info['value'], 'force');
     }
 
     function getIndices()
     {
         return array(
-            $this->info['profile_id']
+            $this->info['value']['profile_id']
         );
     }
 
     function isSpaceContact()
     {
-        return $this->info['type'] == 'space';
+        return $this->info['value']['type'] == 'space';
     }
 }
