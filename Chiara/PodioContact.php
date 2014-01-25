@@ -1,5 +1,6 @@
 <?php
 namespace Chiara;
+use Podio;
 class PodioContact
 {
     protected $info;

@@ -9,6 +9,11 @@ abstract class Reference extends Field
         $this->info = $info;
     }
 
+    function getValue()
+    {
+        return $this->retrieveReference();
+    }
+
     abstract function retrieveReference();
     abstract function getIndices();
 }

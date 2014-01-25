@@ -5,13 +5,13 @@ class App extends Reference
 {
     function retrieveReference()
     {
-        return new PodioItem($this->info['value'], null, 'force');
+        return new PodioItem($this->info, null, 'force');
     }
 
     function getIndices()
     {
         return array(
-            $this->info['value']['item_id']
+            $this->info['item_id']
         );
     }
 }

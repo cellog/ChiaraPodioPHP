@@ -13,7 +13,7 @@ class Collection extends \ArrayObject
         }
         if ($wrapperClass) {
             // wrap the values with objects so their implied information can be accessed
-            $objects = array_map(function($a) use ($wrapperClass) {return new $wrapperClass($a);}, $objects);
+            $objects = array_map(function($a) use ($wrapperClass) {return new $wrapperClass($a['value']);}, $objects);
             foreach ($objects as $i => $obj) {
                 foreach ($obj->getIndices() as $index) {
                     $this->map[$index] = $i;
