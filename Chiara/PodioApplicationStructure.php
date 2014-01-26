@@ -212,7 +212,7 @@ class PodioApplicationStructure
                 case 'embed' :
                 case 'file' :
                 default :
-                    $this->addField($field->external_id, $field->id, $field->type);
+                    $this->addField($field->type, $field->id, $field->external_id);
                     break;
             }
         }

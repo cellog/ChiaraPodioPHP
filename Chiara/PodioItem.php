@@ -86,11 +86,27 @@ class PodioItem
         }
     }
 
+    protected function getIndex($index)
+    {
+        if (is_int($index) && $index < 30) {
+            return $index;
+        }
+        foreach ($this->info['fields'] as $i => $field) {
+            if ($field['external_id'] == $index) {
+                return $i;
+            }
+            if ($field['field_id'] == $index) {
+                return $i;
+            }
+        }
+    }
+
     function setFieldValue($index, $value)
     {
         if (!$this->structure) {
             $this->structure = PodioApplicationStructure::fromItem($this);
         }
+        $index = $this->getIndex($index);
         $this->info['fields'][$index]['values'] = $this->structure->formatValue($this->info['fields'][$index]['field_id'], $value);
     }
 

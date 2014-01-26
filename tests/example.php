@@ -1562,13 +1562,6 @@ $item = new Chiara\PodioItem(array (
   'external_id' => NULL,
 ), $structure);
 
+$item->fields['title'] = "Testing this";
+
 echo $item->fields['title'],"\n";
-echo $item->fields['google-maps'],"\n";
-echo $item->fields['number'],"\n";
-echo $item->fields['money'],"\n";
-echo $item->fields['progress-slider'],"\n";
-echo $item->fields['calculation'],"\n";
-echo $item->fields['category'],"\n";
-echo $item->fields['question'],"\n";
-echo $item->fields['app-reference']->value[0],"\n";
-echo $item->fields['contact']->value[0],"\n";
