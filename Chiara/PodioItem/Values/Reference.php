@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem\Value;
+use Chiara\PodioItem\Value, Chiara\PodioItem;
 abstract class Reference extends Value
 {
     protected $info;

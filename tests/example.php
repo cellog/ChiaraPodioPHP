@@ -1556,3 +1556,6 @@ echo $item->fields['title'],"\n";
 echo $item->fields['google-maps'],"\n";
 echo $item->fields['number'],"\n";
 echo $item->fields['money'],"\n";
+echo $item->fields['progress-slider'],"\n";
+echo $item->fields['calculation'],"\n";
+echo $item->fields['app-reference']->value[0],"\n";

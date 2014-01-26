@@ -99,6 +99,11 @@ class PodioItem
         return $this->info;
     }
 
+    function __toString()
+    {
+        return $this->info['title'];
+    }
+
     function toJsonArray()
     {
         $ret = array();
