@@ -1,11 +1,12 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem\Field;
-abstract class Reference extends Field
+use Chiara\PodioItem\Value;
+abstract class Reference extends Value
 {
     protected $info;
-    function __construct($info = null)
+    function __construct(PodioItem $parent, $info = null)
     {
+        $this->parent = $parent;
         $this->info = $info;
     }
 

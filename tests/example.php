@@ -1552,6 +1552,7 @@ $item = new Chiara\PodioItem(array (
   'external_id' => NULL,
 ), $structure);
 
-foreach ($item->fields['date']->value as $date) {
-    echo $date->format('Y-m-d H:i:s');
-}
+echo $item->fields['title'],"\n";
+echo $item->fields['google-maps'],"\n";
+echo $item->fields['number'],"\n";
+echo $item->fields['money'],"\n";

@@ -14,8 +14,9 @@ class Collection extends \ArrayObject
             $objects = array($objects);
         }
         if ($wrapperClass) {
+            $o = $parentObject->parentItem;
             // wrap the values with objects so their implied information can be accessed
-            $objects = array_map(function($a) use ($wrapperClass) {return new $wrapperClass($a);}, $objects);
+            $objects = array_map(function($a) use ($wrapperClass, $o) {return new $wrapperClass($o, $a);}, $objects);
             foreach ($objects as $i => $obj) {
                 foreach ($obj->getIndices() as $index) {
                     $this->map[$index] = $i;
@@ -59,5 +60,11 @@ class Collection extends \ArrayObject
     function saveValue()
     {
         return array_map(function($a) {return $a->saveValue();}, $this);
+    }
+
+    function __toString()
+    {
+        $x = array_reduce($this->getArrayCopy(), function(&$r, $n) {if ($r) $r .= '; '; $r .= $n; return $r;}, '');
+        return $x;
     }
 }

@@ -26,10 +26,17 @@ class ItemFieldIterator extends \ArrayIterator
     function offsetGet($index)
     {
         if (is_int($index) && $index < 30) {
+            if (!isset($this[$index])) {
+                throw new \Exception("Unknown field \"" . $index . "\"");
+            }
             $info = parent::offsetGet($index);
         } else {
+            if (!isset($this->map[$index])) {
+                throw new \Exception("Unknown field \"" . $index . "\"");
+            }
             $info = parent::offsetGet($this->map[$index]);
         }
+        $a = $this->item;
         return Field::newField($this->item, $info);
     }
 

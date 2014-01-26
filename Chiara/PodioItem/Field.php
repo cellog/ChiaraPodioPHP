@@ -27,6 +27,9 @@ abstract class Field
         if ($name == 'value') {
             return $this->getValue();
         }
+        if ($name == 'parentItem') {
+            return $this->parent;
+        }
         if (isset($this->info[$name])) {
             return $this->info[$name];
         }
@@ -39,7 +42,7 @@ abstract class Field
 
     function __toString()
     {
-        return $this->getValue();
+        return (string) $this->getValue();
     }
 
     function type()
