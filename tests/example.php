@@ -1552,4 +1552,6 @@ $item = new Chiara\PodioItem(array (
   'external_id' => NULL,
 ), $structure);
 
-$ref = $item->fields['contact-2']->value[0]->retrieveReference();
+foreach ($item->fields['date']->value as $date) {
+    echo $date->format('Y-m-d H:i:s');
+}

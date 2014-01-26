@@ -37,6 +37,11 @@ abstract class Field
         return $this->info['values'][0]['value'];
     }
 
+    function __toString()
+    {
+        return $this->getValue();
+    }
+
     function type()
     {
         return $this->info['type'];

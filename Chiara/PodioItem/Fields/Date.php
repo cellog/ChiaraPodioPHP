@@ -5,6 +5,6 @@ class Date extends Field
 {
     function getValue()
     {
-        return new Value(parent::getValue());
+        return new Value($this->info['values'][0]);
     }
 }
