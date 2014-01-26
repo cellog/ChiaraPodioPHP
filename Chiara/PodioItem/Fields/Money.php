@@ -5,6 +5,6 @@ class Money extends Field
 {
     function getValue()
     {
-        return new Value($this, $this->info['values']);
+        return new Value($this->parent, $this->info['values'][0]);
     }
 }
