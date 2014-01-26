@@ -855,6 +855,16 @@ $item = new Chiara\PodioItem(array (
             'color' => 'DCEBD8',
           ),
         ),
+        1 => 
+        array (
+          'value' => 
+          array (
+            'status' => 'active',
+            'text' => '2',
+            'id' => 2,
+            'color' => 'DCEBD8',
+          ),
+        ),
       ),
       'config' => 
       array (
@@ -862,7 +872,7 @@ $item = new Chiara\PodioItem(array (
         'description' => NULL,
         'settings' => 
         array (
-          'multiple' => false,
+          'multiple' => true,
           'options' => 
           array (
             0 => 
@@ -1558,4 +1568,7 @@ echo $item->fields['number'],"\n";
 echo $item->fields['money'],"\n";
 echo $item->fields['progress-slider'],"\n";
 echo $item->fields['calculation'],"\n";
+echo $item->fields['category'],"\n";
+echo $item->fields['question'],"\n";
 echo $item->fields['app-reference']->value[0],"\n";
+echo $item->fields['contact']->value[0],"\n";

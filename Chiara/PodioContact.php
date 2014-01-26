@@ -38,4 +38,9 @@ class PodioContact
     {
         $this->info[$var] = $value;
     }
+
+    function __toString()
+    {
+        return $this->info['name'];
+    }
 }

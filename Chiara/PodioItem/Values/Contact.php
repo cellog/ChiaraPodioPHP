@@ -5,7 +5,7 @@ class Contact extends Reference
 {
     function retrieveReference()
     {
-        return new PodioContact($this->info['value'], 'force');
+        return new PodioContact($this->info['value']);
     }
 
     function getIndices()
