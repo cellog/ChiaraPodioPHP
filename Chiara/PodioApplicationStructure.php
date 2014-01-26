@@ -243,6 +243,8 @@ class PodioApplicationStructure
         $id_name = null;
         switch ($type) {
             case 'state' :
+            case 'media' :
+            case 'video' :
                 break;
             case 'app' :
                 $idname = 'app_id';
@@ -284,6 +286,23 @@ class PodioApplicationStructure
                     }
                 }
                 break;
+            case 'date' :
+                if ($value instanceof \DateTime) {
+                    $value = array('start' => $value->format('Y-m-d H:i:s'));
+                }
+                if ($value instanceof \DatePeriod || $value instanceof PodioItem\Values\Date) {
+                    $final = array();
+                    foreach ($value as $date) {
+                        if (isset($final['start'])) {
+                            $final['end'] = $date->format('Y-m-d H:i:s');
+                            break;
+                        }
+                        $final['start'] = $date->format('Y-m-d H:i:s');
+                    }
+                    $value = $final;
+                }
+                $value = array($value);
+                break;
             case 'image' :
                 if (is_int($value)) {
                     $value = array('value' => array('file_id' => $value));
@@ -304,14 +323,8 @@ class PodioApplicationStructure
                 }
             case 'text' :
             case 'number' :
-            case 'media' :
-            case 'date' :
-                if ($value instanceof \DateTime) {
-                    $value = $value->format('Y-m-d H:i:s');
-                }
             case 'progress' :
             case 'location' :
-            case 'video' :
             case 'duration' :
             case 'calculation' :
             case 'file' :
