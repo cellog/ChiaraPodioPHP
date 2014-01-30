@@ -245,6 +245,7 @@ class PodioApplicationStructure
             case 'state' :
             case 'media' :
             case 'video' :
+            case 'file' :
                 break;
             case 'app' :
                 $idname = 'app_id';
@@ -327,13 +328,37 @@ class PodioApplicationStructure
                         $value = array('currency' => $currency, 'value' => $value);
                     }
                 }
-            case 'text' :
             case 'number' :
+                if ($type === 'number') {
+                    if (!is_numeric($value)) {
+                        throw new \Exception('Cannot set a number to a non-numeric value');
+                    }
+                    $value = (real) $value;
+                }
             case 'progress' :
+                if ($type === 'progress') {
+                    if (!is_int($value) || $value < 0 || $value > 100) {
+                        throw new \Exception('progress field must be between 0 and 100');
+                    }
+                }
             case 'location' :
             case 'duration' :
+                if ($type === 'duration') {
+                    if (is_string($value)) {
+                        $value = \DateInterval::createFromDateString($value);
+                    }
+                    if ($value instanceof \DateInterval) {
+                        (int) $value = $value->format('%s');
+                    }
+                    if (!is_int($value)) {
+                        throw new \Exception('Can only set a duration to a value in seconds, a date string, or a DateInterval object');
+                    }
+                }
             case 'calculation' :
-            case 'file' :
+                if ($type === 'calculation') {
+                    throw new \Exception('Cannot set a value for calculation fields');
+                }
+            case 'text' :
                 if (is_object($value)) {
                     $value = $value->toArray();
                 }
