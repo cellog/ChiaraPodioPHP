@@ -318,8 +318,14 @@ class PodioApplicationStructure
                     }
                 }
             case 'money' :
-                if ($type == 'money' && is_number($value)) {
-                    $value = array('currency' => 'USD', 'value' => $value);
+                if ($type == 'money') {
+                    if (is_number($value)) {
+                        $value = array('currency' => 'USD', 'value' => $value);
+                    } elseif (is_string($value)) {
+                        $parser = new Currency;
+                        list($currency, $value) = $parser->parse($value, $structure['config']);
+                        $value = array('currency' => $currency, 'value' => $value);
+                    }
                 }
             case 'text' :
             case 'number' :
