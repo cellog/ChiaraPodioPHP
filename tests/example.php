@@ -1563,5 +1563,7 @@ $item = new Chiara\PodioItem(array (
 ), $structure);
 
 $item->fields['title'] = "Testing this";
+$item->fields['duration'] = '4 hours';
 
 echo $item->fields['title'],"\n";
+echo $item->fields['duration'],"\n";

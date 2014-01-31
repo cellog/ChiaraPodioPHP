@@ -348,7 +348,7 @@ class PodioApplicationStructure
                         $value = \DateInterval::createFromDateString($value);
                     }
                     if ($value instanceof \DateInterval) {
-                        (int) $value = $value->format('%s');
+                        $value = (int) $this->getDuration($value);
                     }
                     if (!is_int($value)) {
                         throw new \Exception('Can only set a duration to a value in seconds, a date string, or a DateInterval object');
@@ -366,6 +366,16 @@ class PodioApplicationStructure
                 break;
         }
         return $value;
+    }
+
+    function getDuration(\DateInterval $di)
+    {
+        return ($di->y * 365 * 24 * 60 * 60) + 
+               ($di->m * 30 * 24 * 60 * 60) + 
+               ($di->d * 24 * 60 * 60) + 
+               ($di->h * 60 * 60) + 
+               ($di->i * 60) + 
+               $di->s;
     }
 
     function getType($field)
