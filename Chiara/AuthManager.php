@@ -28,4 +28,11 @@ class AuthManager
         if (self::$currentapp == $appid) return; // we are already authenticated as this app
         Podio::authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
     }
+
+    static function verifyNonApp($thing)
+    {
+        if (self::$authmode == self::APP) {
+            throw new \Exception('Cannot access ' . $thing . ' in app authentication mode');
+        }
+    }
 }
