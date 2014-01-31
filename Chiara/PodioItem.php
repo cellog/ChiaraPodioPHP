@@ -3,6 +3,10 @@ namespace Chiara;
 use Podio, Chiara\Iterators\ItemFieldIterator, Chiara\AuthManager as Auth;
 class PodioItem
 {
+    /**
+     * override to automatically set the application ID for new items
+     */
+    const MYAPPID = null;
     protected $info = array();
     /**
      * The PodioApplicationStructure that defines this item's structure
@@ -10,7 +14,7 @@ class PodioItem
      * Note that fields may exist that are not in the definition (legacy deleted fields)
      * @var Chiara\PodioApplicationStructure
      */
-    protected $structure;
+    protected $structure = null;
     /**
      * @var Chiara\PodioApp
      */
@@ -18,7 +22,9 @@ class PodioItem
 
     function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true)
     {
-        $this->structure = $structure;
+        if ($structure) {
+            $this->structure = $structure;
+        }
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
             return;
@@ -27,6 +33,9 @@ class PodioItem
             $info = array('item_id' => $info);
         }
         $this->info = $info;
+        if (!$info && static::MYAPPID) {
+            $this->info = array('app' => array('app_id' => static::MYAPPID));
+        }
         if (!$retrieve || !$info) return;
         $this->retrieve();
     }

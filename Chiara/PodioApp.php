@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio;
+use Podio, Chiara\AuthManager as Auth;
 class PodioApp
 {
     protected $appid;
@@ -19,6 +19,7 @@ class PodioApp
 
     function retrieve()
     {
+        Auth::prepareRemote($this->appid);
         $this->info = Podio::get('/app/' . $this->appid)->json_body();
     }
 

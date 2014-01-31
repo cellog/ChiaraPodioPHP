@@ -7,10 +7,12 @@ class AuthManager
     const APP = 2;
     static protected $tokenmanager;
     static protected $authmode = self::USER;
-    static function setTokenManager(AuthManager\TokenInterface $manager, $client, $token)
+    static protected $currentapp = null;
+    static function setTokenManager(AuthManager\TokenInterface $manager)
     {
         self::$tokenmanager = $manager;
-        Podio::setup($client, $token);
+        $clientinfo = $manager->getAPIClient();
+        Podio::setup($clientinfo['client'], $clientinfo['token']);
     }
 
     static function setAuthMode($mode)
@@ -23,6 +25,7 @@ class AuthManager
         if (self::$authmode == self::USER) {
             return true;
         }
+        if (self::$currentapp == $appid) return; // we are already authenticated as this app
         Podio::authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
     }
 }
