@@ -916,6 +916,11 @@ $item = new Chiara\PodioItem(array (
           'start_time_utc' => NULL,
           'start_date_utc' => '2014-01-08',
           'start_date' => '2014-01-08',
+          'end' => '2014-01-09 00:00:00',
+          'end_time' => NULL,
+          'end_time_utc' => NULL,
+          'end_date_utc' => '2014-01-09',
+          'end_date' => '2014-01-09'
         ),
       ),
       'config' => 
@@ -1563,7 +1568,7 @@ $item = new Chiara\PodioItem(array (
 ), $structure);
 
 $item->fields['title'] = "Testing this";
-$item->fields['duration'] = '4 hours';
+$item->fields['duration'] = $item->fields['date']->duration;
 
 echo $item->fields['title'],"\n";
 echo $item->fields['duration'],"\n";

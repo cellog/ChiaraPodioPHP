@@ -31,6 +31,15 @@ class Date implements \IteratorAggregate
         return new \DatePeriod($a, $interval, $b);
     }
 
+    function getDuration()
+    {
+        if (!$this->info['end']) {
+            return new \DateInterval("PT0S");
+        }
+        return \DateTime::createFromFormat('Y-m-d H:i:s', $this->info['start'])
+            ->diff(\DateTime::createFromFormat('Y-m-d H:i:s', $this->info['end']));
+    }
+
     function getIterator()
     {
         return $this->getValue();
@@ -43,7 +52,7 @@ class Date implements \IteratorAggregate
 
     function __set($var, $value)
     {
-        $this->info[$var] = $value;
+        throw new \Exception('do not set values this way, set it directly with the fields array of the podio item');
     }
 
     function __toString()
