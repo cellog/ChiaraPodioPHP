@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio, Chiara\Iterators\ItemFieldIterator;
+use Podio, Chiara\Iterators\ItemFieldIterator, Chiara\AuthManager as Auth;
 class PodioItem
 {
     protected $info = array();
@@ -38,9 +38,11 @@ class PodioItem
                 // TODO: use custom exception
                 throw new \Exception('Cannot retrieve item, no item_id or app_item_id');
             }
+            Auth::prepareRemote($this->info['app']['app_id']);
             $this->info = Podio::get('/app/' . $this->info['app']['app_id'] . '/item/' .
                                      $this->info['app_item_id'])->json_body();
         } else {
+            Auth::prepareRemote($this->info['app']['app_id']);
             $this->info = Podio::get('/item/' . $this->info['item_id'])->json_body();
         }
         $this->app = null;
@@ -130,6 +132,7 @@ class PodioItem
 
     function save(array $options = array())
     {
+        Auth::prepareRemote($this->info['app']['app_id']);
         if (!$this->id) {
             $result = Podio::post('/item/app/' . $this->app['app_id'], $this->toJsonArray(), $options);
             $this->id = $result['item_id'];
