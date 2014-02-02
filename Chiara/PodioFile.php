@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio;
+use Podio, Chiara\Remote;
 class PodioFile
 {
     protected $info;
@@ -21,7 +21,7 @@ class PodioFile
 
     function retrieve()
     {
-        $this->info = Podio::get('/file/' . $this->info['file_id'])->json_body;
+        $this->info = Remote::$remote->get('/file/' . $this->info['file_id'])->json_body;
     }
 
     function __get($var)
