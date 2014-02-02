@@ -17,7 +17,7 @@ class WorkspaceAppIterator extends \ArrayIterator
     function current()
     {
         $info = parent::current();
-        return Field::newField($info);
+        return new PodioApp($info, 'force');
     }
 
     function offsetGet($index)
