@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio, Chiara\AuthManager as Auth;
+use Podio, Chiara\AuthManager as Auth, Chiara\Remote;
 class PodioContact
 {
     protected $info;
@@ -23,7 +23,7 @@ class PodioContact
     function retrieve()
     {
         Auth::verifyNonApp('contacts');
-        $this->info = Podio::get('/contact/' . $this->info['profile_id'] . '/v2')->json_body;
+        $this->info = Remote::$remote->get('/contact/' . $this->info['profile_id'] . '/v2')->json_body;
         $this->is_space = $this->info['type'] == 'space';
     }
 

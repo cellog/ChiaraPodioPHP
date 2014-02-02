@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio;
+use Podio, Chiara\Remote;
 class AuthManager
 {
     const USER = 1;
@@ -12,7 +12,7 @@ class AuthManager
     {
         self::$tokenmanager = $manager;
         $clientinfo = $manager->getAPIClient();
-        Podio::setup($clientinfo['client'], $clientinfo['token']);
+        Remote::$remote->setup($clientinfo['client'], $clientinfo['token']);
     }
 
     static function setAuthMode($mode)
@@ -26,7 +26,7 @@ class AuthManager
             return true;
         }
         if (self::$currentapp == $appid) return; // we are already authenticated as this app
-        Podio::authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
+        Remote::$remote->authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
     }
 
     static function verifyNonApp($thing)

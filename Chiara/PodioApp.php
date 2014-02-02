@@ -3,24 +3,23 @@ namespace Chiara;
 use Podio, Chiara\AuthManager as Auth;
 class PodioApp
 {
-    protected $appid;
     protected $info;
     function __construct($appid = null, $retrieve = true)
     {
         if (is_array($appid)) {
             $this->info = $appid;
-            $this->appid = $this->info['app_id'];
-            return;
+            if ($retrieve !== 'force') return;
+        } else {
+            $this->info = array('app_id' => $appid);
         }
-        $this->appid = $appid;
         if (!$retrieve) return;
         $this->retrieve();
     }
 
     function retrieve()
     {
-        Auth::prepareRemote($this->appid);
-        $this->info = Podio::get('/app/' . $this->appid)->json_body();
+        Auth::prepareRemote($this->id);
+        $this->info = Remote::$remote->get('/app/' . $this->id)->json_body();
     }
 
     function __get($var)

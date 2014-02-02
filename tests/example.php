@@ -1573,3 +1573,30 @@ $item->fields['duration'] = $item->fields['date']->duration;
 
 echo $item->fields['title'],"\n";
 echo $item->fields['duration'],"\n";
+
+$workspace = new Chiara\PodioWorkspace(array('space_id' => 1802053), false);
+$workspace->apps = json_decode('[
+  {
+    "status": "active",
+    "url": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing",
+    "url_add": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/new",
+    "space_id": 1802053,
+    "link_add": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/new",
+    "app_id": 6686618,
+    "link": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing",
+    "url_label": "testing",
+    "config": {
+      "allow_edit": true,
+      "description": "",
+      "item_name": "thing",
+      "type": "standard",
+      "icon_id": 251,
+      "allow_create": true,
+      "name": "Testing",
+      "usage": "",
+      "external_id": null,
+      "icon": "251.png"
+    }
+  }
+]', 1);
+$app = $workspace->apps['testing'];
