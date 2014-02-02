@@ -68,6 +68,9 @@ class PodioItem
         if ($var == 'id') {
             return $this->info['item_id'];
         }
+        if ($var === 'structure') {
+            return $this->structure;
+        }
         if ($var == 'app') {
             if (!$this->app) {
                 if (isset($this->info['app'])) {
@@ -154,5 +157,29 @@ class PodioItem
     function dump()
     {
         var_export($this->info);
+    }
+
+    function generateClass($classname, $structureclass, $namespace = null, array $implements = array(), $filename = null)
+    {
+        $ret = "<?php\n";
+        if ($namespace) {
+            $ret .= "namespace $namespace;\n";
+        }
+        if ($implements) {
+            $implements = ' implements ' . implode(', ', $implements);
+        } else {
+            $implements = '';
+        }
+        $ret .= "class $classname$implements extends \\" . get_class($this) . "\n";
+        $ret .= "{\n";
+        $ret .= '    function __construct($info = null, $retrieve = true)' . "\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::__construct(\$info, new \\$structureclass, \$retrieve);\n";
+        $ret .= "    }\n";
+        $ret .= "}\n";
+        if ($filename) {
+            file_put_contents($filename, $ret);
+        }
+        return $ret;
     }
 }

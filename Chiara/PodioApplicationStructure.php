@@ -394,6 +394,28 @@ class PodioApplicationStructure
         throw new \Exception('Unknown field: "' . $field . '" configuration requested for app ' . static::APPNAME);
     }
 
+    function generateStructureClass($spaceid, $appid, $classname, $namespace = null, $filename = null)
+    {
+        $ret = "<?php\n";
+        if ($namespace) {
+            $ret .= "namespace $namespace;\n";
+        }
+        $ret .= "class $classname extends \\" . get_class($this) . "\n";
+        $ret .= "{\n";
+        $ret .= '    const APPNAME = "' . $spaceid . '/' . $appid . "\";\n";
+        $ret .= '    protected $structure = ';
+        $structure = explode("\n", $this->dumpStructure());
+        $ret .= $structure[0] . "\n";
+        array_shift($structure);
+        $structure = array_map(function($a) {return "    $a";}, $structure);
+        $ret .= implode("\n", $structure) . ";\n";
+        $ret .= "}\n";
+        if ($filename) {
+            file_put_contents($filename, $ret);
+        }
+        return $ret;
+    }
+
     function dump()
     {
         var_export($this->structure);
