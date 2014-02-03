@@ -2,3 +2,5 @@
 MyProject.komodoproject
 
 tests/api.json
+
+tests/testuser.json
