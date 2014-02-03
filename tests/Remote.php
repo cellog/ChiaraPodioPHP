@@ -31,5 +31,14 @@ class TestRemote extends Chiara\Remote
     {
         $this->queries[] = array('setup' => array($client_id, $client_secret, $options));
     }
+
+    function passwordAuth()
+    {
+        if (!file_exists(__DIR__ . '/testuser.json')) {
+            throw new \Exception('You need to create testuser.json in ' . __DIR__ . ' with format: {"username":"username","password":"password"}');
+        }
+        $a = json_decode(file_get_contents(__DIR__ . '/testuser.json'));
+        Podio::authenticate('password', $a);
+    }
 }
 Chiara\Remote::$remote = new TestRemote;
