@@ -27,14 +27,24 @@ class PodioItem
         }
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
+            if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
+                $this->info['app']['app_id'] = static::MYAPPID;
+            } elseif ($this->info['app']['app_id'] != static::MYAPPID) {
+                throw new \Exception(get_class($this) . ' item has app id set to ' . $this->info['app']['app_id'] .
+                                     ', but it must be ' . static::MYAPPID);
+            }
             return;
         }
         if (is_int($info)) {
             $info = array('item_id' => $info);
         }
         $this->info = $info;
-        if (!$info && static::MYAPPID) {
-            $this->info = array('app' => array('app_id' => static::MYAPPID));
+        if (static::MYAPPID) {
+            if (!$this->info) {
+                $this->info = array('app' => array('app_id' => static::MYAPPID));
+            } elseif (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
+                $this->info['app']['app_id'] = static::MYAPPID;
+            }
         }
         if (!$retrieve || !$info) return;
         $this->retrieve();
