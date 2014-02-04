@@ -42,6 +42,10 @@ class PodioItem
 
     function retrieve()
     {
+        if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
+            // TODO: use custom exception
+            throw new \Exception('Cannot authenticate item, no app_id');
+        }
         if (!isset($this->info['item_id'])) {
             if (!isset($this->info['app_item_id'])) {
                 // TODO: use custom exception
@@ -88,6 +92,9 @@ class PodioItem
     {
         if ($var == 'id') {
             $this->info['item_id'] = $value;
+        }
+        if ($var == 'app_id') {
+            $this->info['app']['app_id'] = $value;
         }
         $this->info[$var] = $value;
     }
