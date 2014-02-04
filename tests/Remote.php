@@ -13,11 +13,17 @@ class TestRemote extends Chiara\Remote
         $this->queries = $this->auth = $this->map = array();
     }
 
+    function expectRequest($type, $url, $result, $attributes = array())
+    {
+        $type = strtoupper($type);
+        $this->map[$type][$url . '?' . http_build_query($attributes)] = $result;
+    }
+
     function getReturn($url, $type)
     {
-        if (isset($this->map[$url])) {
+        if (isset($this->map[$type]) && isset($this->map[$type][$url])) {
             $response = new PodioResponse();
-            $response->body = $this->map[$url];
+            $response->body = $this->map[$type][$url];
             $response->status = 200;
             return $response;
         }

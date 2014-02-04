@@ -1,5 +1,5 @@
 --TEST--
-PodioItem->retrieve
+PodioItem->retrieve with exception thrown
 --FILE--
 <?php
 include __DIR__ . '/setup.php.inc';
