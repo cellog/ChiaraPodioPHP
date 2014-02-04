@@ -69,6 +69,7 @@ class PodioItem
             $this->info = Remote::$remote->get('/item/' . $this->info['item_id'])->json_body();
         }
         $this->app = null;
+        return $this;
     }
 
     function __get($var)
