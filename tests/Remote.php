@@ -12,14 +12,34 @@ class TestRemote extends Chiara\Remote
     {
         $this->queries = $this->auth = $this->map = array();
     }
+
+    function getReturn($url, $type)
+    {
+        if (isset($this->map[$url])) {
+            $response = new PodioResponse();
+            $response->body = $this->map[$url];
+            $response->status = 200;
+            return $response;
+        }
+        throw new \Exception('Unexpected ' . $type . ': ' . $url);
+    }
+
     function get($url, $attributes = array(), $options = array())
     {
         $this->queries[] = array('get', array($url, $attributes, $options));
+        return $this->getReturn($url . '?' . http_build_query($attributes), 'GET');
     }
 
     function post($url, $attributes = array(), $options = array())
     {
         $this->queries[] = array('post', array($url, $attributes, $options));
+        return $this->getReturn($url . '?' . http_build_query($attributes), 'POST');
+    }
+
+    function put($url, $attributes = array())
+    {
+        $this->queries[] = array('post', array($url, $attributes, $options));
+        return $this->getReturn($url . '?' . http_build_query($attributes), 'PUT');
     }
 
     function authenticate_with_app($app_id, $app_token)
