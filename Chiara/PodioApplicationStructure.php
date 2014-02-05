@@ -113,12 +113,26 @@ class PodioApplicationStructure
 
     function addQuestionField($name, $id, array $options, $multiple)
     {
-        $this->addField('file', $name, $id, array('options' => $options, 'multiple' => $multiple));
+        $this->addMultipleChoiceField('question', $name, $id, $options, $multiple);
+    }
+    
+    protected function addMultipleChoiceField($type, $name, $id, array $options, $multiple)
+    {
+        $options = array_values($options);
+        foreach ($options as $option) {
+            if (!is_array($option)) {
+                throw new \Exception('Each option must be an array');
+            }
+            if (array_keys($option) != array('status', 'text', 'id', 'color')) {
+                throw new \Exception('Invalid options, must be an array of arrays with keys "status", "text", "id", "color"');
+            }
+        }
+        $this->addField($type, $name, $id, array('options' => $options, 'multiple' => $multiple));
     }
 
     function addCategoryField($name, $id, array $options, $multiple)
     {
-        $this->addField('category', $name, $id, array('options' => $options, 'multiple' => $multiple));
+        $this->addMultipleChoiceField('category', $name, $id, $options, $multiple);
     }
 
     /**
@@ -323,10 +337,12 @@ class PodioApplicationStructure
                 }
             case 'question' :
             case 'category' :
-                foreach ($structure['config']['options'] as $option) {
-                    if ($option['id'] == $value) {
-                        $value = $option;
-                        break;
+                if ($type === 'question' || $type === 'category') {
+                    foreach ($structure['config']['options'] as $option) {
+                        if ($option['id'] == $value || $option['text'] == $value) {
+                            $value = $option;
+                            break;
+                        }
                     }
                 }
             case 'money' :
