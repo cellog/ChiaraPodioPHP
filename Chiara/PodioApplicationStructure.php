@@ -96,7 +96,7 @@ class PodioApplicationStructure
     {
         if (!in_array($type, array('space_users', 'all_users', 'space_contacts', 'space_users_and_contacts'))) {
             // TODO: convert to custom Chiara exception
-            throw new \Exception('Invalid type for contact field "' . $name . '" in app ' . static::APPNAME);
+            throw new \Exception('Invalid type "' . $type . '" for contact field "' . $name . '"');
         }
         $this->addField('contact', $name, $id, $type);
     }
@@ -155,6 +155,12 @@ class PodioApplicationStructure
 
     function addField($type, $name, $id, $config = null)
     {
+        if (isset($this->structure[$name])) {
+            throw new \Exception('Error: field with external-id "' . $name . '" already exists');
+        }
+        if (isset($this->structure[$id])) {
+            throw new \Exception('Error: field with id "' . $id . '" already exists');
+        }
         $this->structure[$name] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => $config);
         $this->structure[$id] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => $config);
     }
