@@ -1,27 +1,27 @@
 --TEST--
-PodioApplicationStructure->addAppField
+PodioApplicationStructure->addMoneyField
 --FILE--
 <?php
 include __DIR__ . '/../setup.php.inc';
 $structure = new Chiara\PodioApplicationStructure;
 $test->assertEquals(array(), $structure->getRawStructure(), 'before');
 
-$structure->addAppField('foo', 12345, array(15432, 16432));
+$structure->addMoneyField('foo', 12345, array('USD'));
 
 $test->assertEquals(array (
   'foo' => 
   array (
-    'type' => 'app',
+    'type' => 'money',
     'name' => 'foo',
     'id' => 12345,
-    'config' => array(15432, 16432),
+    'config' => array('USD'),
   ),
   12345 => 
   array (
-    'type' => 'app',
+    'type' => 'money',
     'name' => 'foo',
     'id' => 12345,
-    'config' => array(15432, 16432),
+    'config' => array('USD'),
   ),
 ), $structure->getRawStructure(), 'after');
 ?>

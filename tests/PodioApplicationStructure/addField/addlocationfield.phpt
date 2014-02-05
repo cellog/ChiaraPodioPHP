@@ -1,27 +1,27 @@
 --TEST--
-PodioApplicationStructure->addAppField
+PodioApplicationStructure->addLocationField
 --FILE--
 <?php
 include __DIR__ . '/../setup.php.inc';
 $structure = new Chiara\PodioApplicationStructure;
 $test->assertEquals(array(), $structure->getRawStructure(), 'before');
 
-$structure->addAppField('foo', 12345, array(15432, 16432));
+$structure->addLocationField('foo', 12345);
 
 $test->assertEquals(array (
   'foo' => 
   array (
-    'type' => 'app',
+    'type' => 'location',
     'name' => 'foo',
     'id' => 12345,
-    'config' => array(15432, 16432),
+    'config' => NULL,
   ),
   12345 => 
   array (
-    'type' => 'app',
+    'type' => 'location',
     'name' => 'foo',
     'id' => 12345,
-    'config' => array(15432, 16432),
+    'config' => NULL,
   ),
 ), $structure->getRawStructure(), 'after');
 ?>
