@@ -155,8 +155,8 @@ class PodioApplicationStructure
 
     function addField($type, $name, $id, $config = null)
     {
-        $this->structure[$name] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => null);
-        $this->structure[$id] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => null);
+        $this->structure[$name] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => $config);
+        $this->structure[$id] = array('type' => $type, 'name' => $name, 'id' => $id, 'config' => $config);
     }
 
     static function fromItem(PodioItem $item)
