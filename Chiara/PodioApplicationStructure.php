@@ -42,6 +42,11 @@ class PodioApplicationStructure
         return var_export($this->structure, 1);
     }
 
+    function getRawStructure()
+    {
+        return $this->structure;
+    }
+
     function addTextField($name, $id)
     {
         $this->addField('text', $name, $id);
