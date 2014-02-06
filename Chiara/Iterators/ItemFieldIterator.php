@@ -20,7 +20,7 @@ class ItemFieldIterator extends \ArrayIterator
     function current()
     {
         $info = parent::current();
-        return Field::newField($info);
+        return Field::newField($this->item, $info);
     }
 
     function offsetGet($index)

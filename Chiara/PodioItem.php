@@ -29,7 +29,7 @@ class PodioItem
             $this->info = $info;
             if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
                 $this->info['app']['app_id'] = static::MYAPPID;
-            } elseif ($this->info['app']['app_id'] != static::MYAPPID) {
+            } elseif (static::MYAPPID && $this->info['app']['app_id'] != static::MYAPPID) {
                 throw new \Exception(get_class($this) . ' item has app id set to ' . $this->info['app']['app_id'] .
                                      ', but it must be ' . static::MYAPPID);
             }

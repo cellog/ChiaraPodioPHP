@@ -7,4 +7,10 @@ class App extends Field
     {
         return new Collection($this, $this->info['values'], 'Chiara\\PodioItem\\Values\\App');
     }
+
+    function __get($var)
+    {
+        if ($var == 'referenceable_types') return $this->info['config']['settings']['referenceable_types'];
+        return parent::__get($var);
+    }
 }
