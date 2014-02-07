@@ -1,5 +1,5 @@
 --TEST--
-PodioApplicationStructure->structureFromItem basic test
+PodioApplicationStructure->formatValue app reference
 --FILE--
 <?php
 include __DIR__ . '/../setup.php.inc';
@@ -13,6 +13,31 @@ $test->assertEquals(array(
     array('value' => array('app_id' => 2)),
     array('value' => array('app_id' => 3)),
 ), $structure->formatValue('app-reference', array(2,3)), 'simple array of ids');
+
+$item = new Chiara\PodioItem;
+$item->id = 2;
+
+$test->assertEquals(array(
+    array('value' => array('app_id' => 2)),
+    array('value' => array('app_id' => 3)),
+), $structure->formatValue('app-reference', array($item,3)), 'array with object');
+
+class Foo extends Chiara\PodioItem\Field
+{
+}
+
+$foo = new Foo($item);
+$item2 = clone $item;
+$item2->id = 3;
+$collection = new Chiara\PodioItem\Values\Collection($foo, array($item, $item2));
+
+
+$test->assertEquals(array(
+    array('value' => array('app_id' => 2)),
+    array('value' => array('app_id' => 3)),
+), $structure->formatValue('app-reference', $collection
+                           ), 'collection');
+
 echo "done\n";
 ?>
 --EXPECT--

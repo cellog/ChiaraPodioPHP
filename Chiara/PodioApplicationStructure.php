@@ -286,15 +286,19 @@ class PodioApplicationStructure
                         if (is_int($b)) {
                             $b = array($idname => $b);
                         } elseif (is_object($b)) {
-                            $b = $b->toArray();
+                            $b = array($idname => $b->id);
                         }
                         $newvalue[$a] = array('value' => $b);
                     }
                     $value = $newvalue;
+                } elseif ($value instanceof PodioItem\Values\Collection) {
+                    $newvalue = array();
+                    foreach ($value as $obj) {
+                        $newvalue[] = array('value' => array($idname => $obj->id));
+                    }
+                    $value = $newvalue;
                 } elseif (is_object($value)) {
                     $value = array(array('value' => $value->toArray()));
-                } elseif ($value instanceof PodioItem\Values\Collection) {
-                    $value = array_map(function ($a) {return array('value' => $a->toArray());}, $value);
                 }
                 break;
             case 'embed' :
