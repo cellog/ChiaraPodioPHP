@@ -366,7 +366,7 @@ class PodioApplicationStructure
                 }
             case 'money' :
                 if ($type == 'money') {
-                    if (is_number($value)) {
+                    if (is_numeric($value)) {
                         $value = array('currency' => 'USD', 'value' => $value);
                     } elseif (is_string($value)) {
                         $parser = new Currency;
