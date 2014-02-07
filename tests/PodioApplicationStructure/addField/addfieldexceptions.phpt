@@ -55,4 +55,7 @@ $test->assertEquals(array (
     'config' => NULL,
   ),
 ), $structure->getRawStructure(), 'after');
+echo "done\n";
 ?>
+--EXPECT--
+done

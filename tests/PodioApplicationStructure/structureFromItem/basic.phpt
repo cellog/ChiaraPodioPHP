@@ -314,4 +314,7 @@ $test->assertEquals(array (
     ),
   ),
 ), $structure->getRawStructure(), 'output');
+echo "done\n";
 ?>
+--EXPECT--
+done

@@ -24,4 +24,7 @@ $test->assertEquals(array (
     'config' => array('USD'),
   ),
 ), $structure->getRawStructure(), 'after');
+echo "done\n";
 ?>
+--EXPECT--
+done

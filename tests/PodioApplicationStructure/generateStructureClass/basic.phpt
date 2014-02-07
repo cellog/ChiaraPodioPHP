@@ -320,7 +320,11 @@ $test->assertEquals($a = file_get_contents(__DIR__ . '/basic.phpt.php.inc'), $st
 $test->assertFileExists(__DIR__ . '/thing.php', 'after generate');
 
 $test->assertEquals($a, file_get_contents(__DIR__ . '/thing.php'), 'contents match');
+echo "done\n";
 ?>
 --CLEAN--
 <?php
 unlink(__DIR__ . '/thing.php');
+?>
+--EXPECT--
+done;

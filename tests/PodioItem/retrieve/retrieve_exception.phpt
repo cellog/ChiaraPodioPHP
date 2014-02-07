@@ -24,4 +24,7 @@ try {
 } catch (\Exception $e) {
     $test->assertException($e, 'Exception', 'Cannot retrieve item, no item_id or app_item_id', 'wrong error message');
 }
+echo "done\n";
 ?>
+--EXPECT--
+done

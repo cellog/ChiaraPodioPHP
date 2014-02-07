@@ -14,4 +14,7 @@ try {
 }
 
 $test->assertEquals(array(), $structure->getRawStructure(), 'after');
+echo "done\n";
 ?>
+--EXPECT--
+done

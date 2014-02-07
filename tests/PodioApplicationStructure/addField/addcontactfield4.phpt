@@ -24,4 +24,7 @@ $test->assertEquals(array (
     'config' => 'space_users_and_contacts',
   ),
 ), $structure->getRawStructure(), 'after');
+echo "done\n";
 ?>
+--EXPECT--
+done

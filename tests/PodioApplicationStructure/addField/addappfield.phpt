@@ -24,4 +24,7 @@ $test->assertEquals(array (
     'config' => array(15432, 16432),
   ),
 ), $structure->getRawStructure(), 'after');
+echo "done\n";
 ?>
+--EXPECT--
+done
