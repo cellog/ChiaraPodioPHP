@@ -306,16 +306,18 @@ class PodioApplicationStructure
                     $value = array(array('embed' => array('embed_id' => $value), 'file' => array('file_id' => 0)));
                 } elseif (is_string($value)) {
                     $value = array(array('embed' => array('embed_id' => 0, 'url' => $value), 'file' => array('file_id' => 0)));
-                } elseif (is_object($value)) {
-                    $value = array($value->toArray());
                 } elseif (is_array($value) || $value instanceof PodioItem\Values\Collection) {
                     if (isset($value['embed'])) {
                         $value = array($value);
                     } else {
-                        if (isset($value[0]) && is_object($value[0])) {
-                            $value = array_map(function($a) {return $a->toArray();}, $value);
+                        $newvalue = array();
+                        foreach ($value as $obj) {
+                            $newvalue[] = $obj->toArray();
                         }
+                        $value = $newvalue;
                     }
+                } elseif (is_object($value)) {
+                    $value = array($value->toArray());
                 }
                 break;
             case 'date' :
