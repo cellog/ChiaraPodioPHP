@@ -279,16 +279,18 @@ class PodioApplicationStructure
                     $idname = 'profile_id';
                 }
                 if (is_int($value)) {
-                    $value = array($idname => $value);
+                    $value = array(array('value' => array($idname => $value)));
                 } elseif (is_array($value)) {
+                    $newvalue = array();
                     foreach ($value as $a => $b) {
                         if (is_int($b)) {
-                            $b = array($idname => $value);
+                            $b = array($idname => $b);
                         } elseif (is_object($b)) {
                             $b = $b->toArray();
                         }
-                        $value[$a] = array('value' => $b);
+                        $newvalue[$a] = array('value' => $b);
                     }
+                    $value = $newvalue;
                 } elseif (is_object($value)) {
                     $value = array(array('value' => $value->toArray()));
                 } elseif ($value instanceof PodioItem\Values\Collection) {
