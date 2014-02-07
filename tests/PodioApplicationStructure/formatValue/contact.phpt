@@ -1,5 +1,5 @@
 --TEST--
-PodioApplicationStructure->formatValue app reference
+PodioApplicationStructure->formatValue contact
 --FILE--
 <?php
 include __DIR__ . '/../setup.php.inc';
