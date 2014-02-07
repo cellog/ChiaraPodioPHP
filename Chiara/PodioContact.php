@@ -37,6 +37,7 @@ class PodioContact
 
     function __set($var, $value)
     {
+        if ($var === 'id') $var = 'profile_id';
         $this->info[$var] = $value;
     }
 
