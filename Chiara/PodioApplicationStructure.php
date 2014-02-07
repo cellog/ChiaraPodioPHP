@@ -350,9 +350,9 @@ class PodioApplicationStructure
                 break;
             case 'image' :
                 if (is_int($value)) {
-                    $value = array('value' => array('file_id' => $value));
+                    $value = array('file_id' => $value);
                 } elseif (is_string($value)) {
-                    $value = array('value' => array('link' => $value));
+                    $value = array('link' => $value);
                 }
             case 'question' :
             case 'category' :
