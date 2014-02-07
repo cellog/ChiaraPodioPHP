@@ -321,6 +321,17 @@ class PodioApplicationStructure
                 }
                 break;
             case 'date' :
+                if (is_string($value)) {
+                    $value = strtotime($value);
+                    $value = array('start' => date('Y-m-d H:i:s', $value));
+                } elseif (is_int($value)) {
+                    $value = array('start' => date('Y-m-d H:i:s', $value));
+                } elseif (is_array($value)) {
+                    if (count($value) == 2 && isset($value['start']) && isset($value['end'])) {
+                        $value = array('start' => date('Y-m-d H:i:s', strtotime($value['start'])),
+                                       'end' => date('Y-m-d H:i:s', strtotime($value['end'])));
+                    }
+                }
                 if ($value instanceof \DateTime) {
                     $value = array('start' => $value->format('Y-m-d H:i:s'));
                 }
