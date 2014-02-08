@@ -358,8 +358,12 @@ class PodioApplicationStructure
             case 'category' :
                 if ($type === 'question' || $type === 'category') {
                     if ($structure['config']['multiple']) {
-                        foreach ($value as $i => $v) {
-                            $value[$i] = $this->selectOption($structure['config']['options'], $v);
+                        if (!is_array($value) || isset($value['id'])) {
+                            $value = array($this->selectOption($structure['config']['options'], $value));
+                        } else {
+                            foreach ($value as $i => $v) {
+                                $value[$i] = $this->selectOption($structure['config']['options'], $v);
+                            }
                         }
                     } else {
                         $value = array($this->selectOption($structure['config']['options'], $value));
