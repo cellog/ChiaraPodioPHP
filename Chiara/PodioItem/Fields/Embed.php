@@ -7,4 +7,18 @@ class Embed extends Field
     {
         return new Collection($this, $this->info['values'], 'Chiara\\PodioItem\\Values\\Embed');
     }
+
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        $ret = array();
+        foreach ($value as $v) {
+            if ($v->link) {
+                $ret[] = array('link' => $v->link);
+            } else {
+                $ret[] = array('embed' => $v->embed_id, 'file' => $v->file_id);
+            }
+        }
+        return $ret;
+    }
 }

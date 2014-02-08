@@ -1,10 +1,12 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem\Field;
+use Chiara\PodioItem\Field, Chiara\PodioItem;
 class Embed extends Field
 {
-    function __construct($info = null)
+    protected $parent;
+    function __construct(PodioItem $parent, $info = null)
     {
+        $this->parent = $parent;
         $this->info = $info;
     }
 

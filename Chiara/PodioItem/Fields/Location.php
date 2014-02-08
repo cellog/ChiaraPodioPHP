@@ -7,4 +7,14 @@ class Location extends Field
     {
         return new Collection($this, $this->info['values'], 'Chiara\\PodioItem\\Values\\Location');
     }
+
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        $ret = array();
+        foreach ($value as $v) {
+            $ret[] = $v->value;
+        }
+        return $ret;
+    }
 }

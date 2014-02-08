@@ -7,4 +7,14 @@ class Image extends Field
     {
         return new Collection($this, $this->info['values'], 'Chiara\\PodioItem\\Values\\Image');
     }
+
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        $ret = array();
+        foreach ($value as $v) {
+            $ret[] = $v->id;
+        }
+        return $ret;
+    }
 }

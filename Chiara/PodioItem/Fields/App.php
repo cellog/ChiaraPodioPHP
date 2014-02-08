@@ -8,6 +8,16 @@ class App extends Field
         return new Collection($this, $this->info['values'], 'Chiara\\PodioItem\\Values\\App');
     }
 
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        $ret = array();
+        foreach ($value as $v) {
+            $ret[] = $v->id;
+        }
+        return $ret;
+    }
+
     function __get($var)
     {
         if ($var == 'referenceable_types') return $this->info['config']['settings']['referenceable_types'];

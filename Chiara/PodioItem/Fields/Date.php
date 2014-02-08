@@ -8,6 +8,18 @@ class Date extends Field
         return new Value($this->info['values'][0]);
     }
 
+    function getSaveValue()
+    {
+        $ret = array();
+        if (isset($this->info['start'])) {
+            $ret['start'] = $this->info['start'];
+        }
+        if (isset($this->info['end'])) {
+            $ret['end'] = $this->info['end'];
+        }
+        return $ret;
+    }
+
     function __get($var)
     {
         if ($var === 'duration') {

@@ -13,4 +13,14 @@ class Contact extends Field
         if ($var == 'contact_type') return $this->info['config']['settings']['type'];
         return parent::__get($var);
     }
+
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        $ret = array();
+        foreach ($value as $v) {
+            $ret[] = $v->id;
+        }
+        return $ret;
+    }
 }

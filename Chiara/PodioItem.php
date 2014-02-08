@@ -182,6 +182,9 @@ class PodioItem
         }
         foreach ($array as $i => $field) {
             if (!$force) $field = $this->fields[$this->info['fields'][$i]['field_id']];
+            if ($field->type == 'calculation') {
+                continue;
+            }
             $ret[$field->external_id] = $field->saveValue;
         }
         return $ret;

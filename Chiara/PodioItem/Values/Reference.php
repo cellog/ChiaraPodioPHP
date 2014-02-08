@@ -15,6 +15,11 @@ abstract class Reference extends Value
         return $this->retrieveReference();
     }
 
+    function __get($var)
+    {
+        return $this->getValue()->__get($var);
+    }
+
     abstract function retrieveReference();
     abstract function getIndices();
 }

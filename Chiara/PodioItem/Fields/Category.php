@@ -23,4 +23,18 @@ class Category extends Field
         if ($var == 'multiple') return $this->info['config']['settings']['multiple'];
         return parent::__get($var);
     }
+
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        if ($this->info['config']['settings']['multiple']) {
+            $ret = array();
+            foreach ($value as $v) {
+                $ret[] = $v->id;
+            }
+            return $ret;
+        } else {
+            return $value->id;
+        }
+    }
 }

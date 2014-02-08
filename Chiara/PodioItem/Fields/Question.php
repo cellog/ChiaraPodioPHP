@@ -11,6 +11,20 @@ class Question extends Category
         return new Option($this->parent, $this->info['values'][0]);
     }
 
+    function getSaveValue()
+    {
+        $value = $this->getValue();
+        if ($this->info['config']['settings']['multiple']) {
+            $ret = array();
+            foreach ($value as $v) {
+                $ret[] = $v->id;
+            }
+            return $ret;
+        } else {
+            return $value->id;
+        }
+    }
+
     function __get($var)
     {
         if ($var == 'options') return $this->info['config']['settings']['options'];
