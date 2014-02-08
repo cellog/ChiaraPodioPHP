@@ -387,7 +387,6 @@ class PodioApplicationStructure
                         throw new \Exception('progress field must be between 0 and 100');
                     }
                 }
-            case 'location' :
             case 'duration' :
                 if ($type === 'duration') {
                     if (is_string($value)) {
@@ -405,6 +404,7 @@ class PodioApplicationStructure
                     throw new \Exception('Cannot set a value for calculation fields');
                 }
             case 'text' :
+            case 'location' :
                 if (is_object($value)) {
                     $value = $value->toArray();
                 }
