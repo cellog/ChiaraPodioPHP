@@ -27,6 +27,9 @@ abstract class Field
         if ($name == 'value') {
             return $this->getValue();
         }
+        if ($name == 'saveValue') {
+            return $this->getSaveValue();
+        }
         if ($name == 'parentItem') {
             return $this->parent;
         }
@@ -38,6 +41,11 @@ abstract class Field
     function getValue()
     {
         return $this->info['values'][0]['value'];
+    }
+
+    function getSaveValue()
+    {
+        return $this->getValue();
     }
 
     function __toString()

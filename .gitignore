@@ -4,3 +4,13 @@ MyProject.komodoproject
 tests/api.json
 
 tests/testuser.json
+
+tests/**/*.diff
+
+tests/**/*.exp
+
+tests/**/*.log
+
+tests/**/*.out
+
+tests/**/*.php

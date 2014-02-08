@@ -181,8 +181,8 @@ class PodioItem
             $array = $this->dirty;
         }
         foreach ($array as $i => $field) {
-            if (!$force) $field = $this->fields[$i];
-            $ret[] = array($field->external_id => $field->saveValue);
+            if (!$force) $field = $this->fields[$this->info['fields'][$i]['field_id']];
+            $ret[$field->external_id] = $field->saveValue;
         }
         return $ret;
     }

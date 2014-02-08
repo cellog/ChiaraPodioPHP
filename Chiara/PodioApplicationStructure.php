@@ -186,7 +186,9 @@ class PodioApplicationStructure
         if (isset(self::$structures[$id])) {
             return self::$structures[$id];
         }
-        return $this->structureFromItem($item);
+        $ret = new self;
+        $ret->structureFromItem($item);
+        return $ret;
     }
 
     /**
