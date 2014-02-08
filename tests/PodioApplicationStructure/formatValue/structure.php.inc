@@ -69,7 +69,7 @@ class Test extends \Chiara\PodioApplicationStructure
               'color' => 'DCEBD8',
             ),
           ),
-          'multiple' => false,
+          'multiple' => true,
         ),
       ),
       51928210 => 

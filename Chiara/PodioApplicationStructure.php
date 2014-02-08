@@ -357,23 +357,14 @@ class PodioApplicationStructure
             case 'question' :
             case 'category' :
                 if ($type === 'question' || $type === 'category') {
-                    if ($structure['multiple']) {
+                    if ($structure['config']['multiple']) {
                         foreach ($value as $i => $v) {
-                            foreach ($structure['config']['options'] as $option) {
-                                if ($option['id'] == $v || $option['text'] == $v) {
-                                    $value[$i] = $option;
-                                    break;
-                                }
-                            }
+                            $value[$i] = $this->selectOption($structure['config']['options'], $v);
                         }
                     } else {
-                        foreach ($structure['config']['options'] as $option) {
-                            if ($option['id'] == $value || $option['text'] == $value) {
-                                $value = $option;
-                                break;
-                            }
-                        }
+                        $value = array($this->selectOption($structure['config']['options'], $value));
                     }
+                    return $value;
                 }
             case 'money' :
                 if ($type == 'money') {
@@ -423,6 +414,32 @@ class PodioApplicationStructure
                 break;
         }
         return $value;
+    }
+
+    function selectOption($options, $value)
+    {
+        if (is_array($value)) {
+            if (!isset($value['id'])) {
+                // TODO: convert to a specific exception
+                throw new \Exception('array passed in is not a valid array for a question or category option');
+            }
+            $value = $value['id'];
+        } elseif ($value instanceof \Chiara\PodioItem\Values\Option) {
+            $value = $value->getValue();
+        }
+        $found = false;
+        foreach ($options as $option) {
+            if ($option['id'] == $value || $option['text'] == $value) {
+                $value = $option;
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            // TODO: convert to a specific exception
+            throw new \Exception('Option value "' . $value . '" not found');
+        }
+        return array('value' => $value);
     }
 
     function getDuration(\DateInterval $di)
