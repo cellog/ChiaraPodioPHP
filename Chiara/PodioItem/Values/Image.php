@@ -1,11 +1,16 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem;
+use Chiara\PodioItem, Chiara\PodioFile;
 class Image extends Reference
 {
     function retrieveReference()
     {
-        return new PodioFile($this->info['value']['file_id']);
+        return new PodioFile($this->info['value']);
+    }
+
+    function extendedGet($var)
+    {
+        return $this->getValue()->__get($var);
     }
 
     function getIndices()
@@ -13,10 +18,5 @@ class Image extends Reference
         return array(
             $this->info['value']['file_id']
         );
-    }
-
-    function saveValue()
-    {
-        return $this->info['value']['file_id'];
     }
 }

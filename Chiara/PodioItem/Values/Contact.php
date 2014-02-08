@@ -8,6 +8,11 @@ class Contact extends Reference
         return new PodioContact($this->info['value']);
     }
 
+    function extendedGet($var)
+    {
+        return $this->getValue()->__get($var);
+    }
+
     function getIndices()
     {
         return array(

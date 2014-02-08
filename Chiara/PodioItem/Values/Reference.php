@@ -17,7 +17,22 @@ abstract class Reference extends Value
 
     function __get($var)
     {
-        return $this->getValue()->__get($var);
+        if ($this->info == null) {
+            return $this->getValue()->__get($var);
+        } else {
+            if ($this->extendedGet($var)) {
+                return $this->extendedGet($var);
+            }
+            if (!isset($this->info[$var])) {
+                return null;
+            }
+            return $this->info[$var];
+        }
+    }
+
+    function extendedGet($var)
+    {
+        return null;
     }
 
     abstract function retrieveReference();

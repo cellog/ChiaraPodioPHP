@@ -42,12 +42,12 @@ $test->assertEquals(array (
   ),
 ), $structure->formatValue('category', array(1, 2)), 'category');
 
-$option = new Chiara\PodioItem\Values\Option(new Chiara\PodioItem,     array('value' => array (
+$option = new Chiara\PodioItem\Values\Option(new Chiara\PodioItem, array (
       'status' => 'active',
       'text' => '2',
       'id' => 2,
       'color' => 'DCEBD8',
-    )));
+    ));
 
 $test->assertEquals(array (
   0 => 

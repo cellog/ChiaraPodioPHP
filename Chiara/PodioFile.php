@@ -4,6 +4,7 @@ use Podio, Chiara\Remote;
 class PodioFile
 {
     protected $info;
+    protected $fileContents;
 
     function __construct($info = null, $retrieve = true)
     {
@@ -13,7 +14,7 @@ class PodioFile
             return;
         }
         if (is_int($info)) {
-            $info = array('profile_id' => $info);
+            $info = array('file_id' => $info);
         }
         if (!$retrieve) return;
         $this->retrieve();

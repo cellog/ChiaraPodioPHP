@@ -11,11 +11,11 @@ class Date extends Field
     function getSaveValue()
     {
         $ret = array();
-        if (isset($this->info['start'])) {
-            $ret['start'] = $this->info['start'];
+        if (isset($this->info['values'][0]['start'])) {
+            $ret['start'] = $this->info['values'][0]['start'];
         }
-        if (isset($this->info['end'])) {
-            $ret['end'] = $this->info['end'];
+        if (isset($this->info['values'][0]['end'])) {
+            $ret['end'] = $this->info['values'][0]['end'];
         }
         return $ret;
     }

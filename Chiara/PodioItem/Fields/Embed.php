@@ -13,8 +13,8 @@ class Embed extends Field
         $value = $this->getValue();
         $ret = array();
         foreach ($value as $v) {
-            if ($v->link) {
-                $ret[] = array('link' => $v->link);
+            if ($v->url) {
+                $ret[] = array('url' => $v->url);
             } else {
                 $ret[] = array('embed' => $v->embed_id, 'file' => $v->file_id);
             }

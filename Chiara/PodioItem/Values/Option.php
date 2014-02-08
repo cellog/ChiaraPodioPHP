@@ -13,26 +13,26 @@ class Option
 
     function getValue()
     {
-        return $this->info['value']['id'];
+        return $this->info['id'];
     }
 
     function getIndices()
     {
-        return array($this->info['value']['id']);
+        return array($this->info['id']);
     }
 
     function __get($var)
     {
-        return $this->info['value'][$var];
+        return $this->info[$var];
     }
 
     function __set($var, $value)
     {
-        $this->info['value'][$var] = $value;
+        $this->info[$var] = $value;
     }
 
     function __toString()
     {
-        return $this->info['value']['text'];
+        return $this->info['text'];
     }
 }
