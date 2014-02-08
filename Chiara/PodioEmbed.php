@@ -16,9 +16,9 @@ class PodioEmbed
 
     function __get($var)
     {
-        if ($var === 'id') return $this->info['embed']['embed_id'];
-        if ($var === 'file_id') return $this->info['file']['file_id'];
-        if ($var === 'url') return $this->info['embed']['url'];
+        if ($var === 'id' && isset($this->info['embed'])) return $this->info['embed']['embed_id'];
+        if ($var === 'file_id' && isset($this->info['file'])) return $this->info['file']['file_id'];
+        if ($var === 'url' && isset($this->info['embed']) && isset($this->info['embed']['url'])) return $this->info['embed']['url'];
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }

@@ -327,4 +327,4 @@ echo "done\n";
 unlink(__DIR__ . '/thing.php');
 ?>
 --EXPECT--
-done;
+done

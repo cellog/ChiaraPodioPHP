@@ -5,6 +5,7 @@ PodioItem->retrieve success
 include __DIR__ . '/../setup.php.inc';
 TestRemote::$remote->expectRequest('get', '/item/1', file_get_contents(__DIR__ . '/item.json'));
 $item = new Chiara\PodioItem(1, null, false);
+$item->app_id = 1;
 $item->retrieve();
 
 $test->assertEquals(json_decode(file_get_contents(__DIR__ . '/item.json'), 1), $item->info, 'info');

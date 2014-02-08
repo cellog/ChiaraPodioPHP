@@ -64,7 +64,7 @@ class PodioApplicationStructure
 
     function addDateField($name, $id)
     {
-        $this->addField('file', $name, $id);
+        $this->addField('date', $name, $id);
     }
 
     function addAppField($name, $id, array $referenceable_types)
@@ -357,10 +357,21 @@ class PodioApplicationStructure
             case 'question' :
             case 'category' :
                 if ($type === 'question' || $type === 'category') {
-                    foreach ($structure['config']['options'] as $option) {
-                        if ($option['id'] == $value || $option['text'] == $value) {
-                            $value = $option;
-                            break;
+                    if ($structure['multiple']) {
+                        foreach ($value as $i => $v) {
+                            foreach ($structure['config']['options'] as $option) {
+                                if ($option['id'] == $v || $option['text'] == $v) {
+                                    $value[$i] = $option;
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        foreach ($structure['config']['options'] as $option) {
+                            if ($option['id'] == $value || $option['text'] == $value) {
+                                $value = $option;
+                                break;
+                            }
                         }
                     }
                 }
