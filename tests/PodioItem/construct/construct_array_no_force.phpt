@@ -8,4 +8,7 @@ $item = new Chiara\PodioItem(json_decode($a, 1), null, true);
 
 $test->assertEquals(json_decode($a, 1), $item->info, 'info');
 $test->assertEquals(array(), TestRemote::$remote->queries, 'queries executed');
+echo "done\n";
 ?>
+--EXPECT--
+done

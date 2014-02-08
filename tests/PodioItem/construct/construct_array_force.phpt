@@ -23,4 +23,7 @@ $test->assertEquals(array (
     ),
   ),
 ), TestRemote::$remote->queries, 'queries executed');
+echo "done\n";
 ?>
+--EXPECT--
+done

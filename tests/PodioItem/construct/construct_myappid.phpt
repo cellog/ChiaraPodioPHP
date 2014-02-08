@@ -23,4 +23,7 @@ try {
 } catch (\Exception $e) {
     $test->assertException($e, 'Exception', 'foo item has app id set to 4, but it must be 12345', 'app id is wrong');
 }
+echo "done\n";
 ?>
+--EXPECT--
+done

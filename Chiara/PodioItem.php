@@ -28,7 +28,9 @@ class PodioItem
         }
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
-            $this->dirty = array_keys($info['fields']);
+            if (isset($info['fields'])) {
+                $this->dirty = array_keys($info['fields']);
+            }
             if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
                 $this->info['app']['app_id'] = static::MYAPPID;
             } elseif (static::MYAPPID && $this->info['app']['app_id'] != static::MYAPPID) {
@@ -183,6 +185,14 @@ class PodioItem
             $ret[] = array($field->external_id => $field->saveValue);
         }
         return $ret;
+    }
+
+    /**
+     * Mark a podio item as unmodified
+     */
+    function clean()
+    {
+        $this->dirty = array();
     }
 
     function save(array $options = array())
