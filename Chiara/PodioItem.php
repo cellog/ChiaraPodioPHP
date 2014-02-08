@@ -8,6 +8,7 @@ class PodioItem
      */
     const MYAPPID = null;
     protected $info = array();
+    protected $dirty = array();
     /**
      * The PodioApplicationStructure that defines this item's structure
      *
@@ -27,6 +28,7 @@ class PodioItem
         }
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
+            $this->dirty = array_keys($info['fields']);
             if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
                 $this->info['app']['app_id'] = static::MYAPPID;
             } elseif (static::MYAPPID && $this->info['app']['app_id'] != static::MYAPPID) {
@@ -69,6 +71,7 @@ class PodioItem
             $this->info = Remote::$remote->get('/item/' . $this->info['item_id'])->json_body();
         }
         $this->app = null;
+        $this->dirty = array();
         return $this;
     }
 
@@ -108,6 +111,9 @@ class PodioItem
             $this->info['app']['app_id'] = $value;
         }
         $this->info[$var] = $value;
+        if ($var == 'fields') {
+            $this->dirty = array_keys($this->info['fields']);
+        }
     }
 
     function getFieldType($field, array $info = null)
@@ -139,7 +145,13 @@ class PodioItem
             $this->structure = PodioApplicationStructure::fromItem($this);
         }
         $index = $this->getIndex($index);
-        $this->info['fields'][$index]['values'] = $this->structure->formatValue($this->info['fields'][$index]['field_id'], $value);
+        $newvalue = $this->structure->formatValue($this->info['fields'][$index]['field_id'], $value);
+        if ($newvalue == $this->info['fields'][$index]['values']) {
+            return;
+        } else {
+            $this->dirty[$index] = true;
+        }
+        $this->info['fields'][$index]['values'] = $newvalue;
     }
 
     function toArray()
@@ -152,23 +164,43 @@ class PodioItem
         return $this->info['title'];
     }
 
-    function toJsonArray()
+    /**
+     * Convert to an array that can be used to save the item
+     *
+     * @param bool $force if true, all fields will be saved, regardless of modification state,
+     *                    otherwise, only fields that have been modified will be saved
+     */
+    function toJsonArray($force = false)
     {
         $ret = array();
-        foreach ($this->fields as $field) {
+        if ($force) {
+            $array = $this->fields;
+        } else {
+            $array = $this->dirty;
+        }
+        foreach ($array as $i => $field) {
+            if (!$force) $field = $this->fields[$i];
             $ret[] = array($field->external_id => $field->saveValue);
         }
+        return $ret;
     }
 
     function save(array $options = array())
     {
+        $jsonarray = $this->toJsonArray();
+        
+        if (!count($jsonarray)) {
+            // no changes, no need to pollute the internets
+            return;
+        }
         Auth::prepareRemote($this->info['app']['app_id']);
         if (!$this->id) {
-            $result = Remote::$remote->post('/item/app/' . $this->app['app_id'], $this->toJsonArray(), $options);
+            $result = Remote::$remote->post('/item/app/' . $this->app['app_id'], $jsonarray, $options);
             $this->id = $result['item_id'];
         } else {
-            Remote::$remote->post('/item/' . $this->id . '/values', $this->toJsonArray(), $options);
+            Remote::$remote->post('/item/' . $this->id . '/values', $jsonarray, $options);
         }
+        $this->dirty = array();
         return $this;
     }
 
