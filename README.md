@@ -65,13 +65,13 @@ $item->save(true);
 $item->fields['managercontact'] = $item->fields['app-reference']->value->fields['ownercontact']->value;
 
 // easy access to references to this item
-$item2->references['appname'][0]->fields['manageritem'] = $item;
+$item2->references['appname'][0]->retrieve()->fields['manageritem'] = $item;
 // access a specific known item by its item_id
-$item2->references['appname'][12345]->fields['manageritem'] = $item;
+$item2->references['appname'][12345]->retrieve()->fields['manageritem'] = $item;
 // access reference by app_id instead of url_label
-$item2->references[65431][0]->fields['manageritem'] = $item;
+$item2->references[65431][0]->retrieve()->fields['manageritem'] = $item;
 // access reference by known app_item_id
-$item2->references['appname']->items[1]->fields['manageritem'] = $item;
+$item2->references['appname']->items[1]->retrieve()->fields['manageritem'] = $item;
 
 // easy iteration
 foreach ($item->fields['managercontact'] as $contact) {
