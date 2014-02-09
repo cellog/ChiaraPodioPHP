@@ -104,7 +104,9 @@ $item->fields['currency'] = $item2->fields['currency']->value;
 
 // this will create a class named "MyApp" in the "MyNamespace" namespace, expecting
 // a structure class as MyStructure object in the constructor.  More about structure below
-echo $item->generateClass('MyApp', 'MyStructure', 'MyNamespace', array(), __DIR__ . '/MyApp.php');
+// arguments are class name, app id, structure class name, namespace name, array of interfaces to implement,
+// and the path to the file to save it in
+echo $item->generateClass('MyApp', 54321, 'MyStructure', 'MyNamespace', array(), __DIR__ . '/MyApp.php');
 
 // Much of the magic of this app is performed by a Chiara\PodioApplicationStructure object.
 // These objects define metadata that is used to retrieve values as the correct data structure
