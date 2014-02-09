@@ -5,7 +5,7 @@ class Collection extends \ArrayObject
 {
     protected $parentObject;
     protected $wrapperClass;
-    protected $map = array();
+    protected $mymap = array();
     function __construct(Field $parentObject, $objects, $wrapperClass = null)
     {
         $this->parentObject = $parentObject;
@@ -19,11 +19,18 @@ class Collection extends \ArrayObject
             $objects = array_map(function($a) use ($wrapperClass, $o) {return new $wrapperClass($o, $a);}, $objects);
             foreach ($objects as $i => $obj) {
                 foreach ($obj->getIndices() as $index) {
-                    $this->map[$index] = $i;
+                    $this->mymap[$index] = $i;
                 }
             }
         }
         parent::__construct($objects);
+    }
+
+    function __get($var)
+    {
+        if ($var == 'map') {
+            return $this->mymap;
+        }
     }
 
     function offsetGet($var)

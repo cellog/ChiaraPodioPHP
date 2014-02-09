@@ -1,6 +1,7 @@
 <?php
 namespace Chiara;
-use Podio, Chiara\Iterators\ItemFieldIterator, Chiara\AuthManager as Auth, Chiara\Remote;
+use Podio, Chiara\Iterators\ItemFieldIterator, Chiara\AuthManager as Auth, Chiara\Remote,
+    Chiara\Iterators\ReferenceIterator;
 class PodioItem
 {
     /**
@@ -16,6 +17,11 @@ class PodioItem
      * @var Chiara\PodioApplicationStructure
      */
     protected $structure = null;
+    /**
+     * The cached return of a call to the get references API call
+     * @var array
+     */
+    protected $references = null;
     /**
      * @var Chiara\PodioApp
      */
@@ -77,6 +83,29 @@ class PodioItem
         return $this;
     }
 
+    function getIndices($use_app_item_id = false)
+    {
+        if ($use_app_item_id) {
+            return array(
+                $this->info['app_item_id'],
+                $this->info['link']
+            );
+        }
+        return array(
+            $this->info['item_id'],
+            $this->info['link']
+        );
+    }
+
+    function updateReferences(array $references = null)
+    {
+        if ($references) {
+            $this->references = $references;
+        } else {
+            $this->references = Remote::$remote->get('/item/' . $this->info['item_id'] . '/reference')->json_body();
+        }
+    }
+
     function __get($var)
     {
         if ($var == 'fields') {
@@ -87,6 +116,12 @@ class PodioItem
         }
         if ($var == 'id') {
             return $this->info['item_id'];
+        }
+        if ($var == 'references') {
+            if (!isset($this->references)) {
+                $this->updateReferences();
+            }
+            return new ReferenceIterator($this, $this->references);
         }
         if ($var === 'structure') {
             return $this->structure;
@@ -222,7 +257,7 @@ class PodioItem
         var_export($this->info);
     }
 
-    function generateClass($classname, $structureclass, $namespace = null, array $implements = array(), $filename = null)
+    function generateClass($classname, $appid, $structureclass, $namespace = null, array $implements = array(), $filename = null)
     {
         $ret = "<?php\n";
         if ($namespace) {
@@ -235,6 +270,7 @@ class PodioItem
         }
         $ret .= "class $classname$implements extends \\" . get_class($this) . "\n";
         $ret .= "{\n";
+        $ret .= "    const MYAPPID=" . $appid . ";\n";
         $ret .= '    function __construct($info = null, $retrieve = true)' . "\n";
         $ret .= "    {\n";
         $ret .= "        parent::__construct(\$info, new \\$structureclass, \$retrieve);\n";

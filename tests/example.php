@@ -1576,9 +1576,10 @@ echo $item->fields['duration'],"\n";
 
 echo $item->structure->generateStructureClass(1802053, 6686618, 'Testing', 'Chiara\Podio', __DIR__ . '/Testing.php');
 include __DIR__ . '/Testing.php';
-echo $item->generateClass('Item', 'Chiara\Podio\Testing', 'Chiara\Podio', array(), __DIR__ . '/Item.php');
+echo $item->generateClass('Item', 6686618, 'Chiara\Podio\Testing', 'Chiara\Podio', array(), __DIR__ . '/Item.php');
 include __DIR__ . '/Item.php';
-$item = new Chiara\Podio\Item($item->info);
+$item = new Chiara\Podio\Item(112732193);
 
-echo $item->fields['title'],"\n";
-echo $item->fields['duration'],"\n";
+echo $item->references['testing'][112732201]->id,"\n";
+echo $item->references['testing']['https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/2']->id,"\n";
+echo $item->references['testing']->items[2]->retrieve()->fields['category'],"\n";
