@@ -13,7 +13,7 @@ The library uses the Podio class heavily for the actual authentication to Podio 
 to the API, and is fully compatible with the existing API, so you can mix and match if this
 library does not fully do what you need.
 
-Here is some sample code showing how it will work:
+Here is some sample code showing how it works:
 
 ```php
 <?php
