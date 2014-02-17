@@ -26,7 +26,7 @@ class PodioItem
     /**
      * @var Chiara\PodioApp
      */
-    protected $app = null;
+    protected $myapp = null;
 
     function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true)
     {
@@ -168,15 +168,15 @@ class PodioItem
             return $this->structure;
         }
         if ($var == 'app') {
-            if (!$this->app) {
+            if (!$this->myapp) {
                 if (isset($this->info['app'])) {
                     $appinfo = $this->info['app'];
                 } else {
                     $appinfo = null;
                 }
-                $this->app = new PodioApp($appinfo, false);
+                $this->myapp = new PodioApp($appinfo, false);
             }
-            return $this->app;
+            return $this->myapp;
         }
     }
 
