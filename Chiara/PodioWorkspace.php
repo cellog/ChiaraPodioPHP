@@ -1,6 +1,7 @@
 <?php
 namespace Chiara;
-use Chiara\Iterators\WorkspaceAppIterator, Chiara\Remote;
+use Chiara\Iterators\WorkspaceAppIterator, Chiara\Remote, Chiara\PodioApp as App,
+    Chiara\PodioContact as Member, Chiara\PodioTask as Task; //TODO: make the task class
 class PodioWorkspace
 {
     protected $info;
@@ -13,6 +14,31 @@ class PodioWorkspace
         }
         $this->info = $info;
     }
+
+    function __invoke($post, $params)
+    {
+        if (isset($post['app_id'])) {
+            $context = new App($post['app_id'], false);
+        } elseif (isset($post['task_id'])) {
+            $context = new Task($post['task_id'], false);
+        } elseif (isset($post['user_id'])) {
+            $context = new Member(array('user_id' => $post['user_id'], 'space_id' => $post['space_id']));
+        }
+        $func = explode('.', $post['type']);
+        $func = array_map($func, function($a){return ucfirst($a);});
+        $function = 'on' . implode('', $func);
+        $this->$function($context, $params);
+    }
+
+    /**
+     * override these to handle events
+     */
+    function onAppCreate(App $app, $params) {}
+    function onTaskCreate(Task $task, $params) {}
+    function onTaskDelete(Task $task, $params) {}
+    function onTaskUpdate(Task $task, $params) {}
+    function onMemberAdd(Member $member, $params) {}
+    function onMemberRemove(Member $member, $params) {}
 
     function getApps($include_inactive = false)
     {

@@ -17,6 +17,21 @@ class PodioApp
         $this->retrieve();
     }
 
+    function __invoke($post, $params)
+    {
+        $this->info['app_id'] = $post['app_id'];
+        $func = explode('.', $post['type']);
+        $func = array_map($func, function($a){return ucfirst($a);});
+        $function = 'on' . implode('', $func);
+        $this->$function($params);
+    }
+
+    /**
+     * override these to handle events
+     */
+    function onAppUpdate($params) {}
+    function onAppDelete($params) {}
+
     function retrieve()
     {
         Auth::prepareRemote($this->id);
