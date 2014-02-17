@@ -9,7 +9,7 @@ class PodioItem
      */
     const MYAPPID = null;
     protected $info = array();
-    protected $retrieved = false;
+    protected $hasfields = false;
     protected $dirty = array();
     /**
      * The PodioApplicationStructure that defines this item's structure
@@ -33,11 +33,11 @@ class PodioItem
         if ($structure) {
             $this->structure = $structure;
         }
-        $this->retrieved = false;
+        $this->hasfields = false;
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
             if (isset($info['fields'])) {
-                $this->retrieved = true; // prevent re-populating
+                $this->hasfields = true; // prevent re-populating
                 $this->dirty = array_keys($info['fields']);
             }
             if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
@@ -91,9 +91,9 @@ class PodioItem
     function onCommentDelete($params) {}
     function onFileChange($params) {}
 
-    function retrieve()
+    function retrieve($force = false)
     {
-        if ($this->retrieved) {
+        if ($this->hasfields && !$force) {
             return;
         }
         if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
@@ -114,7 +114,7 @@ class PodioItem
         }
         $this->app = null;
         $this->dirty = array();
-        $this->retrieved = true;
+        $this->hasfields = true;
         return $this;
     }
 
@@ -185,7 +185,7 @@ class PodioItem
         }
         $this->info[$var] = $value;
         if ($var == 'fields') {
-            $this->retrieved = false;
+            $this->hasfields = true;
             $this->dirty = array_keys($this->info['fields']);
         }
     }
@@ -224,7 +224,6 @@ class PodioItem
             return;
         } else {
             $this->dirty[$index] = true;
-            $this->retrieved = false;
         }
         $this->info['fields'][$index]['values'] = $newvalue;
     }
@@ -269,7 +268,9 @@ class PodioItem
     function clean()
     {
         $this->dirty = array();
-        $this->retrieved = false;
+        if (!isset($this->info['fields'])) {
+            $this->hasfields = false;
+        }
     }
 
     function save(array $options = array())
@@ -288,7 +289,6 @@ class PodioItem
             Remote::$remote->post('/item/' . $this->id . '/values', $jsonarray, $options);
         }
         $this->dirty = array();
-        $this->retrieved = false;
         return $this;
     }
 
