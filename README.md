@@ -172,7 +172,7 @@ $app->on['item.create'] = new MyApp2;
 // this automatically registers a handler for the hook at "http://example.com/hook.php/suburl"
 $app->on->suburl['item.create'] = new MyApp2;
 
-// this automatically registers a handler for the hook at "http://example.com/hook.php/sub/url"
+// this automatically registers a handler for the hook at "http://example.com/hook.php/suburl/deeper"
 $app->on->suburl->deeper['item.create'] = new MyApp2;
 ?>
 ```
