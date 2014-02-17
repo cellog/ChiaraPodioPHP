@@ -54,6 +54,78 @@ class PodioApp
         }
     }
 
+    function generateStructureClass($classname, $namespace = null, $filename = null)
+    {
+        $structure = new PodioApplicationStructure;
+        $structure->structureFromApp($this);
+        return $structure->generateStructureClass($this->space_id, $this->app_id, $classname, $namespace, $filename);
+    }
+
+    function generateClass($classname, $appid, $structureclass, $namespace = null, array $implements = array(), $filename = null,
+                           $itemclass = 'Chiara\PodioItem')
+    {
+        if (is_object($itemclass)) {
+            $itemclass = get_class($itemclass);
+        }
+        $ret = "<?php\n";
+        if ($namespace) {
+            $ret .= "namespace $namespace;\n";
+        }
+        if ($implements) {
+            $implements = ' implements ' . implode(', ', $implements);
+        } else {
+            $implements = '';
+        }
+        $ret .= "class $classname$implements extends \\" . $itemclass . "\n";
+        $ret .= "{\n";
+        $ret .= "    protected \$MYAPPID=" . $this->id . ";\n";
+        $ret .= '    function __construct($info = null, $retrieve = true)' . "\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::__construct(\$info, new \\$structureclass, \$retrieve);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    /**\n";
+        $ret .= "     * handle an item.create hook in here\n";
+        $ret .= "     * @param array any url-specific parameters passed in to\n";
+        $ret .= "     *              differentiate between hooks.  The item is already set up\n";
+        $ret .= "     *              and can be used immediately.\n";
+        $ret .= "     */\n";
+        $ret .= "    function onItemCreate(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::onItemCreate(\$params);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onItemUpdate(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::onItemUpdate(\$params);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onItemDelete(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::onItemDelete(\$params);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onCommentCreate(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::onCommentCreate(\$params);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onCommentDelete(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::onCommentDelete(\$params);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onFileChange(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        parent::onFileChange(\$params);\n";
+        $ret .= "    }\n";
+        $ret .= "}\n";
+        if ($filename) {
+            file_put_contents($filename, $ret);
+        }
+        return $ret;
+    }
+
     function dump()
     {
         var_export($this->info);

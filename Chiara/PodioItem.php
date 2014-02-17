@@ -304,62 +304,6 @@ class PodioItem
 
     function generateClass($classname, $appid, $structureclass, $namespace = null, array $implements = array(), $filename = null)
     {
-        $ret = "<?php\n";
-        if ($namespace) {
-            $ret .= "namespace $namespace;\n";
-        }
-        if ($implements) {
-            $implements = ' implements ' . implode(', ', $implements);
-        } else {
-            $implements = '';
-        }
-        $ret .= "class $classname$implements extends \\" . get_class($this) . "\n";
-        $ret .= "{\n";
-        $ret .= "    protected \$MYAPPID=" . $appid . ";\n";
-        $ret .= '    function __construct($info = null, $retrieve = true)' . "\n";
-        $ret .= "    {\n";
-        $ret .= "        parent::__construct(\$info, new \\$structureclass, \$retrieve);\n";
-        $ret .= "    }\n";
-        $ret .= "\n";
-        $ret .= "    /**\n";
-        $ret .= "     * handle an item.create hook in here\n";
-        $ret .= "     * @param array any url-specific parameters passed in to\n";
-        $ret .= "     *              differentiate between hooks.  The item is already set up\n";
-        $ret .= "     *              and can be used immediately.\n";
-        $ret .= "     */\n";
-        $ret .= "    function onItemCreate(\$params)\n";
-        $ret .= "    {\n";
-        $ret .= "        \n";
-        $ret .= "    }\n";
-        $ret .= "\n";
-        $ret .= "    function onItemUpdate(\$params)\n";
-        $ret .= "    {\n";
-        $ret .= "        \n";
-        $ret .= "    }\n";
-        $ret .= "\n";
-        $ret .= "    function onItemDelete(\$params)\n";
-        $ret .= "    {\n";
-        $ret .= "        \n";
-        $ret .= "    }\n";
-        $ret .= "\n";
-        $ret .= "    function onCommentCreate(\$params)\n";
-        $ret .= "    {\n";
-        $ret .= "        \n";
-        $ret .= "    }\n";
-        $ret .= "\n";
-        $ret .= "    function onCommentDelete(\$params)\n";
-        $ret .= "    {\n";
-        $ret .= "        \n";
-        $ret .= "    }\n";
-        $ret .= "\n";
-        $ret .= "    function onFileChange(\$params)\n";
-        $ret .= "    {\n";
-        $ret .= "        \n";
-        $ret .= "    }\n";
-        $ret .= "}\n";
-        if ($filename) {
-            file_put_contents($filename, $ret);
-        }
-        return $ret;
+        return $this->app->generateClass($classname, $appid, $structureclass, $namespace, $implements, $filename, $this);
     }
 }

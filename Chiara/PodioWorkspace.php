@@ -68,4 +68,25 @@ class PodioWorkspace
             $this->apps = $value;
         }
     }
+
+    /**
+     * Generate helper classes for an entire workspace
+     *
+     * @param directory name to save the files
+     * @param string prefix for class name, if any
+     * @param namespace name, if any
+     */
+    function generateClasses($directory, $namespace = null, $classprefix = null, $podioitemclass = 'Chiara\PodioItem', array $implements = array())
+    {
+        $ret = array();
+        foreach ($this->apps as $app) {
+            $classname = $classprefix . str_replace('-', '_', $app->url_label);
+            $structureclassname = $classprefix . $classname . 'Structure';
+            $appdefinition = $app->generateClass($classname, $app->id, $structureclass, $namespace, $implements,
+                                $directory . '/' . $classname . '.php', $itemclass);
+            $structuredefinition = $app->generateStructureClass($structureclassname, $namespace, $directory . '/' . $structureclassname . '.php');
+            $ret[$app->id] = array($appdefinition, $structuredefinition);
+        }
+        return $ret;
+    }
 }
