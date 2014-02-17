@@ -7,7 +7,7 @@ class PodioItem
     /**
      * override to automatically set the application ID for new items
      */
-    const MYAPPID = null;
+    protected $MYAPPID = null;
     protected $info = array();
     protected $hasfields = false;
     protected $dirty = array();
@@ -41,10 +41,10 @@ class PodioItem
                 $this->dirty = array_keys($info['fields']);
             }
             if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
-                $this->info['app']['app_id'] = static::MYAPPID;
-            } elseif (static::MYAPPID && $this->info['app']['app_id'] != static::MYAPPID) {
+                $this->info['app']['app_id'] = $this->MYAPPID;
+            } elseif ($this->MYAPPID && $this->info['app']['app_id'] != $this->MYAPPID) {
                 throw new \Exception(get_class($this) . ' item has app id set to ' . $this->info['app']['app_id'] .
-                                     ', but it must be ' . static::MYAPPID);
+                                     ', but it must be ' . $this->MYAPPID);
             }
             return;
         }
@@ -52,11 +52,11 @@ class PodioItem
             $info = array('item_id' => $info);
         }
         $this->info = $info;
-        if (static::MYAPPID) {
+        if ($this->MYAPPID) {
             if (!$this->info) {
-                $this->info = array('app' => array('app_id' => static::MYAPPID));
+                $this->info = array('app' => array('app_id' => $this->MYAPPID));
             } elseif (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
-                $this->info['app']['app_id'] = static::MYAPPID;
+                $this->info['app']['app_id'] = $this->MYAPPID;
             }
         }
         if (!$retrieve || !$info) return;
@@ -315,7 +315,7 @@ class PodioItem
         }
         $ret .= "class $classname$implements extends \\" . get_class($this) . "\n";
         $ret .= "{\n";
-        $ret .= "    const MYAPPID=" . $appid . ";\n";
+        $ret .= "    protected \$MYAPPID=" . $appid . ";\n";
         $ret .= '    function __construct($info = null, $retrieve = true)' . "\n";
         $ret .= "    {\n";
         $ret .= "        parent::__construct(\$info, new \\$structureclass, \$retrieve);\n";

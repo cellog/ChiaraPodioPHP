@@ -1,11 +1,11 @@
 --TEST--
-PodioItem->__construct, child class, MYAPPID is set
+PodioItem->__construct, child class, $MYAPPID is set
 --FILE--
 <?php
 include __DIR__ . '/../setup.php.inc';
 class foo extends Chiara\PodioItem
 {
-    const MYAPPID = 12345;
+    protected $MYAPPID = 12345;
 }
 $item = new foo(3, null, false);
 

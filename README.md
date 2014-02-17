@@ -35,12 +35,12 @@ Chiara\AuthManager::setTokenManager($tokenmanager);
 // create items for specific applications based on the application ID
 class ThisApp extends Chiara\PodioItem
 {
-    const MYAPPID = 15436;
+    protected $MYAPPID = 15436;
 }
 
 class AnotherApp extends Chiara\PodioItem
 {
-    const MYAPPID = 26463;
+    protected $MYAPPID = 26463;
 }
 
 $item = new ThisApp(array(12345); // retrieve the item with ID 12345
