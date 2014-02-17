@@ -15,6 +15,11 @@ class Remote
         return Podio::post($url, $attributes, $options);
     }
 
+    function delete($url, $attributes = array())
+    {
+        return Podio::delete($url, $attributes);
+    }
+
     function authenticate_with_app($app_id, $app_token)
     {
         return Podio::authenticate_with_app($app_id, $app_token);

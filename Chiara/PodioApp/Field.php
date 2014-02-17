@@ -1,8 +1,10 @@
 <?php
 namespace Chiara\PodioApp;
+use Chiara\Hook;
 class Field
 {
     protected $info;
+    protected $hookmanager = null;
     function __construct(array $info = array())
     {
         $this->info = $info;
@@ -11,13 +13,14 @@ class Field
         }
     }
 
-    function __get($name)
+    function __get($var)
     {
-        if ($name == 'id') {
+        if ($var === 'id') {
             return $this->info['field_id'];
         }
-        if (isset($this->info[$name])) {
-            return $this->info[$name];
+        if ($var === 'on') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        if (isset($this->info[$var])) {
+            return $this->info[$var];
         }
     }
 

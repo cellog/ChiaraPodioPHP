@@ -9,6 +9,7 @@ class PodioItem
      */
     const MYAPPID = null;
     protected $info = array();
+    protected $retrieved = false;
     protected $dirty = array();
     /**
      * The PodioApplicationStructure that defines this item's structure
@@ -32,9 +33,11 @@ class PodioItem
         if ($structure) {
             $this->structure = $structure;
         }
+        $this->retrieved = false;
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
             if (isset($info['fields'])) {
+                $this->retrieved = true; // prevent re-populating
                 $this->dirty = array_keys($info['fields']);
             }
             if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
@@ -60,8 +63,39 @@ class PodioItem
         $this->retrieve();
     }
 
+    /**
+     * This is used to allow passing an item as a hook callback.
+     */
+    function __invoke($post, $params)
+    {
+        $this->info['item_id'] = $post['item_id'];
+        if (isset($post['item_revision_id'])) {
+            $this->info['item_revision_id'] = $post['item_revision_id'];
+        }
+        if (isset($post['external_id'])) {
+            $this->info['external_id'] = $post['external_id'];
+        }
+        $func = explode('.', $post['type']);
+        $func = array_map($func, function($a){return ucfirst($a);});
+        $function = 'on' . implode('', $func);
+        $this->$function($params);
+    }
+
+    /**
+     * override these functions in a child class to allow fine-grained handling of hooks
+     */
+    function onItemCreate($params) {}
+    function onItemUpdate($params) {}
+    function onItemDelete($params) {}
+    function onCommentCreate($params) {}
+    function onCommentDelete($params) {}
+    function onFileChange($params) {}
+
     function retrieve()
     {
+        if ($this->retrieved) {
+            return;
+        }
         if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
             // TODO: use custom exception
             throw new \Exception('Cannot authenticate item, no app_id');
@@ -80,6 +114,7 @@ class PodioItem
         }
         $this->app = null;
         $this->dirty = array();
+        $this->retrieved = true;
         return $this;
     }
 
@@ -109,6 +144,7 @@ class PodioItem
     function __get($var)
     {
         if ($var == 'fields') {
+            $this->retrieve();
             return new ItemFieldIterator($this);
         }
         if ($var == 'info') {
@@ -149,6 +185,7 @@ class PodioItem
         }
         $this->info[$var] = $value;
         if ($var == 'fields') {
+            $this->retrieved = false;
             $this->dirty = array_keys($this->info['fields']);
         }
     }
@@ -187,6 +224,7 @@ class PodioItem
             return;
         } else {
             $this->dirty[$index] = true;
+            $this->retrieved = false;
         }
         $this->info['fields'][$index]['values'] = $newvalue;
     }
@@ -231,6 +269,7 @@ class PodioItem
     function clean()
     {
         $this->dirty = array();
+        $this->retrieved = false;
     }
 
     function save(array $options = array())
@@ -249,6 +288,7 @@ class PodioItem
             Remote::$remote->post('/item/' . $this->id . '/values', $jsonarray, $options);
         }
         $this->dirty = array();
+        $this->retrieved = false;
         return $this;
     }
 
@@ -274,6 +314,42 @@ class PodioItem
         $ret .= '    function __construct($info = null, $retrieve = true)' . "\n";
         $ret .= "    {\n";
         $ret .= "        parent::__construct(\$info, new \\$structureclass, \$retrieve);\n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    /**\n";
+        $ret .= "     * handle an item.create hook in here\n";
+        $ret .= "     * @param array any url-specific parameters passed in to\n";
+        $ret .= "     *              differentiate between hooks.  The item is already set up\n";
+        $ret .= "     *              and can be used immediately.\n";
+        $ret .= "     */\n";
+        $ret .= "    function onItemCreate(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        \n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onItemUpdate(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        \n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onItemDelete(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        \n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onCommentCreate(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        \n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onCommentDelete(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        \n";
+        $ret .= "    }\n";
+        $ret .= "\n";
+        $ret .= "    function onFileChange(\$params)\n";
+        $ret .= "    {\n";
+        $ret .= "        \n";
         $ret .= "    }\n";
         $ret .= "}\n";
         if ($filename) {

@@ -36,6 +36,12 @@ class TestRemote extends Chiara\Remote
         return $this->getReturn($url . '?' . http_build_query($attributes), 'GET');
     }
 
+    function delete($url, $attributes = array())
+    {
+        $this->queries[] = array('delete', array($url, $attributes));
+        return $this->getReturn($url . '?' . http_build_query($attributes), 'DELETE');
+    }
+
     function post($url, $attributes = array(), $options = array())
     {
         $this->queries[] = array('post', array($url, $attributes, $options));

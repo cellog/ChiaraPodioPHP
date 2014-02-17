@@ -135,5 +135,44 @@ include __DIR__ . '/MyApp.php';
 
 $item3 = new MyApp(54321);
 $item3->fields['complex-app-reference-field'] = array($item, $item2);
+
+// hooks can be easily created
+Chiara\Hookserver::$server->setBaseUrl('http://example.com/hook.php');
+
+// creates a hook at "http://example.com/hook.php"
+Chiara\HookServer::$server->makeHook($app, null, 'item.create');
+// creates a hook at "http://example.com/hook.php/suburl"
+Chiara\HookServer::$server->makeHook($app, 'suburl', 'item.create');
+// creates a hook at "http://example.com/hook.php/sub/url"
+Chiara\HookServer::$server->makeHook($app, 'suburl/deeper', 'item.create');
+
+// inside hook.php you should use code like:
+
+include 'autoload.php';
+include __DIR__ . '/MyAppStructure.php';
+include __DIR__ . '/MyApp.php';
+$tokenmanager = new Chiara\AuthManager\File(__DIR__ . '/tokens.json', __DIR__ . '/api.json', true);
+Chiara\AuthManager::setAuthMode(Chiara\AuthManager::APP);
+Chiara\AuthManager::setTokenManager($tokenmanager);
+
+// hooks can then be easily handled directly from apps or from items
+class MyApp2 extends MyApp
+{
+    // this code can also be placed directly in MyApp.php instead of extending it again
+    function onItemCreate($params)
+    {
+        $this->fields['app-reference']->fields['foo'] = $this->fields['number']->value;
+        $this->fields['app-reference']->save();
+    }
+}
+
+// this automatically registers a handler for the hook at "http://example.com/hook.php"
+$app->on['item.create'] = new MyApp2;
+
+// this automatically registers a handler for the hook at "http://example.com/hook.php/suburl"
+$app->on->suburl['item.create'] = new MyApp2;
+
+// this automatically registers a handler for the hook at "http://example.com/hook.php/sub/url"
+$app->on->suburl->deeper['item.create'] = new MyApp2;
 ?>
 ```
