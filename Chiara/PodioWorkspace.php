@@ -15,6 +15,11 @@ class PodioWorkspace
         $this->info = $info;
     }
 
+    function createHook($podioaction, $action = null)
+    {
+        return HookServer::$hookserver->makeHook($this, $action, $podioaction);
+    }
+
     function __invoke($post, $params)
     {
         if (isset($post['app_id'])) {

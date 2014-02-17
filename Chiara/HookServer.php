@@ -62,15 +62,15 @@ class HookServer implements Router
      * @param int id of the context.  Must be the value of either app_id, field_id,
      *            or space_id.  This is only required if $context is a string
      */
-    function makeHook($context, $action, $hooktype, $id = null)
+    function makeHook($context, $action, $podioaction, $id = null)
     {
-        list ($url, $id, $ref_type) = $this->getIdUrl($action, $hooktype, $context);
+        list ($url, $id, $ref_type) = $this->getIdUrl($action, $podioaction, $context);
         if (!$id) {
             throw new \Exception('Id must be explicitly specified to create a hook');
         }
         $ret = Remote::$remote->post('/hook/' . $ref_type . '/' . $id . '/', array(
             'url' => $url,
-            'type' => $hooktype
+            'type' => $podioaction
         ))->json_body();
         return $ret['hook_id'];
     }

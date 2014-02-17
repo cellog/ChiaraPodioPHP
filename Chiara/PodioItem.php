@@ -81,6 +81,11 @@ class PodioItem
         $this->$function($params);
     }
 
+    function createHook($podioaction, $action = null)
+    {
+        return HookServer::$hookserver->makeHook($this->app, $action, $podioaction);
+    }
+
     /**
      * override these functions in a child class to allow fine-grained handling of hooks
      */

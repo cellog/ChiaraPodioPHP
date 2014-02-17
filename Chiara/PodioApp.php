@@ -38,6 +38,11 @@ class PodioApp
         $this->info = Remote::$remote->get('/app/' . $this->id)->json_body();
     }
 
+    function createHook($podioaction, $action = null)
+    {
+        return HookServer::$hookserver->makeHook($this, $action, $podioaction);
+    }
+
     function __get($var)
     {
         if ($var === 'info') return $this->info;
