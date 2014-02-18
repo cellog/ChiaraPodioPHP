@@ -14,3 +14,7 @@ tests/**/*.log
 tests/**/*.out
 
 tests/**/*.php
+
+tests/tokens.json
+
+tests/mylocaltest.json
