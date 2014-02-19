@@ -5,9 +5,11 @@ Advanced PHP library for Podio based on the existing Podio API
 
 This library is designed to simplify some of the annoying tasks that must be repeated for each
 podio API task.  It is useful both for web hooks and for more general-purpose Podio
-applications.  To begin, it focuses exclusively on interacting with items and applications,
-but will expand to include workspaces, hooks, tasks, and all the other areas of Podio the API
-supports.
+applications.  To begin, it focuses primarily on interacting with items and applications.
+There is extensive built-in support for application-based authentication and web hooks, basic
+support for handling organizations and drilling down through to workspaces and apps within them.
+All of this code is designed to support the interaction with items, but future plans include adding
+ancillary API code such as tasks and messages.
 
 The library uses the Podio class heavily for the actual authentication to Podio and requests
 to the API, and is fully compatible with the existing API, so you can mix and match if this
@@ -19,7 +21,30 @@ Here is some sample code showing how it works:
 <?php
 include 'autoload.php'; // now you can use any class from Podio or from ChiaraPodio
 
-// authentication via app
+// authentication via server (webpage)
+$tokenmanager = new Chiara\AuthManager\File(__DIR__ . '/localtokens.json', __DIR__ . '/mylocaltest.json', true);
+Chiara\AuthManager::setTokenManager($tokenmanager);
+// the first parameter is the address podio should redirect to upon success
+// the next is a true/false that is used to determine whether the user has attempted to log out
+// the final is either the code returned from podio's OAuth, or false if none
+Chiara\AuthManager::attemptServerLogin('http://localhost' . $_SERVER['PHP_SELF'], isset($_GET['logout']),
+                                       isset($_GET['code']) ? $_GET['code'] : false);
+// if you plan to do any work with organizations or workspaces as a whole, or contacts,
+// you must use this authentication model.
+
+// This example shows how helper classes can be generated for a specific subset of workspaces
+// in 3 lines of code
+$myorganizations = Chiara\PodioOrganization::mine();
+
+// the matching() method takes a regular expression with optional starting/ending ^ and $
+foreach ($myorganizations['unledu']->workspaces->matching('^SOM: Chamber Music') as $space) {
+    $ret = $space->generateClasses(__DIR__ . '/modeltest', 'SOM\Models');
+    echo $space, " processed<br>\n";
+}
+
+// *********************************** web hook API examples **************************************** //
+
+// authentication via app (this is what you will use in web hooks)
 // token managers allow you to keep your app tokens out of your public source code
 // to avoid the security risk
 $tokenmanager = new Chiara\AuthManager\File(__DIR__ . '/tokens.json', __DIR__ . '/api.json', true);
