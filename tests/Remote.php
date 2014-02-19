@@ -59,6 +59,11 @@ class TestRemote extends Chiara\Remote
         $this->queries[] = array('authenticate_with_app' => array($app_id, $app_token));
     }
 
+    function authenticate($grant_type, $attributes)
+    {
+        $this->queries[] = array('authenticate' => array($grant_type, $attributes));
+    }
+
     function setup($client_id, $client_secret, $options = array('session_manager' => 'PodioSession', 'curl_options' => array()))
     {
         $this->queries[] = array('setup' => array($client_id, $client_secret, $options));

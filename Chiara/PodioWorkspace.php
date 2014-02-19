@@ -1,11 +1,11 @@
 <?php
 namespace Chiara;
 use Chiara\Iterators\WorkspaceAppIterator, Chiara\Remote, Chiara\PodioApp as App,
-    Chiara\PodioContact as Member, Chiara\PodioTask as Task; //TODO: make the task class
+    Chiara\PodioContact as Member, Chiara\PodioTask as Task, Chiara\AuthManager as Auth; //TODO: make the task class
 class PodioWorkspace
 {
     protected $info;
-    protected $apps = array();
+    protected $myapps = array();
     function __construct($info = null)
     {
         if (is_int($info)) {
@@ -47,12 +47,13 @@ class PodioWorkspace
 
     function getApps($include_inactive = false)
     {
-        if (count($this->apps)) {
-            return $this->apps;
+        if (count($this->myapps)) {
+            return $this->myapps;
         }
         Auth::verifyNonApp('workspace');
-        $this->apps = Remote::$remote->get('/app/space/' . $this->info['space_id'], array('include_inactive' => $include_inactive))->json_body;
-        return $this->apps;
+        $this->myapps = Remote::$remote->get('/app/space/' . $this->info['space_id'] . '/',
+                                             array('include_inactive' => (int) $include_inactive))->json_body();
+        return $this->myapps;
     }
 
     function __get($var)
@@ -65,8 +66,13 @@ class PodioWorkspace
     function __set($var, $value)
     {
         if ($var === 'apps') {
-            $this->apps = $value;
+            $this->myapps = $value;
         }
+    }
+
+    function __toString()
+    {
+        return $this->info['name'];
     }
 
     /**
@@ -79,12 +85,16 @@ class PodioWorkspace
     function generateClasses($directory, $namespace = null, $classprefix = null, $podioitemclass = 'Chiara\PodioItem', array $implements = array())
     {
         $ret = array();
+        if (!file_exists($directory . DIRECTORY_SEPARATOR . 'Structure')) {
+            mkdir($directory . DIRECTORY_SEPARATOR . 'Structure');
+        }
         foreach ($this->apps as $app) {
-            $classname = $classprefix . str_replace('-', '_', $app->url_label);
-            $structureclassname = $classprefix . $classname . 'Structure';
-            $appdefinition = $app->generateClass($classname, $app->id, $structureclass, $namespace, $implements,
-                                $directory . '/' . $classname . '.php', $itemclass);
-            $structuredefinition = $app->generateStructureClass($structureclassname, $namespace, $directory . '/' . $structureclassname . '.php');
+            $classname = explode('-', $app->url_label);
+            $classname = $classprefix . implode('', array_map(function($a){return ucfirst($a);}, $classname));
+            $structurenamespace = $namespace ? $namespace . '\\Structure' : 'Structure';
+            $appdefinition = $app->generateClass($classname, $app->id, $structurenamespace . '\\' . $classname, $namespace, $implements,
+                                $directory . '/' . $classname . '.php', $podioitemclass);
+            $structuredefinition = $app->generateStructureClass($classname, $structurenamespace, $directory . '/Structure/' . $classname . '.php');
             $ret[$app->id] = array($appdefinition, $structuredefinition);
         }
         return $ret;

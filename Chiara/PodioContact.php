@@ -3,6 +3,7 @@ namespace Chiara;
 use Podio, Chiara\AuthManager as Auth, Chiara\Remote;
 class PodioContact
 {
+    protected $orgs = null;
     protected $info;
     protected $is_space = false;
 
@@ -23,13 +24,22 @@ class PodioContact
     function retrieve()
     {
         Auth::verifyNonApp('contacts');
-        $this->info = Remote::$remote->get('/contact/' . $this->info['profile_id'] . '/v2')->json_body;
+        $this->info = Remote::$remote->get('/contact/' . $this->info['profile_id'] . '/v2')->json_body();
         $this->is_space = $this->info['type'] == 'space';
+    }
+
+    static function me()
+    {
+        Auth::verifyNonApp('Current user');
+        return new static(Remote::$remote->get('/user')->json_body(), false);
     }
 
     function __get($var)
     {
         if ($var === 'id') return $this->info['profile_id'];
+        if ($var === 'myorganizations') {
+            return PodioOrganization::getMyOrganizations();
+        }
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }
@@ -39,6 +49,12 @@ class PodioContact
     {
         if ($var === 'id') $var = 'profile_id';
         $this->info[$var] = $value;
+    }
+
+    function __isset($var)
+    {
+        if ($var === 'id') $var = 'profile_id';
+        return is_array($this->info) && isset($this->info[$var]);
     }
 
     function __toString()

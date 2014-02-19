@@ -29,6 +29,36 @@ class AuthManager
         Remote::$remote->authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
     }
 
+    static function attemptServerLogin($redirectUri, $logoutvariable = false, $code = null)
+    {
+        if (self::$authmode == self::APP) {
+            return;
+        }
+        if (!$redirectUri) {
+            throw new \Exception('Cannot authenticate unless redirect URI is specific explicitly');
+        }
+        if ($code) {
+            self::authenticateServer($redirectUri, $code);
+            $logoutvariable = false;
+        }
+        if ($logoutvariable || !Podio::$oauth->access_token) {
+            $client = self::$tokenmanager->getAPIClient();
+            header('Location: https://podio.com/oauth/authorize?client_id=' . $client['client'] . '&redirect_uri=' .
+                   urlencode($redirectUri));
+            exit;
+        }
+    }
+
+    static function authenticateServer($redirectUri, $code)
+    {
+        if ($code) {
+            Remote::$remote->authenticate('authorization_code', array('code' => $code,
+                                                            'redirect_uri' => $redirectUri));
+            return true;
+        }
+        return false;
+    }
+
     static function verifyNonApp($thing)
     {
         if (self::$authmode == self::APP) {

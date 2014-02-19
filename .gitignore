@@ -18,3 +18,5 @@ tests/**/*.php
 tests/tokens.json
 
 tests/mylocaltest.json
+
+tests/localtokens.json

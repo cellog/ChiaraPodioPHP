@@ -22,7 +22,7 @@ class PodioFile
 
     function retrieve()
     {
-        $this->info = Remote::$remote->get('/file/' . $this->info['file_id'])->json_body;
+        $this->info = Remote::$remote->get('/file/' . $this->info['file_id'])->json_body();
     }
 
     function __get($var)
