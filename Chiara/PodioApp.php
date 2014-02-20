@@ -76,6 +76,21 @@ class PodioApp
         } else {
             $implements = '';
         }
+        if ($filename) {
+            if (file_exists($filename)) {
+                // check to see if it is the class
+                $content = file_get_contents($filename);
+                if (strpos($content, "protected \$MYAPPID=")) {
+                    // we have a match.
+                    $content = preg_replace("/class[^{]+\n{/", "class $classname$implements extends \\" . $itemclass . "\n{", $content);
+                    $content = preg_replace('/protected \$MYAPPID=\d+;/', 'protected $MYAPPID=' . $this->id . ';', $content);
+                    $content = preg_replace('/parent::__construct\(\$info, new [^,]+,/',
+                                            "parent::__construct(\$info, new \\$structureclass,", $content);
+                    file_put_contents($filename, $content);
+                    return $content;
+                }
+            }
+        }
         $ret .= "class $classname$implements extends \\" . $itemclass . "\n";
         $ret .= "{\n";
         $ret .= "    protected \$MYAPPID=" . $this->id . ";\n";
