@@ -59,6 +59,11 @@ class TestRemote extends Chiara\Remote
         $this->queries[] = array('authenticate_with_app' => array($app_id, $app_token));
     }
 
+    function authenticate_with_password($username, $password)
+    {
+        $this->queries[] = array('authenticate_with_password' => array($username, $password));
+    }
+
     function authenticate($grant_type, $attributes)
     {
         $this->queries[] = array('authenticate' => array($grant_type, $attributes));

@@ -25,6 +25,11 @@ class Remote
         return Podio::authenticate_with_app($app_id, $app_token);
     }
 
+    function authenticate_with_password($username, $password)
+    {
+        return Podio::authenticate('password', array('username' => $username, 'password' => $password));
+    }
+
     function authenticate($grant_type, $attributes)
     {
         return Podio::authenticate($grant_type, $attributes);

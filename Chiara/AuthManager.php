@@ -29,6 +29,18 @@ class AuthManager
         Remote::$remote->authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
     }
 
+    static function attemptPasswordLogin($logoutvariable = false)
+    {
+        if (self::$authmode == self::APP) {
+            return;
+        }
+        if (!Podio::is_authenticated()) {
+            $username = readline("Please enter your Podio username: ");
+            $password = readline("Please enter your Podio password: ");
+            Remote::$remote->authenticate_with_password($username, $password);
+        }
+    }
+
     static function attemptServerLogin($redirectUri, $logoutvariable = false, $code = null)
     {
         if (self::$authmode == self::APP) {
