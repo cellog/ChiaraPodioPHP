@@ -98,8 +98,9 @@ class PodioWorkspace
             $structuredefinition = $app->generateStructureClass($classname, $structurenamespace, $directory . '/Structure/' . $classname . '.php');
             $ret[$app->id] = array($appdefinition, $structuredefinition);
             if ($mapclasses) {
-                if ($namespace) $namespace .= '\\';
-                Auth::getTokenManager()->mapAppToClass($app->id, $namespace . $classname);
+                $m = $namespace;
+                if ($m) $m .= '\\';
+                Auth::getTokenManager()->mapAppToClass($app->id, $m . $classname);
             }
         }
         return $ret;
