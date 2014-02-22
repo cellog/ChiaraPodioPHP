@@ -117,7 +117,7 @@ class PodioItem
             Auth::prepareRemote($this->info['app']['app_id']);
             $this->info = Remote::$remote->get('/item/' . $this->info['item_id'])->json_body();
         }
-        $this->app = null;
+        $this->myapp = null;
         $this->dirty = array();
         $this->hasfields = true;
         return $this;
