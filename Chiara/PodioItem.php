@@ -77,7 +77,7 @@ class PodioItem
             } else {
                 $appid = $info['app']['app_id'];
             }
-        } elseif ($info === null) {
+        } else {
             return new self($info, $structure, $retrieve);
         }
         $class = Auth::getTokenManager()->getAppClass($appid, __CLASS__);
