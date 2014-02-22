@@ -82,7 +82,8 @@ class PodioWorkspace
      * @param string prefix for class name, if any
      * @param namespace name, if any
      */
-    function generateClasses($directory, $namespace = null, $classprefix = null, $podioitemclass = 'Chiara\PodioItem', array $implements = array())
+    function generateClasses($directory, $namespace = null, $mapclasses = true, $classprefix = null,
+                             $podioitemclass = 'Chiara\PodioItem', array $implements = array())
     {
         $ret = array();
         if (!file_exists($directory . DIRECTORY_SEPARATOR . 'Structure')) {
@@ -96,6 +97,10 @@ class PodioWorkspace
                                 $directory . '/' . $classname . '.php', $podioitemclass);
             $structuredefinition = $app->generateStructureClass($classname, $structurenamespace, $directory . '/Structure/' . $classname . '.php');
             $ret[$app->id] = array($appdefinition, $structuredefinition);
+            if ($mapclasses) {
+                if ($namespace) $namespace .= '\\';
+                Auth::getTokenManager()->mapAppToClass($app->id, $namespace . $classname);
+            }
         }
         return $ret;
     }

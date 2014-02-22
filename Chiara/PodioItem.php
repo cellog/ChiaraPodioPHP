@@ -64,6 +64,27 @@ class PodioItem
     }
 
     /**
+     * This differs in that it will instantiate the correct class for the application id
+     * @return Chiara\PodioItem
+     */
+    static function factory($info = null, PodioApplicationStructure $structure = null, $retrieve = true)
+    {
+        if (is_int($info)) {
+            $appid = 0;
+        } elseif (is_array($info)) {
+            if (!isset($info['app']) || !isset($info['app']['app_id'])) {
+                $appid = 0;
+            } else {
+                $appid = $info['app']['app_id'];
+            }
+        } elseif ($info === null) {
+            return new self($info, $structure, $retrieve);
+        }
+        $class = Auth::getTokenManager()->getAppClass($appid, __CLASS__);
+        return new $class($info, $structure, $retrieve = false);
+    }
+
+    /**
      * This is used to allow passing an item as a hook callback.
      */
     function __invoke($post, $params)

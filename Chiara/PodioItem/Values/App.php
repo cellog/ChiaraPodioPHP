@@ -1,11 +1,12 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem;
+use Chiara\AuthManager as Auth;
 class App extends Reference
 {
     function retrieveReference()
     {
-        return new PodioItem($this->info['value'], null, 'force');
+        $class = Auth::getTokenManager()->getAppClass($this->info['value']['app_id']);
+        return new $class($this->info['value'], null, 'force');
     }
 
     function extendedGet($var)

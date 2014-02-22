@@ -77,4 +77,9 @@ class AuthManager
             throw new \Exception('Cannot access ' . $thing . ' in app authentication mode');
         }
     }
+
+    static function getTokenManager()
+    {
+        return self::$tokenmanager;
+    }
 }

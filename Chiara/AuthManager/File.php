@@ -6,7 +6,8 @@ class File implements TokenInterface
     protected $apipath;
     protected $info = array();
     protected $client = array();
-    function __construct($path, $apipath, $create = false)
+    protected $map = array();
+    function __construct($path, $apipath, $mappath, $create = false)
     {
         $this->filepath = realpath($path);
         if (!$this->filepath) {
@@ -26,14 +27,28 @@ class File implements TokenInterface
         if (!$this->apipath) {
             if ($create) {
                 file_put_contents($apipath, json_encode(array(), 1));
-                $this->apipath = realpath($path);
+                $this->apipath = realpath($apipath);
             } else {
-                throw new \Exception('api client file ' . $path . ' not found');
+                throw new \Exception('api client file ' . $apipath . ' not found');
             }
         }
         $this->client = json_decode(file_get_contents($this->apipath), 1);
         if (!is_array($this->client)) {
             throw new \Exception('api client file ' . $path . ' is not a valid json file');
+        }
+
+        $this->mappath = realpath($mappath);
+        if (!$this->mappath) {
+            if ($create) {
+                file_put_contents($mappath, json_encode(array(), 1));
+                $this->mappath = realpath($mappath);
+            } else {
+                throw new \Exception('class map file ' . $mappath . ' not found');
+            }
+        }
+        $this->map = json_decode(file_get_contents($this->mappath), 1);
+        if (!is_array($this->client)) {
+            throw new \Exception('class map file ' . $mappath . ' is not a valid json file');
         }
     }
 
@@ -61,5 +76,16 @@ class File implements TokenInterface
         $this->client['client'] = $client;
         $this->client['token'] = $token;
         file_put_contents($this->apipath, json_encode($this->client, 1));
+    }
+
+    function mapAppToClass($appid, $class)
+    {
+        $this->map[$appid] = $class;
+        file_put_contents($this->mappath, json_encode($this->map, 1));
+    }
+
+    function getAppClass($appid, $defaultClass = 'Chiara\PodioItem')
+    {
+        return isset($this->map[$appid]) ? $this->map[$appid] : $defaultClass;
     }
 }

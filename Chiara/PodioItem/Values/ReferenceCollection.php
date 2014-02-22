@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\PodioItem\Values;
-use Chiara\PodioItem;
+use Chiara\PodioItem, Chiara\AuthManager as Auth;
 class ReferenceCollection extends Collection
 {
     protected $appinfo = array();
@@ -20,7 +20,12 @@ class ReferenceCollection extends Collection
         if ($wrapperClass) {
             // wrap the values with objects so their implied information can be accessed
             $objects = array_map(function($a) use ($wrapperClass, $appinfo)
-                                 {$z = new $wrapperClass($a);$z->app_id = $appinfo['app_id'];return $z;}, $objects);
+                                 {
+                                    $class = Auth::getTokenManager()->getAppClass($appinfo['app_id'], $wrapperClass);
+                                    $z = new $class($a);
+                                    $z->app_id = $appinfo['app_id'];
+                                    return $z;
+                                 }, $objects);
             foreach ($objects as $i => $obj) {
                 foreach ($obj->getIndices() as $index) {
                     $this->realmap[$index] = $i;

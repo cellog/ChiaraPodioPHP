@@ -14,6 +14,6 @@ Chiara\AuthManager::attemptPasswordLogin();
 // in 3 lines of code (the 4th is just for informational purposes)
 $myorganizations = Chiara\PodioOrganization::mine();
 foreach ($myorganizations['unledu']->workspaces->matching('^SOM: Chamber Music') as $space) {
-    $ret = $space->generateClasses(__DIR__ . '/modeltest', 'SOM\Models', null, 'SOM\MyTest');
+    $ret = $space->generateClasses(__DIR__ . '/modeltest', 'SOM\Models', true, null, 'SOM\MyTest');
     echo $space, " processed<br>\n";
 }
