@@ -216,12 +216,12 @@ class PodioItem
         }
     }
 
-    function getFieldType($field, array $info = null)
+    function getFieldName($fieldid)
     {
         if ($this->structure) {
-            $info = $this->structure->getConfig($field);
-            
+            return $this->structure->getName($fieldid);
         }
+        return null;
     }
 
     protected function getIndex($index)

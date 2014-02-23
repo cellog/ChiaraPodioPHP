@@ -12,8 +12,8 @@ class ItemRevisionDiffIterator extends ItemFieldIterator
         \ArrayIterator::__construct($diff);
         foreach ($f as $i => $field) {
             // TODO: use the app structure to retrieve external_id for the field_id
-            $this->map[$field['field_id']] = $this->map[$field['external_id']] = $i;
-            $this->reverse_map[$i] = $field['external_id'];
+            $this->map[$field['field_id']] = $this->map[$e = $item->getFieldName($field['field_id'])] = $i;
+            $this->reverse_map[$i] = $e;
         }
     }
 
@@ -42,9 +42,6 @@ class ItemRevisionDiffIterator extends ItemFieldIterator
 
     function offsetSet($index, $value)
     {
-        if (is_int($index) && isset($this->reverse_map[$index])) {
-            $index = $this->reverse_map[$index];
-        }
-        $this->item->setFieldValue($index, $value);
+        throw new \Exception('Cannot modify an item revision diff');
     }
 }

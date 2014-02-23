@@ -466,6 +466,20 @@ class PodioApplicationStructure
         throw new \Exception('Unknown field: "' . $field . '" requested for app ' . static::APPNAME);
     }
 
+    function getName($field)
+    {
+        if (isset($this->structure[$field])) {
+            return $this->structure['name'];
+        }
+    }
+
+    function getFieldId($field)
+    {
+        if (isset($this->structure[$field])) {
+            return $this->structure['id'];
+        }
+    }
+
     function getConfig($field)
     {
         if (isset($this->structure[$field])) {
