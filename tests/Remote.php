@@ -16,6 +16,12 @@ class TestRemote extends Chiara\Remote
     function expectRequest($type, $url, $result, $attributes = array())
     {
         $type = strtoupper($type);
+        if (!is_string($result)) {
+            if (is_array($result)) {
+                throw new \Exception('Oops - expectRequest result must be a string, did you json_decode it already?');
+            }
+            throw new \Exception('expectRequest result must be a string');
+        }
         $this->map[$type][$url . '?' . http_build_query($attributes)] = $result;
     }
 

@@ -469,14 +469,14 @@ class PodioApplicationStructure
     function getName($field)
     {
         if (isset($this->structure[$field])) {
-            return $this->structure['name'];
+            return $this->structure[$field]['name'];
         }
     }
 
     function getFieldId($field)
     {
         if (isset($this->structure[$field])) {
-            return $this->structure['id'];
+            return $this->structure[$field]['id'];
         }
     }
 

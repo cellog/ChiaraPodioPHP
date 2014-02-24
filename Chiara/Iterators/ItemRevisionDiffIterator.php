@@ -10,10 +10,14 @@ class ItemRevisionDiffIterator extends ItemFieldIterator
     {
         $this->item = $item;
         \ArrayIterator::__construct($diff);
-        foreach ($f as $i => $field) {
+        foreach ($diff as $i => $field) {
             // TODO: use the app structure to retrieve external_id for the field_id
-            $this->map[$field['field_id']] = $this->map[$e = $item->getFieldName($field['field_id'])] = $i;
-            $this->reverse_map[$i] = $e;
+            $e = $item->getFieldName($field['field_id']);
+            $this->map[$field['field_id']] = $i;
+            if ($e) {
+                $this->map[$e] = $i;
+                $this->reverse_map[$i] = $e;
+            }
         }
     }
 

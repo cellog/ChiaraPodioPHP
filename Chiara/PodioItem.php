@@ -1,7 +1,7 @@
 <?php
 namespace Chiara;
 use Podio, Chiara\Iterators\ItemFieldIterator, Chiara\AuthManager as Auth, Chiara\Remote,
-    Chiara\Iterators\ReferenceIterator;
+    Chiara\Iterators\ReferenceIterator, Chiara\Iterators\ItemRevisionDiffIterator as DiffIterator;
 class PodioItem
 {
     /**
@@ -214,6 +214,22 @@ class PodioItem
             $this->hasfields = true;
             $this->dirty = array_keys($this->info['fields']);
         }
+    }
+
+    function diff($revision)
+    {
+        if (!is_array($this->info)) {
+            $this->retrieve();
+        }
+        if (!isset($this->info['current_revision'])) {
+            throw new \Exception('Cannot retrieve diff, current revision is unknown');
+        }
+        return new DiffIterator($this, $this->getRevisionDiff($this->info['current_revision']['revision'], $revision));
+    }
+
+    function getRevisionDiff($r1, $r2)
+    {
+        return Remote::$remote->get('/item/' . $this->id . '/revision/' . $r1 . '/' . $r2)->json_body();
     }
 
     function getFieldName($fieldid)
