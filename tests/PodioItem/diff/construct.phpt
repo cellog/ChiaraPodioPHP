@@ -8,7 +8,8 @@ $item = new Chiara\PodioItem($a = json_decode(file_get_contents(__DIR__ . '/item
 $structure = Chiara\PodioApplicationStructure::fromItem($item);
 $item = new $item($a, $structure);
 $diff = $item->diff(1);
-echo 'fail to make the test fail - we are incomplete';
+$test->assertIsa('Chiara\Iterators\ItemRevisionDiffIterator', $diff, 'class of diff');
+$test->assertFail('test unfinished');
 ?>
 done
 --EXPECT--
