@@ -226,11 +226,11 @@ class PodioApplicationStructure
                 case 'category' :
                     $this->addCategoryField($field->external_id, $field->id, $field->options, $field->multiple);
                     break;
+                case 'date' :
                 case 'text' :
                 case 'number' :
                 case 'image' :
                 case 'media' :
-                case 'date' :
                 case 'progress' :
                 case 'location' :
                 case 'video' :
@@ -239,7 +239,7 @@ class PodioApplicationStructure
                 case 'embed' :
                 case 'file' :
                 default :
-                    $this->addField($field->type, $field->id, $field->external_id);
+                    $this->addField($field->type, $field->external_id, $field->id);
                     break;
             }
         }

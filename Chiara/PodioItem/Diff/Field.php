@@ -62,7 +62,7 @@ abstract class Field
 
     static function newField(PodioItem $parent, array $info)
     {
-        $class = __NAMESPACE__ . '\\Fields\\Diff\\' . ucfirst($info['type']);
+        $class = __NAMESPACE__ . '\\Fields\\' . ucfirst($info['type']);
         return new $class($parent, $info);
     }
 }

@@ -33,12 +33,12 @@ class ItemRevisionDiffIterator extends ItemFieldIterator
             if (!isset($this[$index])) {
                 throw new \Exception("Unknown field \"" . $index . "\"");
             }
-            $info = parent::offsetGet($index);
+            $info = \ArrayIterator::offsetGet($index);
         } else {
             if (!isset($this->map[$index])) {
                 throw new \Exception("Unknown field \"" . $index . "\"");
             }
-            $info = parent::offsetGet($this->map[$index]);
+            $info = \ArrayIterator::offsetGet($this->map[$index]);
         }
         $a = $this->item;
         return Field::newField($this->item, $info);

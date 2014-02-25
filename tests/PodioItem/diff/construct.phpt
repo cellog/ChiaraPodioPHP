@@ -9,7 +9,8 @@ $structure = Chiara\PodioApplicationStructure::fromItem($item);
 $item = new $item($a, $structure);
 $diff = $item->diff(1);
 $test->assertIsa('Chiara\Iterators\ItemRevisionDiffIterator', $diff, 'class of diff');
-$test->assertFail('test unfinished');
+
+$test->assertEquals(5, $diff['number']->from, 'number from');
 ?>
 done
 --EXPECT--
