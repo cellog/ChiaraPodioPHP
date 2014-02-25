@@ -274,6 +274,15 @@ class PodioApplicationStructure
             case 'video' :
             case 'file' :
                 break;
+            case 'money' :
+                if (is_numeric($value)) {
+                    $value = array('currency' => 'USD', 'value' => $value);
+                } elseif (is_string($value)) {
+                    $parser = new Currency;
+                    list($currency, $value) = $parser->parse($value, $structure['config']);
+                    $value = array('currency' => $currency, 'value' => $value);
+                }
+                return array($value);
             case 'app' :
                 $idname = 'app_id';
             case 'contact' :
@@ -371,16 +380,6 @@ class PodioApplicationStructure
                         $value = array($this->selectOption($structure['config']['options'], $value));
                     }
                     return $value;
-                }
-            case 'money' :
-                if ($type == 'money') {
-                    if (is_numeric($value)) {
-                        $value = array('currency' => 'USD', 'value' => $value);
-                    } elseif (is_string($value)) {
-                        $parser = new Currency;
-                        list($currency, $value) = $parser->parse($value, $structure['config']);
-                        $value = array('currency' => $currency, 'value' => $value);
-                    }
                 }
             case 'number' :
                 if ($type === 'number') {

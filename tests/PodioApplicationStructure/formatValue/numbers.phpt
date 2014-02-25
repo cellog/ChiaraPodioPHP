@@ -27,10 +27,10 @@ $test->assertEquals(array(array('value' => 86400)),
 $test->assertEquals(array(array('value' => 3600)),
                     $structure->formatValue('duration', DateInterval::createFromDateString('1 hour')), 'date interval object');
 
-$test->assertEquals(array(array('value' => array('currency' => 'USD', 'value' => 50.14))),
+$test->assertEquals(array(array('currency' => 'USD', 'value' => 50.14)),
                     $structure->formatValue('money', 50.14), 'simple integer money');
 
-$test->assertEquals(array(array('value' => array('currency' => 'USD', 'value' => 50.14))),
+$test->assertEquals(array(array('currency' => 'USD', 'value' => 50.14)),
                     $structure->formatValue('money', '$50.14'), 'simple integer money');
 
 try {

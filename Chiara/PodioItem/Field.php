@@ -12,7 +12,9 @@ abstract class Field
         $this->info = $info;
         $this->parent = $parent;
         if (!isset($info['type'])) {
-            $this->info['type'] = str_replace('Chiara\\PodioItem\\Fields\\', '', get_class($this));
+            $type = explode('\\', get_class($this));
+            $type = strtolower(array_pop($type));
+            $this->info['type'] = $type;
         }
         if (isset($this->mytype)) {
             $this->info['type'] = $this->mytype;

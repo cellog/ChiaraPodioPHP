@@ -35,11 +35,11 @@ $test->assertEquals(array (
     0 => '1 Lincoln Center Plaza, New York, NY 10023',
   ),
   'question' => 2,
-  'number' => '5.0000',
+  'number' => 5,
   'money' => 
   array (
     'currency' => 'USD',
-    'value' => '3.0000',
+    'value' => 3,
   ),
   'duration' => 3600,
   'progress-slider' => 25,

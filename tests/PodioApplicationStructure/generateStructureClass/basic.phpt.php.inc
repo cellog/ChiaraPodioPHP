@@ -4,18 +4,18 @@ class Classy extends \Chiara\PodioApplicationStructure
 {
     const APPNAME = "1234/2345";
     protected $structure = array (
-      51928207 => 
-      array (
-        'type' => 'text',
-        'name' => 51928207,
-        'id' => 'title',
-        'config' => NULL,
-      ),
       'title' => 
       array (
         'type' => 'text',
-        'name' => 51928207,
-        'id' => 'title',
+        'name' => 'title',
+        'id' => 51928207,
+        'config' => NULL,
+      ),
+      51928207 => 
+      array (
+        'type' => 'text',
+        'name' => 'title',
+        'id' => 51928207,
         'config' => NULL,
       ),
       'contact' => 
@@ -100,60 +100,60 @@ class Classy extends \Chiara\PodioApplicationStructure
           'multiple' => false,
         ),
       ),
-      51928211 => 
-      array (
-        'type' => 'date',
-        'name' => 51928211,
-        'id' => 'date',
-        'config' => NULL,
-      ),
       'date' => 
       array (
         'type' => 'date',
-        'name' => 51928211,
-        'id' => 'date',
+        'name' => 'date',
+        'id' => 51928211,
         'config' => NULL,
       ),
-      51928212 => 
+      51928211 => 
       array (
-        'type' => 'embed',
-        'name' => 51928212,
-        'id' => 'link',
+        'type' => 'date',
+        'name' => 'date',
+        'id' => 51928211,
         'config' => NULL,
       ),
       'link' => 
       array (
         'type' => 'embed',
-        'name' => 51928212,
-        'id' => 'link',
+        'name' => 'link',
+        'id' => 51928212,
         'config' => NULL,
       ),
-      51928213 => 
+      51928212 => 
       array (
-        'type' => 'image',
-        'name' => 51928213,
-        'id' => 'image',
+        'type' => 'embed',
+        'name' => 'link',
+        'id' => 51928212,
         'config' => NULL,
       ),
       'image' => 
       array (
         'type' => 'image',
-        'name' => 51928213,
-        'id' => 'image',
+        'name' => 'image',
+        'id' => 51928213,
         'config' => NULL,
       ),
-      51928214 => 
+      51928213 => 
       array (
-        'type' => 'location',
-        'name' => 51928214,
-        'id' => 'google-maps',
+        'type' => 'image',
+        'name' => 'image',
+        'id' => 51928213,
         'config' => NULL,
       ),
       'google-maps' => 
       array (
         'type' => 'location',
-        'name' => 51928214,
-        'id' => 'google-maps',
+        'name' => 'google-maps',
+        'id' => 51928214,
+        'config' => NULL,
+      ),
+      51928214 => 
+      array (
+        'type' => 'location',
+        'name' => 'google-maps',
+        'id' => 51928214,
         'config' => NULL,
       ),
       'question' => 
@@ -210,18 +210,18 @@ class Classy extends \Chiara\PodioApplicationStructure
           'multiple' => false,
         ),
       ),
-      51928216 => 
-      array (
-        'type' => 'number',
-        'name' => 51928216,
-        'id' => 'number',
-        'config' => NULL,
-      ),
       'number' => 
       array (
         'type' => 'number',
-        'name' => 51928216,
-        'id' => 'number',
+        'name' => 'number',
+        'id' => 51928216,
+        'config' => NULL,
+      ),
+      51928216 => 
+      array (
+        'type' => 'number',
+        'name' => 'number',
+        'id' => 51928216,
         'config' => NULL,
       ),
       'money' => 
@@ -248,46 +248,46 @@ class Classy extends \Chiara\PodioApplicationStructure
           2 => 'USD',
         ),
       ),
-      51928218 => 
-      array (
-        'type' => 'duration',
-        'name' => 51928218,
-        'id' => 'duration',
-        'config' => NULL,
-      ),
       'duration' => 
       array (
         'type' => 'duration',
-        'name' => 51928218,
-        'id' => 'duration',
+        'name' => 'duration',
+        'id' => 51928218,
         'config' => NULL,
       ),
-      51928219 => 
+      51928218 => 
       array (
-        'type' => 'progress',
-        'name' => 51928219,
-        'id' => 'progress-slider',
+        'type' => 'duration',
+        'name' => 'duration',
+        'id' => 51928218,
         'config' => NULL,
       ),
       'progress-slider' => 
       array (
         'type' => 'progress',
-        'name' => 51928219,
-        'id' => 'progress-slider',
+        'name' => 'progress-slider',
+        'id' => 51928219,
         'config' => NULL,
       ),
-      51928244 => 
+      51928219 => 
       array (
-        'type' => 'calculation',
-        'name' => 51928244,
-        'id' => 'calculation',
+        'type' => 'progress',
+        'name' => 'progress-slider',
+        'id' => 51928219,
         'config' => NULL,
       ),
       'calculation' => 
       array (
         'type' => 'calculation',
-        'name' => 51928244,
-        'id' => 'calculation',
+        'name' => 'calculation',
+        'id' => 51928244,
+        'config' => NULL,
+      ),
+      51928244 => 
+      array (
+        'type' => 'calculation',
+        'name' => 'calculation',
+        'id' => 51928244,
         'config' => NULL,
       ),
       'app-reference' => 

@@ -12,6 +12,12 @@ $test->assertIsa('Chiara\Iterators\ItemRevisionDiffIterator', $diff, 'class of d
 
 $test->assertEquals(5, $diff['number']->from, 'number from');
 $test->assertEquals(3, $diff['number']->to, 'number from');
+
+$test->assertIsa('Chiara\PodioItem\Values\Money', $diff['money']->from, 'money from class');
+$test->assertIsa('Chiara\PodioItem\Values\Money', $diff['money']->to, 'money to class');
+
+$test->assertEquals(array('currency' => 'USD', 'value' => 3), $diff['money']->from->value, 'money from value');
+$test->assertEquals(array('currency' => 'DKK', 'value' => 3), $diff['money']->to->value, 'money to value');
 ?>
 done
 --EXPECT--

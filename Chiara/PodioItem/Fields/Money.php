@@ -10,8 +10,7 @@ class Money extends Field
 
     function getSaveValue()
     {
-        $value = $this->getValue();
-        return array('currency' => $value->currency, 'value' => $value->value);
+        return $this->getValue()->value;
     }
 
     function __get($var)
