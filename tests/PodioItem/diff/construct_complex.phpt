@@ -39,6 +39,16 @@ $test->assertEquals(1, count($diff['link']->deleted), 'link deleted count');
 
 $test->assertEquals(23752853, $diff['link']->added[0]->id, 'link added id');
 $test->assertEquals(1, count($diff['link']->added), 'link added count');
+
+$test->assertIsa('Chiara\PodioItem\Diff\Fields\Image', $diff['image'], 'image class');
+$test->assertEquals(76482653, $diff['image']->from[0]->id, 'image from id');
+$test->assertEquals(83568354, $diff['image']->to[0]->id, 'image to id');
+
+$test->assertEquals(76482653, $diff['image']->deleted[0]->id, 'image deleted id');
+$test->assertEquals(1, count($diff['image']->deleted), 'image deleted count');
+
+$test->assertEquals(83568354, $diff['image']->added[0]->id, 'image added id');
+$test->assertEquals(1, count($diff['image']->added), 'image added count');
 ?>
 done
 --EXPECT--
