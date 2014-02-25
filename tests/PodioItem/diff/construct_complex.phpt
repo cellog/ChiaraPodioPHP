@@ -59,6 +59,16 @@ $test->assertEquals(1, count($diff['google-maps']->deleted), 'google-maps delete
 
 $test->assertEquals("15 W. 13th st., new york, ny", $diff['google-maps']->added[0]->value, 'google-maps added id');
 $test->assertEquals(1, count($diff['google-maps']->added), 'google-maps added count');
+
+$test->assertIsa('Chiara\PodioItem\Diff\Fields\App', $diff['app-reference'], 'app-reference class');
+$test->assertEquals(112732193, $diff['app-reference']->from[0]->id, 'app-reference from id');
+$test->assertEquals(125266328, $diff['app-reference']->to[0]->id, 'app-reference to id');
+
+$test->assertEquals(112732193, $diff['app-reference']->deleted[0]->id, 'app-reference deleted id');
+$test->assertEquals(1, count($diff['app-reference']->deleted), 'app-reference deleted count');
+
+$test->assertEquals(125266328, $diff['app-reference']->added[0]->id, 'app-reference added id');
+$test->assertEquals(1, count($diff['app-reference']->added), 'app-reference added count');
 ?>
 done
 --EXPECT--
