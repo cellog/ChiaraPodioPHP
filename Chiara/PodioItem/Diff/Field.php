@@ -1,8 +1,8 @@
 <?php
 namespace Chiara\PodioItem\Diff;
-use Chiara\PodioItem;
+use Chiara\PodioItem, Chiara\PodioItem\Field as PodioField;
 
-abstract class Field
+abstract class Field extends PodioField
 {
     protected $info;
     protected $parent;

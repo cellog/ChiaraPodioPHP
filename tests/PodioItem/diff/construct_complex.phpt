@@ -10,9 +10,8 @@ $item = new $item($a, $structure);
 $diff = $item->diff(1);
 $test->assertIsa('Chiara\Iterators\ItemRevisionDiffIterator', $diff, 'class of diff');
 
-$test->assertFail('unimplemented test');
-
-// test the ->added ->deleted as well as ->to and ->from for types that can contain multiple values
+$test->assertIsa('Chiara\PodioItem\Diff\Fields\Contact', $diff['contact'], 'contact class');
+$test->assertEquals(1834391, $diff['contact']->from[0]->user_id, 'from userid');
 ?>
 done
 --EXPECT--

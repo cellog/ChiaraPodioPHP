@@ -1,17 +1,17 @@
 <?php
 namespace Chiara\PodioItem\Diff\Fields;
-use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection;
+use Chiara\PodioItem\Diff\Field, Chiara\PodioItem\Values\Collection;
 abstract class CollectionField extends Field
 {
     protected $added = false, $deleted, $itemclass;
     function getValue()
     {
-        return new Collection($this, $this->info['to'], $itemclass);
+        return new Collection($this, $this->info['to'], $this->itemclass);
     }
 
     function getOldValue()
     {
-        return new Collection($this, $this->info['from'], $itemclass);
+        return new Collection($this, $this->info['from'], $this->itemclass);
     }
 
     function getSaveValue()
