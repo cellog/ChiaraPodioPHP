@@ -49,6 +49,16 @@ $test->assertEquals(1, count($diff['image']->deleted), 'image deleted count');
 
 $test->assertEquals(83568354, $diff['image']->added[0]->id, 'image added id');
 $test->assertEquals(1, count($diff['image']->added), 'image added count');
+
+$test->assertIsa('Chiara\PodioItem\Diff\Fields\Location', $diff['google-maps'], 'google-maps class');
+$test->assertEquals("1 Lincoln Center Plaza, New York, NY 10023", $diff['google-maps']->from[0]->value, 'google-maps from id');
+$test->assertEquals("15 W. 13th st., new york, ny", $diff['google-maps']->to[0]->value, 'google-maps to id');
+
+$test->assertEquals("1 Lincoln Center Plaza, New York, NY 10023", $diff['google-maps']->deleted[0]->value, 'google-maps deleted id');
+$test->assertEquals(1, count($diff['google-maps']->deleted), 'google-maps deleted count');
+
+$test->assertEquals("15 W. 13th st., new york, ny", $diff['google-maps']->added[0]->value, 'google-maps added id');
+$test->assertEquals(1, count($diff['google-maps']->added), 'google-maps added count');
 ?>
 done
 --EXPECT--
