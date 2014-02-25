@@ -24,17 +24,19 @@ abstract class CollectionField extends Field
         return $ret;
     }
 
+    abstract protected function getId($value);
+
     protected function calculateChanges()
     {
         if (false !== $this->added) return;
         $this->added = $this->deleted = array();
         $tempa = array();
         foreach ($this->info['to'] as $i => $value) {
-            $tempa[$value['item_id']] = $i;
+            $tempa[$this->getId($value)] = $i;
         }
         $tempd = array();
         foreach ($this->info['from'] as $i => $value) {
-            $tempd[$value['item_id']] = $i;
+            $tempd[$this->getId($value)] = $i;
         }
         foreach ($tempd as $id => $i) {
             if (!isset($tempa[$id])) {
@@ -53,11 +55,11 @@ abstract class CollectionField extends Field
         if ($var == 'referenceable_types') return $this->to['info']['config']['settings']['referenceable_types'];
         if ($var == 'deleted') {
             $this->calculateChanges();
-            return new Collection($this, $this->deleted, 'Chiara\\PodioItem\\Values\\App');
+            return new Collection($this, $this->deleted, $this->itemclass);
         }
         if ($var == 'added') {
             $this->calculateChanges();
-            return new Collection($this, $this->added, 'Chiara\\PodioItem\\Values\\App');
+            return new Collection($this, $this->added, $this->itemclass);
         }
         return parent::__get($var);
     }

@@ -23,6 +23,9 @@ abstract class Reference extends Value
             if ($this->extendedGet($var)) {
                 return $this->extendedGet($var);
             }
+            if (isset($this->info['value']) && isset($this->info['value'][$var])) {
+                return $this->info['value'][$var];
+            }
             if (!isset($this->info[$var])) {
                 return null;
             }
