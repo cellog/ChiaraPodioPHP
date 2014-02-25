@@ -1,5 +1,5 @@
 <?php
-namespace Chiara\PodioItem\Fields;
+namespace Chiara\PodioItem\Diff\Fields;
 class Calculation extends Number
 {
 }

@@ -24,11 +24,4 @@ class Question extends Category
             return $value->id;
         }
     }
-
-    function __get($var)
-    {
-        if ($var == 'options') return $this->info['config']['settings']['options'];
-        if ($var == 'multiple') return $this->info['config']['settings']['multiple'];
-        return parent::__get($var);
-    }
 }

@@ -47,6 +47,9 @@ class Date implements \IteratorAggregate
 
     function __get($var)
     {
+        if ($var === 'duration') {
+            return $this->getDuration();
+        }
         return $this->info[$var];
     }
 
