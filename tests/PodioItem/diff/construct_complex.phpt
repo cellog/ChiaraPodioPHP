@@ -13,8 +13,12 @@ $test->assertIsa('Chiara\Iterators\ItemRevisionDiffIterator', $diff, 'class of d
 $test->assertIsa('Chiara\PodioItem\Diff\Fields\Contact', $diff['contact'], 'contact class');
 $test->assertEquals(1834391, $diff['contact']->from[0]->user_id, 'from userid');
 $test->assertEquals(1897866, $diff['contact']->to[0]->user_id, 'to userid');
+
 $test->assertEquals(1834391, $diff['contact']->deleted[0]->user_id, 'deleted userid');
 $test->assertEquals(1, count($diff['contact']->deleted), 'deleted count');
+
+$test->assertEquals(1897866, $diff['contact']->added[0]->user_id, 'added userid');
+$test->assertEquals(1, count($diff['contact']->added), 'added count');
 ?>
 done
 --EXPECT--
