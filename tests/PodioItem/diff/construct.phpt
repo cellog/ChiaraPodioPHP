@@ -11,6 +11,7 @@ $diff = $item->diff(1);
 $test->assertIsa('Chiara\Iterators\ItemRevisionDiffIterator', $diff, 'class of diff');
 
 $test->assertEquals(5, $diff['number']->from, 'number from');
+$test->assertEquals(3, $diff['number']->to, 'number from');
 ?>
 done
 --EXPECT--
