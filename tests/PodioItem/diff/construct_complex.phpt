@@ -29,6 +29,16 @@ $test->assertEquals(1, count($diff['contact-2']->deleted), 'contact-2 deleted co
 
 $test->assertEquals(112147307, $diff['contact-2']->added[0]->id, 'contact-2 added id');
 $test->assertEquals(1, count($diff['contact-2']->added), 'contact-2 added count');
+
+$test->assertIsa('Chiara\PodioItem\Diff\Fields\Embed', $diff['link'], 'link class');
+$test->assertEquals(19611300, $diff['link']->from[0]->id, 'link from id');
+$test->assertEquals(23752853, $diff['link']->to[0]->id, 'link to id');
+
+$test->assertEquals(19611300, $diff['link']->deleted[0]->id, 'link deleted id');
+$test->assertEquals(1, count($diff['link']->deleted), 'link deleted count');
+
+$test->assertEquals(23752853, $diff['link']->added[0]->id, 'link added id');
+$test->assertEquals(1, count($diff['link']->added), 'link added count');
 ?>
 done
 --EXPECT--
