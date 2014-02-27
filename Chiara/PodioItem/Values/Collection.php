@@ -50,6 +50,10 @@ class Collection extends \ArrayObject
     {
         $ret = array();
         $wrapperClass = $this->wrapperClass;
+        if (null === $index) {
+            // called like $var[] = $a;
+            $index = count($this);
+        }
         if (is_int($var)) {
             if (isset($this[$index])) {
                 $current = $this->offsetGet($index);
