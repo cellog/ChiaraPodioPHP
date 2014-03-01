@@ -1,7 +1,7 @@
 <?php
 namespace Chiara\Iterators;
 use Chiara\PodiRevision as Revision, Chiara\PodioItem as Item;
-class WorkspaceAppIterator extends \ArrayIterator
+class RevisionIterator extends \ArrayIterator
 {
     protected $item;
     function __construct(Item $item)
