@@ -178,6 +178,7 @@ class HookServer implements Router
         } else {
             Auth::prepareRemote(Auth::APP);
         }
+        Auth::beginHook(); // ensure that hook = false is passed in options
         $info = $this->router->route();
         if (isset($this->handlers[$this->input['type']])) {
             if (is_callable($this->handlers[$this->input['type']])) {

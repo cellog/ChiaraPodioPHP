@@ -8,11 +8,25 @@ class AuthManager
     static protected $tokenmanager;
     static protected $authmode = self::USER;
     static protected $currentapp = null;
+    static protected $ishook = false;
     static function setTokenManager(AuthManager\TokenInterface $manager)
     {
         self::$tokenmanager = $manager;
         $clientinfo = $manager->getAPIClient();
         Remote::$remote->setup($clientinfo['client'], $clientinfo['token']);
+    }
+
+    static function getOptions($options)
+    {
+        if (!isset($options['hook'])) {
+            $options['hook'] = false;
+        }
+        return $options;
+    }
+
+    static function beginHook()
+    {
+        self::$ishook = true;
     }
 
     static function setAuthMode($mode)

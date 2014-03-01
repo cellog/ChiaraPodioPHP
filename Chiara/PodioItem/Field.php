@@ -65,6 +65,11 @@ abstract class Field
         return $this->info['values'][0]['value'];
     }
 
+    function save(array $options = array())
+    {
+        $this->parent->saveField($this, $options);
+    }
+
     static function newField(PodioItem $parent, array $info)
     {
         $class = __NAMESPACE__ . '\\Fields\\' . ucfirst($info['type']);

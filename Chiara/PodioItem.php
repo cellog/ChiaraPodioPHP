@@ -324,6 +324,7 @@ class PodioItem
             return;
         }
         Auth::prepareRemote($this->info['app']['app_id']);
+        $options = Auth::getOptions($options);
         if (!$this->id) {
             $result = Remote::$remote->post('/item/app/' . $this->app['app_id'], $jsonarray, $options);
             $this->id = $result['item_id'];
@@ -332,6 +333,22 @@ class PodioItem
         }
         $this->dirty = array();
         return $this;
+    }
+
+    function saveField(Field $field, array $options = array())
+    {
+        if (!$this->id) {
+            throw new \Exception('Cannot update individual field values unless the item already exists');
+        }
+        Auth::prepareRemote($this->info['app']['app_id']);
+        $options = Auth::getOptions($options);
+        
+        Remote::$remote->post('/item/' . $this->id . '/value/' . $field->id,
+                              array($field->external_id => $field->saveValue), $options);
+        $i = $this->getIndex($field->external_id);
+        if (isset($this->dirty[$i])) {
+            unset($this->dirty[$i]);
+        }
     }
 
     function dump()
