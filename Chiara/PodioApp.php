@@ -49,9 +49,20 @@ class PodioApp
         if ($var === 'fields') return new Iterators\AppFieldIterator($this);
         if ($var === 'id') return $this->info['app_id'];
         if ($var === 'on') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        if ($var === 'token') {
+            return $this->verifyTokenAvailable();
+        }
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }
+    }
+
+    function verifyTokenAvailable()
+    {
+        if (isset($this->info['token'])) {
+            return $this->info['token'];
+        }
+        throw new \Exception('App token is not available, you need to request an upgraded API key from Podio Support');
     }
 
     function generateStructureClass($classname, $namespace = null, $filename = null)
