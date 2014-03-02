@@ -15,6 +15,44 @@ The library uses the Podio class heavily for the actual authentication to Podio 
 to the API, and is fully compatible with the existing API, so you can mix and match if this
 library does not fully do what you need.
 
+Documentation is in the [docs](https://github.com/cellog/ChiaraPodioPHP/tree/master/docs) directory
+
+#Working with Web Hooks
+This is the primary focus of the library at this stage, and support for web hooks, working with items
+and apps is fully implemented.
+> [web hooks](https://github.com/cellog/ChiaraPodioPHP/tree/master/docs/WebHooks.md)
+#Authentication
+#Working with Applications
+#Working with Items
+#Unimplemented features
+ - tasks
+ - statuses
+ - actions
+ - app market
+ - most application features
+ - batches
+ - calendar
+ - comments
+ - most contact features
+ - conversations
+ - adding an embed
+ - uploading a file
+ - web forms
+ - grants
+ - importer
+ - integrations
+ - most item features
+ - linked accounts
+ - notifications and subscriptions
+ - most organization features
+ - status questions
+ - ratings
+ - search
+ - most space features
+ - tags
+ - views
+ - widgets
+
 Here is some sample code showing how it works:
 
 ```php
