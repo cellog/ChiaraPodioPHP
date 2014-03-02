@@ -171,6 +171,23 @@ Chiara\HookServer::$server->makeHook($app, 'suburl', 'item.create');
 // creates a hook at "http://example.com/hook.php/sub/url"
 Chiara\HookServer::$server->makeHook($app, 'suburl/deeper', 'item.create');
 
+Other convenient ways to make a hook:
+$app = new Chiara\PodioApp($appid);
+
+// creates a hook at "http://example.com/hook.php"
+$app->hook['item.create']->create();
+// creates a hook at "http://example.com/hook.php/suburl"
+$app->hook->suburl['item.create']->create();
+// creates a hook at "http://example.com/hook.php/suburl"
+$app->hook->suburl->deeper['item.create']->create();
+
+// The same API works for item fields and workspaces:
+
+$app->fields['fieldname']->hook['item.create']->create();
+
+$space = new Chiara\PodioWorkspace($spaceid);
+$space->hook['app.create']->create();
+
 // inside hook.php you should use code like:
 
 include 'autoload.php';
@@ -191,13 +208,16 @@ class MyApp2 extends MyApp
     }
 }
 
+$item = new MyApp2;
+$app = $item->app;
+
 // this automatically registers a handler for the hook at "http://example.com/hook.php"
-$app->on['item.create'] = new MyApp2;
+$app->on['item.create'] = $item;
 
 // this automatically registers a handler for the hook at "http://example.com/hook.php/suburl"
-$app->on->suburl['item.create'] = new MyApp2;
+$app->on->suburl['item.create'] = $item;
 
 // this automatically registers a handler for the hook at "http://example.com/hook.php/suburl/deeper"
-$app->on->suburl->deeper['item.create'] = new MyApp2;
+$app->on->suburl->deeper['item.create'] = $item;
 ?>
 ```
