@@ -7,14 +7,21 @@ class HookServer implements Router
     protected $handlers = array();
     protected $router;
     protected $baseurl;
+    protected $input;
+    protected $server;
 
-    function __construct($post = null, $baseurl = '')
+    function __construct($baseurl = '', $post = null, $server = null)
     {
         $this->baseurl = $baseurl;
         if ($post) {
             $this->input = $post;
         } else {
             $this->input = $_POST;
+        }
+        if ($server) {
+            $this->server = $server;
+        } else {
+            $this->server = $_SERVER;
         }
         $this->registerRouter($this);
         $this->handlers['hook.verify'] = array($this, 'hookVerify');
@@ -32,8 +39,8 @@ class HookServer implements Router
 
     function route()
     {
-        if (isset($_SERVER['PATH_INFO'])) {
-            $info = explode('/', $_SERVER['PATH_INFO']);
+        if (isset($this->server['PATH_INFO'])) {
+            $info = explode('/', $this->server['PATH_INFO']);
             array_shift($info);
             $action = array_shift($info);
             return array('action' => $action, 'params' => $info);
