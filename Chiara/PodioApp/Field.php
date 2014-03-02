@@ -18,7 +18,7 @@ class Field
         if ($var === 'id') {
             return $this->info['field_id'];
         }
-        if ($var === 'on') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }

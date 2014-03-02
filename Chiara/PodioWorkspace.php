@@ -6,6 +6,7 @@ class PodioWorkspace
 {
     protected $info;
     protected $myapps = array();
+    protected $hookmanager = null;
     function __construct($info = null)
     {
         if (is_int($info)) {
@@ -61,6 +62,7 @@ class PodioWorkspace
         if ($var === 'apps') {
             return new WorkspaceAppIterator($this);
         }
+        if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
     }
 
     function __set($var, $value)

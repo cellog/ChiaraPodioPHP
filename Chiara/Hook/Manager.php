@@ -7,10 +7,12 @@ class Manager implements \ArrayAccess
     protected $allowedContexts;
     protected $context;
     protected $action;
-    function __construct($context, $action = null)
+    protected $podioaction;
+    function __construct($context, $action = null, $podioaction = null)
     {
         $this->context = $context;
         $this->action = $action;
+        $this->podioaction = $podioaction;
         if ($context instanceof App) {
             $this->allowedContexts = array(
                 'item.create', 'item.update', 'item.delete',
@@ -41,7 +43,10 @@ class Manager implements \ArrayAccess
 
     function offsetGet($offset)
     {
-        return Server::$hookserver->getHandler($offset, $this->action);
+        if (isset($this->podioaction)) {
+            throw new \Exception('Hook action already requested "' . $this->podioaction . '"');
+        }
+        return new static($this->context, $this->action, $offset);
     }
 
     function offsetSet($offset, $handler)
@@ -52,6 +57,22 @@ class Manager implements \ArrayAccess
     function offsetUnset($offset)
     {
         Server::$hookserver->unregisterHandler($offset, $this->action);
+    }
+
+    function create()
+    {
+        if (!isset($this->podioaction)) {
+            throw new \Exception('Hook action must be specified before creating a hook');
+        }
+        return Server::$hookserver->makeHook($this->context, $this->action, $this->podioaction);
+    }
+
+    function remove()
+    {
+        if (!isset($this->podioaction)) {
+            throw new \Exception('Hook action must be specified before removing a hook');
+        }
+        return Server::$hookserver->removeHook($this->context, $this->action, $this->podioaction);
     }
 
     function __get($var)

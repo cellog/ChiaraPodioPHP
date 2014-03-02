@@ -53,7 +53,7 @@ class PodioApp
         if ($var === 'info') return $this->info;
         if ($var === 'fields') return new Iterators\AppFieldIterator($this);
         if ($var === 'id') return $this->info['app_id'];
-        if ($var === 'on') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
         if ($var === 'token') {
             return $this->verifyTokenAvailable();
         }
