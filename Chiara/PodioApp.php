@@ -43,6 +43,11 @@ class PodioApp
         return HookServer::$hookserver->makeHook($this, $action, $podioaction);
     }
 
+    function removeHook($podioaction, $action = null)
+    {
+        return HookServer::$hookserver->removeHook($this, $action, $podioaction);
+    }
+
     function __get($var)
     {
         if ($var === 'info') return $this->info;

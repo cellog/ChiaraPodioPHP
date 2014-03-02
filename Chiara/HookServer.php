@@ -103,15 +103,15 @@ class HookServer implements Router
         return array($url, $id, $ref_type);
     }
 
-    function removeHook($context, $action, $hooktype, $id = null)
+    function removeHook($context, $action, $podioaction, $id = null)
     {
-        list ($url, $id, $ref_type) = $this->getIdUrl($action, $hooktype, $context);
+        list ($url, $id, $ref_type) = $this->getIdUrl($action, $podioaction, $context, $id);
         if (!$id) {
             throw new \Exception('Id must be explicitly specified to remove a hook');
         }
-        $hooks = Remote::$remote->get('/hook/' . $hooktype . '/' . $id)->json_body();
+        $hooks = Remote::$remote->get('/hook/' . $ref_type . '/' . $id . '/')->json_body();
         foreach ($hooks as $hook) {
-            if ($hook['url'] == $url) {
+            if ($hook['url'] == $url && $hook['type'] == $podioaction) {
                 Remote::$remote->delete('/hook/' . $hook['hook_id']);
                 return;
             }

@@ -1,18 +1,23 @@
 --TEST--
-HookServer->perform registered handler
+HookServer->removeHook (through PodioApp->removeHook)
 --FILE--
 <?php
 use Chiara\HookServer as Hook, Chiara\Remote as Remote, Chiara\AuthManager as Auth;
 include __DIR__ . '/../setup.php.inc';
-Remote::$remote->expectRequest('POST', '/hook/app/5/', json_encode(array('hook_id' => 10)),
-                               array('url' => 'http://example.com/hook.php/', 'type' => 'item.create'));
+Remote::$remote->expectRequest('GET', '/hook/app/5/', json_encode(array(array('hook_id' => 4, 'url' => 'http://example.com/hook.php/',
+                                                                               'type' => 'item.update'),
+                                                                         array('hook_id' => 10, 'url' => 'http://example.com/hook.php/',
+                                                                               'type' => 'item.create'))),
+                               array());
+Remote::$remote->expectRequest('DELETE', '/hook/10', '',
+                               array());
 Auth::setAuthMode(Auth::APP);
 $tokens = new TestTokenManager;
 $tokens->saveToken(5, 123);
 Auth::setTokenManager($tokens);
 $item = new Chiara\PodioApp(array('app_id' => 5), false);
 Hook::$hookserver->setBaseUrl('http://example.com/hook.php');
-$test->assertEquals(10, $item->createHook('item.create'), 'return of item.create hook creation');
+$item->removeHook('item.create');
 
 $test->assertEquals(array (
   0 => 
@@ -32,16 +37,25 @@ $test->assertEquals(array (
   ),
   1 => 
   array (
-    0 => 'post',
+    0 => 'get',
     1 => 
     array (
       0 => '/hook/app/5/',
       1 => 
       array (
-        'url' => 'http://example.com/hook.php/',
-        'type' => 'item.create',
       ),
       2 => 
+      array (
+      ),
+    ),
+  ),
+  2 => 
+  array (
+    0 => 'delete',
+    1 => 
+    array (
+      0 => '/hook/10',
+      1 => 
       array (
       ),
     ),
