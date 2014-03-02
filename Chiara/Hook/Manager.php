@@ -46,7 +46,7 @@ class Manager implements \ArrayAccess
 
     function offsetSet($offset, $handler)
     {
-        Server::$hookserver->registerHandler($handler, $this->action);
+        Server::$hookserver->registerHandler($offset, $this->action, $handler);
     }
 
     function offsetUnset($offset)

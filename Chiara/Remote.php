@@ -5,14 +5,28 @@ class Remote
 {
     static public $remote;
 
+    function mergeOptions($attributes, $options)
+    {
+        if (isset($options['hook'])) {
+            $attributes['hook'] = $options['hook'] ? 'true' : 'false';
+        }
+        if (isset($options['silent'])) {
+            $attributes['silent'] = $options['silent'] ? '1' : '0';
+        }
+        if (isset($options['fields'])) {
+            $attributes['fields'] = $options['fields'];
+        }
+        return $attributes;
+    }
+
     function get($url, $attributes = array(), $options = array())
     {
-        return Podio::get($url, $attributes, $options);
+        return Podio::get($url, $this->mergeOptions($attributes, $options));
     }
 
     function post($url, $attributes = array(), $options = array())
     {
-        return Podio::post($url, $attributes, $options);
+        return Podio::post($url, $this->mergeOptions($attributes, $options));
     }
 
     function delete($url, $attributes = array())

@@ -90,3 +90,41 @@ class TestRemote extends Chiara\Remote
     }
 }
 Chiara\Remote::$remote = new TestRemote;
+class TestTokenManager implements Chiara\AuthManager\TokenInterface
+{
+    public $tokenmap = array();
+    public $clientmap = array('client' => 5, 'token' => 6);
+    public $classmap = array();
+    function getToken($appid)
+    {
+        return $this->tokenmap[$appid];
+    }
+
+    function saveToken($appid, $token)
+    {
+        $this->tokenmap[$appid] = $token;
+    }
+
+    function getAPIClient()
+    {
+        return $this->clientmap;
+    }
+
+    function saveAPIClient($client, $token)
+    {
+        $this->clientmap = array('client' => $client, 'token' => $token);
+    }
+
+    function mapAppToClass($appid, $classname)
+    {
+        $this->classmap[$appid] = $classname;
+    }
+
+    function getAppClass($appid, $defaultClass = 'Chiara\PodioItem')
+    {
+        if (isset($this->classmap[$appid])) {
+            return $this->classmap[$appid];
+        }
+        return $defaultClass;
+    }
+}

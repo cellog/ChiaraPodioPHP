@@ -1,7 +1,8 @@
 <?php
 namespace Chiara;
 use Podio, Chiara\Iterators\ItemFieldIterator, Chiara\AuthManager as Auth, Chiara\Remote,
-    Chiara\Iterators\ReferenceIterator, Chiara\Iterators\ItemRevisionDiffIterator as DiffIterator;
+    Chiara\Iterators\ReferenceIterator, Chiara\Iterators\ItemRevisionDiffIterator as DiffIterator,
+    Chiara\PodioItem\Field;
 class PodioItem
 {
     /**
