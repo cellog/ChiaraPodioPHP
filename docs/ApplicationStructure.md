@@ -22,15 +22,15 @@ $item->fields['fieldname'] = 5;
 Without the Application Structure meta-data, there are 3 unknowns in the
 above code:
 
- 1 Which field is "fieldname"?
- 2 What type of field is "fieldname"?
- 3 What kind of data is "5"?  Is it text, number, progress, or duration?
+ 1. Which field is "fieldname"?
+ 2. What type of field is "fieldname"?
+ 3. What kind of data is "5"?  Is it text, number, progress, or duration?
 
 There are a couple of ways to generate Application Structure meta-data:
 
- 1 manually
- 2 auto-generate from a retrieved item or app
- 3 pre-generate using the generated class feature
+ 1. manually
+ 2. auto-generate from a retrieved item or app
+ 3. pre-generate using the generated class feature
 
 ###Manually generating application structure
 
