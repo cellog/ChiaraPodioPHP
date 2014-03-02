@@ -71,7 +71,7 @@ class HookServer implements Router
      */
     function makeHook($context, $action, $podioaction, $id = null)
     {
-        list ($url, $id, $ref_type) = $this->getIdUrl($action, $podioaction, $context);
+        list ($url, $id, $ref_type) = $this->getIdUrl($action, $podioaction, $context, $id);
         if (!$id) {
             throw new \Exception('Id must be explicitly specified to create a hook');
         }
@@ -82,10 +82,10 @@ class HookServer implements Router
         return $ret['hook_id'];
     }
 
-    protected function getIdUrl()
+    protected function getIdUrl($action, $podioaction, $context, $id)
     {
         $url = $this->getHookUrl($action);
-        $this->validHook($hooktype);
+        $this->validHook($podioaction);
         if ($context instanceof PodioApp) {
             $id = $context->id;
             $ref_type = 'app';
