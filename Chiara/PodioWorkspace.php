@@ -62,7 +62,11 @@ class PodioWorkspace
         if ($var === 'apps') {
             return new WorkspaceAppIterator($this);
         }
+        if ($var === 'id') {
+            return $this->info['space_id'];
+        }
         if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        return $this->info[$var];
     }
 
     function __set($var, $value)

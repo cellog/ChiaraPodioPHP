@@ -1,0 +1,101 @@
+{
+  "post_on_new_member": true,
+  "url_label": "chiarapodio",
+  "created_on": "2014-01-16 16:54:35",
+  "video": null,
+  "owner": {
+    "type": "org",
+    "id": 4
+  },
+  "subscribed": true,
+  "privacy": "closed",
+  "created_by": {
+    "user_id": 1834391,
+    "space_id": null,
+    "image": {
+      "hosted_by": "podio",
+      "hosted_by_humanized_name": "Podio",
+      "thumbnail_link": "https://d3szoh0f46td6t.cloudfront.net/public/65246588",
+      "link": "https://d3szoh0f46td6t.cloudfront.net/public/65246588",
+      "file_id": 65246588,
+      "link_target": "_blank"
+    },
+    "profile_id": 98265149,
+    "org_id": null,
+    "link": "https://podio.com/users/1834391",
+    "avatar": 65246588,
+    "type": "user",
+    "last_seen_on": "2014-03-02 06:12:38",
+    "name": "Gregory Beaver"
+  },
+  "role": "admin",
+  "type": "regular",
+  "premium": false,
+  "description": null,
+  "auto_join": false,
+  "org": {
+    "premium": false,
+    "status": "active",
+    "contract_status": "none",
+    "name": "Chiara String Quartet",
+    "sales_agent_id": 659442,
+    "rights": [
+      "add_conversation",
+      "update",
+      "view",
+      "view_admins",
+      "statistics",
+      "add_space",
+      "add_contract"
+    ],
+    "url": "https://podio.com/chiaraquartetnet",
+    "grants_count": 0,
+    "image": {
+      "hosted_by": "podio",
+      "hosted_by_humanized_name": "Podio",
+      "thumbnail_link": "https://d3szoh0f46td6t.cloudfront.net/public/75833289",
+      "link": "https://d3szoh0f46td6t.cloudfront.net/public/75833289",
+      "file_id": 75833289,
+      "link_target": "_blank"
+    },
+    "user_limit": 10,
+    "org_id": 4,
+    "role": "admin",
+    "type": "free",
+    "domains": [
+      "chiaraquartet.net"
+    ],
+    "logo": 75833289,
+    "segment": null,
+    "segment_size": null,
+    "url_label": "chiaraquartetnet"
+  },
+  "is_overdue": false,
+  "name": "ChiaraPodio",
+  "post_on_new_app": true,
+  "rights": [
+    "view_members",
+    "delete",
+    "add_task",
+    "add_widget",
+    "subscribe",
+    "add_file",
+    "add_hook",
+    "share",
+    "update",
+    "add_status",
+    "add_user",
+    "add_contact",
+    "view",
+    "add_app"
+  ],
+  "url": "https://podio.com/chiaraquartetnet/chiarapodio",
+  "space_id": 5,
+  "org_id": 4,
+  "push": {
+    "timestamp": 1393741140,
+    "expires_in": 21600,
+    "channel": "/space/1802053",
+    "signature": "c5efccbf6262111295bd46f7eadb0297c2f85dca"
+  }
+}
