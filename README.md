@@ -26,6 +26,7 @@ and apps is fully implemented.
 #Working with Applications
 
 > [application structure](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/ApplicationStructure.md)
+
 #Working with Items
 #Unimplemented features
  - tasks
