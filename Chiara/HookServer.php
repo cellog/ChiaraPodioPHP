@@ -130,6 +130,10 @@ class HookServer implements Router
             throw new \Exception('Handler must be callable for podio action "' . $podioaction . '"');
         }
         if (!$action) {
+            if (is_array($this->handles[$podioaction])) {
+                throw new \Exception('Cannot set handler for podio action "' . $podioaction .
+                                     '", handlers for specific actions exist');
+            }
             $this->handlers[$podioaction] = $handler;
         }
         $this->handlers[$podioaction][$action] = $handler;
@@ -173,27 +177,23 @@ class HookServer implements Router
     {
         $this->validHook($podioaction);
         if ($action) {
-            return isset($this->handlers[$podioaction]) && isset($this->handlers[$action]);
+            return isset($this->handlers[$podioaction]) &&
+            is_array($this->handlers[$podioaction]) && isset($this->handlers[$podioaction][$action]);
         }
-        return isset($this->handlers[$podioaction]);
+        return isset($this->handlers[$podioaction]) && is_callable($this->handles[$podioaction]);
     }
 
-    function perform($userauth = false)
+    function perform()
     {
-        if ($userauth) {
-            Auth::prepareRemote(Auth::USER);
-        } else {
-            Auth::prepareRemote(Auth::APP);
-        }
         Auth::beginHook(); // ensure that hook = false is passed in options
         $info = $this->router->route();
         if (isset($this->handlers[$this->input['type']])) {
             if (is_callable($this->handlers[$this->input['type']])) {
-                return call_user_func_array($this->handlers[$this->input['type']], $this->input, $info['params']);
+                return call_user_func($this->handlers[$this->input['type']], $this->input, $info['params']);
             }
             if (isset($this->handlers[$this->input['type']][$info['action']])) {
                 $action = $this->handlers[$this->input['type']][$info['action']];
-                return call_user_func_array($action, $this->input, $info['params']);
+                return call_user_func($action, $this->input, $info['params']);
             }
         }
         if ($info['action']) {
