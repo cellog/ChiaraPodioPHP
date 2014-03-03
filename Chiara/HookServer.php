@@ -43,7 +43,27 @@ class HookServer implements Router
             $info = explode('/', $this->server['PATH_INFO']);
             array_shift($info);
             $action = array_shift($info);
-            return array('action' => $action, 'params' => $info);
+            $params = $info;
+            $test = $action;
+            if (isset($this->handlers[$this->input['type']])) {
+                $t = $this->handlers[$this->input['type']];
+                if (is_array($t)) {
+                    $actual = array();
+                    do {
+                        $test = implode('/', $params);
+                        while (count($params)) {
+                            if (isset($t[$test])) {
+                                $action = $test;
+                                $params = $actual;
+                                break;
+                            }
+                            array_unshift($actual, array_pop($params));
+                        }
+                        $params = $info; // not found
+                    } while (false);
+                }
+            }
+            return array('action' => $action, 'params' => $params);
         }
     }
 
