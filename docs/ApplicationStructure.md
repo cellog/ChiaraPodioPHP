@@ -237,3 +237,4 @@ class Instruments extends \Chiara\PodioItem
 }
 ```
 
+For more information on how to use the generated class, continue reading at [Web Hooks](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/WebHooks.md)
