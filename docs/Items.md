@@ -172,14 +172,221 @@ date slightly in the future of the end date.  It is much simpler to use an array
 
 ###Fields that can contain multiple values
 
+Several fields can contain more than 1 value, such as the location field, which
+can contain multiple addresses.  Every one of these implements a collection
+that allows accessing the values by the order in which they appear, by id (if any)
+or by some other logical identifier.
+
 ####Location
+
+Location fields are stored as a text address.  You can either set a location
+to a text value, an array of text values, or add a text value to an array, or
+as a collection of locations from another item.
+
+```php
+<?php
+$item->fields['location'] = '66 Lincoln Center Plaza, New York, NY 10023';
+$item->fields['location'][] = '66 Lincoln Center Plaza, New York, NY 10023';
+$item->fields['location'] = array('66 Lincoln Center Plaza, New York, NY 10023',
+                                  '22 Foo St., Fake City, KS 12345'
+                            );
+$item->fields['location'] = $anotheritem->fields['mylocation']->value;
+?>
+```
+
+The only way to reference location values is by index or through an iteration loop
+
+```php
+<?php
+if (isset($item->fields['location']->value[0])) {
+    $value = $item->fields['location']->value[0];
+}
+
+foreach ($item->fields['location']->value as $location) {
+    $value = $location->value;
+}
+?>
+```
 
 ####Question and Category
 
+For question field and category fields that only allow 1 option, the representation
+is the same.  You can set a value to the id of an option, the text of an option,
+to an array containing the index "id", or a Chiara\PodioItem\Values\Option object.
+
+```php
+<?php
+$item->fields['questionfield'] = 1; // set to the option with id "1"
+$item->fields['questionfield'] = 'hello'; // set to the option with text "hello"
+// set to the result returned via a Podio API call from the Podio PHP library
+$item->fields['questionfield'] = array('id' => 1, 'text' => 'hello', 'color' => '#FCDEFC');
+$item->fields['questionfield'] = $anotheritem->fields['questionfield']->value;
+?>
+```
+
+For category fields that allow multiple values, the value returned is a collection
+of [Chiara\PodioItem\Values\Option](https://github.com/cellog/ChiaraPodioPHP/blob/master/Chiara/PodioItem/Values/Option.php)
+objects.  You can reference the selected objects by id, or by a foreach loop.
+
+```php
+<?php
+if (isset($item->fields['multiplecategory']->value[1])) {
+    $value = $item->fields['multiplecategory']->value[1]; // get category field
+}
+
+foreach ($item->fields['multiplcategory']->value as $value) {
+    $val = $value->text;
+}
+?>
+```
+
 ####Embed
+
+Embed fields are represented as a collection of
+[Chiara\PodioItem\Values\Embed](https://github.com/cellog/ChiaraPodioPHP/blob/master/Chiara/PodioItem/Values/Embed.php)
+objects.  You can set an embed to either a URL to embed, an embed_id, the array
+returned from a Podio API call to retrieve an embed, or another field's embed
+contents.
+
+```php
+<?php
+$item->fields['embedfield'] = 'http://example.com';
+$item->fields['embedfield'] = 123456; // set to embed with embed_id of 123456
+$item->fields['embedfield'] = array('embed' => array('embed_id' => 1), 'file' => array('file_id' => 3));
+$item->fields['embedfield'] = $anotheritem->fields['embedfield']->value;
+$item->fields['embedfield'] = $anotheritem->fields['embedfield']->value[123456]; // set to the value of a single embed in a collection
+
+foreach ($item->fields['embedfield']->value as $embed) {
+    $link = $embed->original_url;
+}
+?>
+```
 
 ####Image
 
+Image fields are represented as a collection of
+[Chiara\PodioItem\Values\Image](https://github.com/cellog/ChiaraPodioPHP/blob/master/Chiara/PodioItem/Values/Image.php)
+objects.  You can set an image to either a URL to add as an image, or a file_id of
+an uploaded image.
+
+```php
+<?php
+$item->fields['imagefield'] = 'http://example.com/img.jpg';
+$item->fields['imagefield'] = 123456; // set to an uploaded file with file_id of 123456
+
+foreach ($item->fields['imagefield']->value as $image) {
+    $thumbnail = $image->thumbnail;
+}
+?>
+```
+
 ####Contact
 
+Podio represents two very different data objects with the same data structure.
+Podio contacts are people with direct access to a workspace, whose email
+addresses have been added as a member to the workspace.  Space contacts are
+simply a directory of contact information, and can be anyone, regardless of
+whether they are even aware of Podio's existence.  The crucial distinguishing
+factor is whether the contact has a user_id.  Only Podio contacts have a
+user_id.  In addition, space contacts have a space_id set, and Podio contacts do
+not.
+
+In the ChiaraPodioPHP library, we represent both contact types using the same
+object, a [Chiara\PodioContact](https://github.com/cellog/ChiaraPodioPHP/blob/master/Chiara/PodioContact.php)
+object.
+
+When referencing a contact field in an item, you can determine which kinds of
+contacts are valid through the contact_type variable:
+
+```php
+if ($item->fields['contact']->contact_type === 'space') {
+    // space contact
+} else {
+    // podio contact
+}
+```
+
+A contact field can be set to these values:
+ 1. an integer value, which is interpreted as a profile_id (all contacts, both
+    space and podio, have a profile_id)
+ 2. an array of integers or an array of contact objects
+ 3. another contact field's value
+ 4. any contact object
+
+```php
+<?php
+$item->fields['contact'] = 13245; // interpreted as a profile_id
+$item->fields['contact'] = array(1325, 453254);
+$item->fields['contact'] = new Chiara\PodioContact(12345);
+$item->fields['contact'] = $anotheritem->fields['contact2']->value;
+
+foreach ($item->fields['contact']->value as $contact) {
+    // do something
+}
+$contact = $item->fields['contact']->value[13245]; // indexed by profile_id
+$contact = $item->fields['contact']->value[0]; // indexed by order
+?>
+```
+
 ####App Reference
+
+In the ChiaraPodioPHP library, app references are represented as a collection of
+[Chiara\PodioItem](https://github.com/cellog/ChiaraPodioPHP/blob/master/Chiara/PodioItem.php)
+objects, encapsulated within an app value.
+
+App references are very powerful.  The Chiara PodioPHP library allows direct
+access to a referenced object's field without further programming.
+
+You can set an app reference field to these values:
+ 1. an integer item_id
+ 2. an array of integers or an array of item objects
+ 3. another app reference field's value
+ 4. any item object
+
+```php
+<?php
+$item->fields['app-reference'] = 13245; // interpreted as app_id
+$item->fields['app-reference'] = array(13452, 1354356);
+$item->fields['app-reference'] = new Chiara\PodioItem(123454);
+$item->fields['app-reference'] = $anotheritem->fields['app2']->value;
+
+foreach ($item->fields['app-reference']->value as $app) {
+    // do something
+}
+$item = $item->fields['app-reference']->value[13245]; // indexed by app_id
+$item = $item->fields['app-reference']->value[0]; // indexed by order
+
+// access a field within a referenced item
+$info = $item->fields['app-reference']->value[13245]->fields['text']->value;
+?>
+```
+
+##References
+
+Often, an item will need to retrieve an external reference from another application's
+app reference field.  The ChiaraPodioPHP library makes this very simple.
+
+The references member is indexed by both app_id and the app url_label, making it
+very simple to determine if an app reference exists and access it.  Items can be
+accessed by the order in which they occur, by a known item_id, or by the app_item_id
+within the referencing app itself, using the "items" member.
+
+```php
+<?php
+if (isset($item->references['appname'])) {
+    // retrieve information from the first reference
+    $info = $item->references['appname'][0]->retrieve()->fields['manageritem']->value;
+    // easy setting of circular references
+    $item->references['appname'][0]->retrieve()->fields['manageritem] = $item;
+
+    // retrieve information from a known item_id that references this one
+    $info = $item->references['appname'][12345]->retrieve()->fields['text']->value;
+}
+
+// via app_id instead of url_label
+if (isset($item->references[123456])) {
+    // access a reference by app_item_id
+    $mynumber = $item->references[123456]->items[1]->retrieve()->fields['number']->value;
+}
+?>
+```
