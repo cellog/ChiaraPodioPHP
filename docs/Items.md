@@ -113,7 +113,7 @@ $item->fields['durationfield'] = '60 seconds';
 $value = $item->fields['durationfield']->value; // will always be an integer
 
 // throws an exception
-$item->fields['durationfield'] = new stdClass';
+$item->fields['durationfield'] = new stdClass;
 ?>
 ```
 
