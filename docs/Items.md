@@ -165,10 +165,10 @@ $item->fields['datefield'] = $anotheritem->fields['date']->value;
 
 $duration = $item->fields['datefield']->duration; // calculated on the fly from the value
 ?>
+```
 
 One caveat: if you are using a DatePeriod, be aware that the 3rd parameter must be a
 date slightly in the future of the end date.  It is much simpler to use an array.
-```
 
 ###Fields that can contain multiple values
 
