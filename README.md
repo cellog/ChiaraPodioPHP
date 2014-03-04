@@ -31,6 +31,9 @@ and apps is fully implemented.
 > [application structure](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/ApplicationStructure.md)
 
 #Working with Items
+
+> [items and fields and their values](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md)
+
 #Unimplemented features
  - tasks
  - statuses
