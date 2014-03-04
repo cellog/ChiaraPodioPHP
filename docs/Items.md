@@ -377,7 +377,7 @@ if (isset($item->references['appname'])) {
     // retrieve information from the first reference
     $info = $item->references['appname'][0]->retrieve()->fields['manageritem']->value;
     // easy setting of circular references
-    $item->references['appname'][0]->retrieve()->fields['manageritem] = $item;
+    $item->references['appname'][0]->retrieve()->fields['manageritem'] = $item;
 
     // retrieve information from a known item_id that references this one
     $info = $item->references['appname'][12345]->retrieve()->fields['text']->value;
