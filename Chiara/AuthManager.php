@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio, Chiara\Remote;
+use Podio, Chiara\Remote, Chiara\Interfaces;
 class AuthManager
 {
     const USER = 1;
@@ -9,7 +9,7 @@ class AuthManager
     static protected $authmode = self::USER;
     static protected $currentapp = null;
     static protected $ishook = false;
-    static function setTokenManager(AuthManager\TokenInterface $manager)
+    static function setTokenManager(Interfaces\AuthTokenManager $manager)
     {
         self::$tokenmanager = $manager;
         $clientinfo = $manager->getAPIClient();

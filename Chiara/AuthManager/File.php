@@ -1,6 +1,7 @@
 <?php
 namespace Chiara\AuthManager;
-class File implements TokenInterface
+use Chiara\Interfaces\AuthTokenManager;
+class File implements AuthTokenManager
 {
     protected $filepath;
     protected $apipath;

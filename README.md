@@ -23,6 +23,9 @@ and apps is fully implemented.
 > [web hooks](https://github.com/cellog/ChiaraPodioPHP/tree/master/docs/WebHooks.md)
 
 #Authentication
+
+> [authentication](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Authentication.md)
+
 #Working with Applications
 
 > [application structure](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/ApplicationStructure.md)

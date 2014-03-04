@@ -106,6 +106,9 @@ class PodioWorkspace
             if ($mapclasses) {
                 $m = $namespace;
                 if ($m) $m .= '\\';
+                if (isset($app->token)) {
+                    Auth::getTokenManager()->saveToken($app->id, $app->token);
+                }
                 Auth::getTokenManager()->mapAppToClass($app->id, $m . $classname);
             }
         }

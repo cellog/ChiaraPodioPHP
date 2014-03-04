@@ -1,6 +1,6 @@
 <?php
-namespace Chiara\AuthManager;
-interface TokenInterface
+namespace Chiara\Interfaces;
+interface AuthTokenManager
 {
     function getToken($appid);
     function saveToken($appid, $token);
