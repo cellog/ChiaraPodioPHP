@@ -445,3 +445,67 @@ if (count($diff['fieldname']->deleted)) {
     // remove deleted items from some other location referencing them
 }
 ```
+
+##Special Item Features
+
+Items track changes, and only save changes from when they are retrieved:
+
+```php
+<?php
+// retrieve an item from the server
+$item = new Chiara\PodioItem(12345);
+
+// no API call is made, nothing was changed.
+$item->save();
+
+// assume that the value of field "blah" is 6, and "blah" is a number field
+$item->fields['blah'] = 6;
+
+// no changes made, no API call
+$item->save();
+
+// force the API call
+$item->save(true);
+
+// now we have made a change
+$item->fields['blah'] = 7;
+
+// a call to the server is made with the changes;
+$item->save();
+?>
+```
+
+All items and fields can be converted to a human-readable string:
+
+```php
+// retrieve an item from the server
+$item = new Chiara\PodioItem(12345);
+
+echo $item; // prints the title of the item
+
+echo $item->fields['numberfield']; // prints the number value of the number field
+echo $item->fields['datefield']; // prints "start => end" with the start date and end date
+// and so on
+
+// thus it is easy to combine fields for other fields:
+
+$item->fields['detail'] = '(' . $item->fields['category'] . ') ' . $item->fields['summary'] . ' - ' . $item->fields['priority'];
+```
+
+A Chiara\PodioApp object can be retrieved directly for any item:
+
+```php
+// retrieve the application for an item
+$app = $item->app;
+// create a web hook listener
+$app->on['item.create'] = function($post, $params) {
+   // ... do something
+};
+```
+
+If you have [generated custom classes](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/ApplicationStructure.md#pre-generate-using-the-generated-class-feature)
+and wish to have them automatically used, use the static factory method:
+
+```php
+$item = Chiara\PodioItem::factory(array('item_id' => 12345, 'app' => array('app_id' => 23456)));
+```
