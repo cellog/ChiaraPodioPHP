@@ -33,8 +33,8 @@ and apps is fully implemented.
 #Working with Items
 
 > [items and fields and their values](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md)
-> > [item references](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#references)
-    [item revisions](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#revisions)
+> * [item references](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#references)
+> *  [item revisions](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#revisions)
 
 #Unimplemented features
  - tasks
