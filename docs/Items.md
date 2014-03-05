@@ -390,3 +390,58 @@ if (isset($item->references[123456])) {
 }
 ?>
 ```
+
+##Revisions
+
+One of the most important features of Podio items is item revisions.  This
+feature can be used to determine exactly what the user changed from one revision
+to the next, and is especially useful in an item.update web hook.  The
+ChiaraPodioPHP library implements revisions as if they were an array within the
+item itself.
+
+Revision differences are retrieved using the [diff()](https://github.com/cellog/ChiaraPodioPHP/blob/master/Chiara/PodioItem.php#L220)
+method.  This is used to retrieve differences from the current revision to a
+previous revision.  For example, in a web hook, one might:
+
+```php
+<?php
+    function onItemUpdate($params)
+    {
+        // retrieve changes since the last update
+        $diff = $this->diff($params['revision_id'] - 1);
+    }
+?>
+```
+
+The diff acts as an array indexed by field_id, external_id, and order, so
+the presence of modifications to a specific field can be easily tested for:
+
+```php
+if (isset($diff['fieldname'])) {
+    // ...
+}
+```
+
+Once a field's presence is determined, the old and new values can be accessed
+using members "to" and "from":
+
+```php
+$oldvalue = $diff['fieldname']->from->value;
+$newvalue = $diff['fieldname']->to->value;
+// this is the same as "to"
+$newvalue = $diff['fieldname']->value;
+```
+
+For fields that are collections of values, such as an app reference, two
+special arrays are also available, "added" and "deleted."  These arrays
+represent the values that were added to the collection or removed from the
+collection.
+
+```php
+foreach ($diff['fieldname']->added as $item) {
+    // work with the item values
+}
+if (count($diff['fieldname']->deleted)) {
+    // remove deleted items from some other location referencing them
+}
+```
