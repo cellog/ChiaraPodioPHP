@@ -336,6 +336,19 @@ class PodioItem
         return $this;
     }
 
+    function delete(array $options = array())
+    {
+        if (!$this->id) {
+            throw new \Exception("Cannot delete item, no item_id is set");
+        }
+        if (!$this->info['app']['app_id']) {
+            throw new \Exception("Cannot delete item, no app_id is set");
+        }
+        Auth::prepareRemote($this->info['app']['app_id']);
+        $options = Auth::getOptions($options);
+        Remote::$remote->delete('/item/' . $this->id);
+    }
+
     function saveField(Field $field, array $options = array())
     {
         if (!$this->id) {
