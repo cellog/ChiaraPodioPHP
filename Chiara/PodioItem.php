@@ -11,6 +11,12 @@ class PodioItem
     protected $MYAPPID = null;
     protected $info = array();
     protected $hasfields = false;
+    /**
+     * If true, then {@link self::retrieve()} will use the "external_id" field
+     * instead of "item_id" or "app_item_id"
+     * @var bool
+     */
+    protected $useExternalIds = false;
     protected $dirty = array();
     /**
      * The PodioApplicationStructure that defines this item's structure
@@ -29,12 +35,13 @@ class PodioItem
      */
     protected $myapp = null;
 
-    function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true)
+    function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true, $externalid = false)
     {
         if ($structure) {
             $this->structure = $structure;
         }
         $this->hasfields = false;
+        $this->useExternalIds = $externalid;
         if (is_array($info) && $retrieve !== 'force') {
             $this->info = $info;
             if (isset($info['fields'])) {
@@ -118,6 +125,11 @@ class PodioItem
     function onCommentDelete($params) {}
     function onFileChange($params) {}
 
+    function useExternalIds()
+    {
+        $this->useExternalIds = true;
+    }
+
     function retrieve($force = false, $basic = false)
     {
         if ($this->hasfields && !$force) {
@@ -126,6 +138,19 @@ class PodioItem
         if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
             // TODO: use custom exception
             throw new \Exception('Cannot authenticate item, no app_id');
+        }
+        if ($this->useExternalIds) {
+            if (!isset($this->info['app_item_id'])) {
+                // TODO: use custom exception
+                throw new \Exception('Cannot retrieve item, no item_id or app_item_id');
+            }
+            if (!isset($this->info['external_id'])) {
+                // TODO: use custom exception
+                throw new \Exception('Cannot retrieve item, no external_id');
+            }
+            Auth::prepareRemote($this->info['app']['app_id']);
+            $this->info = Remote::$remote->get('/item/app/' . $this->info['app']['app_id'] . '/external_id/' .
+                                     $this->info['external_id'])->json_body();
         }
         if (!isset($this->info['item_id'])) {
             if (!isset($this->info['app_item_id'])) {
