@@ -118,7 +118,7 @@ class PodioItem
     function onCommentDelete($params) {}
     function onFileChange($params) {}
 
-    function retrieve($force = false)
+    function retrieve($force = false, $basic = false)
     {
         if ($this->hasfields && !$force) {
             return;
@@ -137,7 +137,12 @@ class PodioItem
                                      $this->info['app_item_id'])->json_body();
         } else {
             Auth::prepareRemote($this->info['app']['app_id']);
-            $this->info = Remote::$remote->get('/item/' . $this->info['item_id'])->json_body();
+            if ($basic) {
+                $basic = '/basic';
+            } else {
+                $basic = '';
+            }
+            $this->info = Remote::$remote->get('/item/' . $this->info['item_id'] . $basic)->json_body();
         }
         $this->myapp = null;
         $this->dirty = array();
