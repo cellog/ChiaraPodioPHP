@@ -51,7 +51,6 @@ class PodioApp
     function __get($var)
     {
         if ($var === 'info') return $this->info;
-        if ($var === 'items') return new Iterators\AppItemIterator($this);
         if ($var === 'fields') return new Iterators\AppFieldIterator($this);
         if ($var === 'id') return $this->info['app_id'];
         if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
