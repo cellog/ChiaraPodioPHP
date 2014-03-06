@@ -90,7 +90,7 @@ class TestRemote extends Chiara\Remote
     }
 }
 Chiara\Remote::$remote = new TestRemote;
-class TestTokenManager implements Chiara\AuthManager\TokenInterface
+class TestTokenManager implements Chiara\Interfaces\AuthTokenManager
 {
     public $tokenmap = array();
     public $clientmap = array('client' => 5, 'token' => 6);

@@ -49,13 +49,14 @@ class HookServer implements Router
                 $t = $this->handlers[$this->input['type']];
                 if (is_array($t)) {
                     $actual = array();
+                    array_unshift($params, $action);
                     do {
-                        $test = implode('/', $params);
                         while (count($params)) {
+                            $test = implode('/', $params);
                             if (isset($t[$test])) {
                                 $action = $test;
                                 $params = $actual;
-                                break;
+                                break 2;
                             }
                             array_unshift($actual, array_pop($params));
                         }
