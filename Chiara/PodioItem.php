@@ -351,6 +351,12 @@ class PodioItem
 
     function __clone()
     {
+        if (!$this->id) {
+            throw new \Exception("Cannot clone item, no item_id is set");
+        }
+        if (!$this->info['app']['app_id']) {
+            throw new \Exception("Cannot clone item, no app_id is set");
+        }
         Auth::prepareRemote($this->info['app']['app_id']);
         $options = Auth::getOptions($options);
         $info = Remote::$remote->post('/item/' . $this->info['item_id'] . '/clone', '', $options);
