@@ -349,6 +349,14 @@ class PodioItem
         Remote::$remote->delete('/item/' . $this->id);
     }
 
+    function __clone()
+    {
+        Auth::prepareRemote($this->info['app']['app_id']);
+        $options = Auth::getOptions($options);
+        $info = Remote::$remote->post('/item/' . $this->info['item_id'] . '/clone', '', $options);
+        $this->info['item_id'] = $info['item_id'];
+    }
+
     function saveField(Field $field, array $options = array())
     {
         if (!$this->id) {
