@@ -56,7 +56,22 @@ and apps is fully implemented.
  - grants
  - importer
  - integrations
- - most item features
+ - item features
+   * Get references to item by field
+   * Bulk delete items (will be implemented as app method)
+   * Delete item reference
+   * Export items (will be implemented as app method)
+   * Filter Items (and by view) (will be implemented as app method)
+   * Find referenceable items
+   * Get field ranges (will be implemented as app method)
+   * Get item preview for field reference
+   * Get item count (will be implemented as app method)
+   * Get items (will not be implemented)
+   * Get items as Xlsx (will not be implemented)
+   * Get meeting url
+   * Revert item revision
+   * Set participation
+   * Update item reference
  - linked accounts
  - notifications and subscriptions
  - most organization features
