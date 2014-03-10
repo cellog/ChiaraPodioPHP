@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\Iterators;
-use Chiara\PodiRevision as Revision, Chiara\PodioItem as Item;
+use Chiara\PodioRevision as Revision, Chiara\PodioItem as Item;
 class RevisionIterator extends \ArrayIterator
 {
     protected $item;
