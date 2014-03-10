@@ -1,12 +1,14 @@
 <?php
 namespace Chiara\PodioApp;
-use Chiara\Hook;
+use Chiara\Hook, Chiara\PodioApp;
 class Field
 {
     protected $info;
+    protected $parent;
     protected $hookmanager = null;
-    function __construct(array $info = array())
+    function __construct(PodioApp $parent, array $info = array())
     {
+        $this->parent = $parent;
         $this->info = $info;
         if (!isset($info['type']) && get_class($this) !== 'Chiara\\PodioApp\\Field') {
             $this->info['type'] = str_replace('Chiara\\PodioApp\\Fields\\', '', get_class($this));
@@ -29,9 +31,9 @@ class Field
         return $this->info['type'];
     }
 
-    static function newField(array $info)
+    static function newField(PodioApp $parent, array $info)
     {
         $class = __NAMESPACE__ . '\\Fields\\' . ucfirst($info['type']);
-        return new $class($info);
+        return new $class($parent, $info);
     }
 }

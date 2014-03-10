@@ -17,7 +17,7 @@ class AppFieldIterator extends \ArrayIterator
     function current()
     {
         $info = parent::current();
-        return Field::newField($info);
+        return Field::newField($this->app, $info);
     }
 
     function offsetGet($index)
@@ -27,6 +27,6 @@ class AppFieldIterator extends \ArrayIterator
         } else {
             $info = parent::offsetGet($this->map[$index]);
         }
-        return Field::newField($info);
+        return Field::newField($this->app, $info);
     }
 }
