@@ -130,6 +130,11 @@ class PodioItem
         $this->useExternalIds = true;
     }
 
+    function retrieveValuesOnly()
+    {
+        return $this->retrieve(true, '/value');
+    }
+
     function retrieve($force = false, $basic = false)
     {
         if ($this->hasfields && !$force) {
@@ -163,7 +168,13 @@ class PodioItem
         } else {
             Auth::prepareRemote($this->info['app']['app_id']);
             if ($basic) {
-                $basic = '/basic';
+                if ($basic != '/value') {
+                    $basic = '/basic';
+                    $this->info['fields'] = Remote::$remote->get('/item/' . $this->info['item_id'] . $basic)->json_body();
+                    $this->dirty = array();
+                    $this->hasfields = true;
+                    return $this;
+                }
             } else {
                 $basic = '';
             }
