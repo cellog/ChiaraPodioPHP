@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\PodioItem\Fields;
-use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection;
+use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection, Chiara\PodioApp\Field\App;
 class App extends Field
 {
     function getValue()
@@ -16,6 +16,12 @@ class App extends Field
             $ret[] = $v->id;
         }
         return $ret;
+    }
+
+    function topValues($limit = 13, array $excludeItems = array())
+    {
+        Auth::prepareRemote($this->parent->id);
+        return App::topValues($this->id, $limit, $excludeItems);
     }
 
     function __get($var)
