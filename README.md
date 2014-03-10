@@ -21,6 +21,8 @@ Documentation is in the [docs](https://github.com/cellog/ChiaraPodioPHP/tree/mas
 This is the primary focus of the library at this stage, and support for web hooks, working with items
 and apps is fully implemented.
 > [web hooks](https://github.com/cellog/ChiaraPodioPHP/tree/master/docs/WebHooks.md)
+> * [handling a web hook](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/WebHooks.md#handling-a-web-hook)
+> * [creating a web hook](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/WebHooks.md#creating-a-web-hook)
 
 #Authentication
 
