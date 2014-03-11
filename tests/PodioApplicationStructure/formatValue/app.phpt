@@ -27,7 +27,7 @@ class Foo extends Chiara\PodioItem\Field
 }
 
 $foo = new Foo($item);
-$item2 = clone $item;
+$item2 = $item->simpleClone();
 $item2->id = 3;
 $collection = new Chiara\PodioItem\Values\Collection($foo, array($item, $item2));
 

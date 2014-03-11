@@ -415,12 +415,22 @@ class PodioItem
         Remote::$remote->delete('/item/' . $this->id);
     }
 
+    private $__noclone = false;
+    function simpleClone()
+    {
+        $this->__noclone = true;
+        $a = clone $this;
+        $this->__noclone = false;
+        return $a;
+    }
+
     function __clone()
     {
+        if ($this->__noclone) return;
         if (!$this->id) {
             throw new \Exception("Cannot clone item, no item_id is set");
         }
-        if (!$this->info['app']['app_id']) {
+        if (!isset($this->info['app']) && !isset($this->info['app']['app_id'])) {
             throw new \Exception("Cannot clone item, no app_id is set");
         }
         Auth::prepareRemote($this->info['app']['app_id']);
