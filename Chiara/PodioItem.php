@@ -130,6 +130,7 @@ class PodioItem
         $this->useExternalIds = true;
     }
 
+    // TODO: document this
     function retrieveValuesOnly()
     {
         return $this->retrieve(true, '/value');
@@ -241,6 +242,21 @@ class PodioItem
             }
             return $this->myapp;
         }
+        if (isset($this->info[$var])) {
+            return $this->info[$var];
+        }
+        if ($var == 'meetingurl') {
+            if (!isset($this->info['app']) || !isset($this->info['app']['app_id'])) {
+                // TODO: use custom exception
+                throw new \Exception('Cannot authenticate item, no app_id');
+            }
+            if (!isset($this->info['item_id'])) {
+                throw new \Exception('Cannot retrieve meeting url, no item_id');
+            }
+            Auth::prepareRemote($this->info['app']['app_id']);
+            $url = Remote::$remote->get('/item/' . $this->id . '/meeting/url');
+            return $url['url'];
+        }
     }
 
     function __set($var, $value)
@@ -272,6 +288,15 @@ class PodioItem
     function getRevisionDiff($r1, $r2)
     {
         return Remote::$remote->get('/item/' . $this->id . '/revision/' . $r1 . '/' . $r2)->json_body();
+    }
+
+    function revert($revision_id)
+    {
+        if (!is_int($revision_id) || $revision_id < 0) {
+            throw new \Exception('Revision must be a positive integer');
+        }
+        $response = Remote::$remote->delete('/item/' . $this->id . '/revision/' . $revision_id);
+        return new Revision($this, $response['revision'], false);
     }
 
     function getFieldName($fieldid)

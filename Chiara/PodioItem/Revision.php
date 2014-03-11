@@ -43,4 +43,10 @@ class Revision
         Auth::prepareRemote($this->item->app_id);
         return $this->item->getRevisionDiff($this->id, $revision->id);
     }
+
+    function revert()
+    {
+        Auth::prepareRemote($this->item->app_id);
+        return $this->item->revert($this->revision_id);
+    }
 }
