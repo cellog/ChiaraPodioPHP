@@ -80,7 +80,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         if (!count($this->data)) {
             $this->setupJIT();
         }
-        return PodioItem::factory($this->data[$this->cursor - $this->offset]);
+        return Item::factory($this->data[$this->cursor - $this->offset]);
     }
 
     function key()
