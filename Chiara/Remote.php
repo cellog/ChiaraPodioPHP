@@ -26,12 +26,12 @@ class Remote
 
     function post($url, $attributes = array(), $options = array())
     {
-        return Podio::post($url, $this->mergeOptions($attributes, $options));
+        return Podio::post(Podio::url_with_options($url, $this->mergeOptions(array(), $options)), $attributes);
     }
 
     function put($url, $attributes = array(), $options = array())
     {
-        return Podio::put($url, $this->mergeOptions($attributes, $options));
+        return Podio::put(Podio::url_with_options($url, $this->mergeOptions(array(), $options)), $attributes);
     }
 
     function delete($url, $attributes = array())
