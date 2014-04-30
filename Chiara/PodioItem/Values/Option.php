@@ -13,20 +13,24 @@ class Option
 
     function getValue()
     {
-        if (!isset($this->info['id'])) {
-            var_dump($this->info);
-            throw new \Exception('test');
-        }
         return $this->info['id'];
     }
 
     function getIndices()
     {
+        if (!isset($this->info['id'])) {
+            var_dump($this->info);
+            throw new \Exception('test');
+        }
         return array($this->info['id']);
     }
 
     function __get($var)
     {
+        if (!isset($this->info[$var])) {
+            var_dump($this->info);
+            throw new \Exception('test');
+        }
         return $this->info[$var];
     }
 
