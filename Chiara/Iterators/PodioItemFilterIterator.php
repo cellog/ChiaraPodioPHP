@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\Iterators;
-use Chiara\PodioItem as Item, Chiara\PodioApplication as App,
+use Chiara\PodioItem as Item, Chiara\Podi as App,
     Chiara\PodioView as View, Chiara\Remote;
 class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 {
