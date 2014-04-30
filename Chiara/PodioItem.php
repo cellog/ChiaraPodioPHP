@@ -397,7 +397,8 @@ class PodioItem
                                             array('fields' => $jsonarray), $options)->json_body();
             $this->info['item_id'] = $result['item_id'];
         } else {
-            Remote::$remote->post('/item/' . $this->id . '/values', $jsonarray, $options);
+            Remote::$remote->post('/item/' . $this->id . '/value',
+                                  array('fields' => $jsonarray), $options);
         }
         $this->dirty = array();
         return $this;
