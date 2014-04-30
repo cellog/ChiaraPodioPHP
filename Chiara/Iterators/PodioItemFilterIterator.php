@@ -43,7 +43,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         if ($this->view) {
             $view = '/' . $this->view->id;
         }
-        $this->data = Remote::$remote->post('/item/app/filter/' . $this->app->id . $view,
+        $this->data = Remote::$remote->post('/item/app/' . $this->app->id . '/filter/' . $view,
                                             $this->getAttributes())->json_body();
         $this->count = Remote::$remote->get('/item/app/' . $this->app->id . '/count')->json_body();
     }
