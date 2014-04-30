@@ -1,7 +1,7 @@
 <?php
 namespace Chiara\Iterators;
 use Chiara\PodioItem as Item, Chiara\PodioApp as App,
-    Chiara\PodioView as View, Chiara\Remote;
+    Chiara\PodioView as View, Chiara\Remote, Chiara\AuthManager as Auth;
 class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 {
     protected $app;
