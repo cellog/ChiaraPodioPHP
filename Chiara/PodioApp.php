@@ -36,6 +36,7 @@ class PodioApp
     {
         Auth::prepareRemote($this->id);
         $this->info = Remote::$remote->get('/app/' . $this->id)->json_body();
+        return $this;
     }
 
     function search($match, $limit = 20, $offset = 0)
