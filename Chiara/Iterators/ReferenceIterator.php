@@ -29,4 +29,13 @@ class ReferenceIterator extends \ArrayIterator
         }
         return new ReferenceCollection($this->item, $info['app'], $info['items']);
     }
+
+    function offsetExists($index)
+    {
+        if (is_int($index) && $index < 30) {
+            return parent::offsetExists($index);
+        } else {
+            return parent::offsetExists($this->map[$index]);
+        }
+    }
 }
