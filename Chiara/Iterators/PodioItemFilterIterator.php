@@ -45,8 +45,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         }
         $this->data = Remote::$remote->post('/item/app/' . $this->app->id . '/filter/' . $view,
                                             $this->getAttributes())->json_body();
-        $this->count = Remote::$remote->get('/item/app/' . $this->app->id . '/count')->json_body();
-        var_dump($this->data);exit;
+        $this->count = $this->data['filtered'];
     }
 
     function offsetGet($var)
@@ -81,7 +80,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         if (!count($this->data)) {
             $this->setupJIT();
         }
-        return Item::factory($this->data[$this->cursor - $this->offset]);
+        return Item::factory($this->data['items'][$this->cursor - $this->offset]);
     }
 
     function key()
@@ -95,8 +94,8 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         if ($this->cursor >= $this->count) {
             return;
         }
-        if ($this->cursor >= count($this->data) + $this->offset) {
-            $this->offset += count($this->data);
+        if ($this->cursor >= count($this->data['items']) + $this->offset) {
+            $this->offset += count($this->data['items']);
             $this->setupJIT();
         }
     }
