@@ -9,6 +9,9 @@ class Option
     {
         $this->parent = $parent;
         $this->info = $info;
+        if (isset($info['value'])) {
+            $this->info = $this->info['value'];
+        }
     }
 
     function getValue()

@@ -382,9 +382,9 @@ class PodioItem
         }
     }
 
-    function save(array $options = array())
+    function save(array $options = array(), $force = false)
     {
-        $jsonarray = $this->toJsonArray();
+        $jsonarray = $this->toJsonArray($force);
         
         if (!count($jsonarray)) {
             // no changes, no need to pollute the internets
