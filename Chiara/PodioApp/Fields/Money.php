@@ -3,9 +3,9 @@ namespace Chiara\PodioApp\Fields;
 use Chiara\PodioApp\Field;
 class Money extends Field
 {
-    function __construct(array $info = array())
+    function __construct(PodioApp $parent, array $info = array())
     {
-        parent::__construct($info);
+        parent::__construct($parent, $info);
         $this->info['config']['settings']['allowed_currencies'] = array();
     }
 

@@ -3,9 +3,9 @@ namespace Chiara\PodioApp\Fields;
 use Chiara\PodioApp\Field;
 class Question extends Field
 {
-    function __construct(array $info = array())
+    function __construct(PodioApp $parent, array $info = array())
     {
-        parent::__construct($info);
+        parent::__construct($parent, $info);
         if (!count($info)) {
             $this->info['config']['settings']['options'] = array();
             $this->info['config']['settings']['multiple'] = false;
