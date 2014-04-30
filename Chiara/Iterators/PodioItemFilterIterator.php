@@ -7,7 +7,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
     protected $app;
     protected $view;
     protected $count;
-    protected $data;
+    protected $data = array();
     protected $cursor = 0;
     protected $offset = 0;
     protected $limit = 30;
@@ -77,6 +77,9 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 
     function current()
     {
+        if (!count($this->data)) {
+            $this->setupJIT();
+        }
         return PodioItem::factory($this->data[$this->cursor - $this->offset]);
     }
 
@@ -106,5 +109,13 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
     function valid()
     {
         return 0 === $this->cursor || $this->cursor < $this->count;
+    }
+
+    function count()
+    {
+        if (!count($this->data)) {
+            $this->setupJIT();
+        }
+        return $this->count;
     }
 }
