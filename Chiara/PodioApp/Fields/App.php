@@ -1,6 +1,7 @@
 <?php
 namespace Chiara\PodioApp\Fields;
-use Chiara\PodioApp\Field, Chiara\Iterators\TopItemIterator, Chiara\AuthManager as Auth, Chiara\Remote;
+use Chiara\PodioApp\Field, Chiara\Iterators\TopItemIterator,
+    Chiara\AuthManager as Auth, Chiara\Remote, Chiara\PodioApp;
 class App extends Field
 {
     function __construct(PodioApp $parent, array $info = array())

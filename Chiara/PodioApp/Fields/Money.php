@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\PodioApp\Fields;
-use Chiara\PodioApp\Field;
+use Chiara\PodioApp\Field, Chiara\PodioApp;
 class Money extends Field
 {
     function __construct(PodioApp $parent, array $info = array())
