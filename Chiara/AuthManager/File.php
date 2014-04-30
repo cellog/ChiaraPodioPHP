@@ -81,6 +81,16 @@ class File implements AuthTokenManager
 
     function mapAppToClass($appid, $class)
     {
+        $indices = array();
+        foreach ($this->map as $testid => $testclass) {
+            if ($testclass == $class) {
+                $indices[] = $testid;
+            }
+        }
+        foreach ($indices as $index) {
+            // remove the classes mapped to old apps
+            unset($this->map[$index]);
+        }
         $this->map[$appid] = $class;
         file_put_contents($this->mappath, json_encode($this->map, 1));
     }

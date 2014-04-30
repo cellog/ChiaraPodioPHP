@@ -77,7 +77,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 
     function current()
     {
-        return $this->data[$this->cursor - $this->offset];
+        return PodioItem::factory($this->data[$this->cursor - $this->offset]);
     }
 
     function key()
