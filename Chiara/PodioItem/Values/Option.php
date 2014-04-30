@@ -13,6 +13,10 @@ class Option
 
     function getValue()
     {
+        if (!isset($this->info['id'])) {
+            var_dump($this->info);
+            throw new \Exception('test');
+        }
         return $this->info['id'];
     }
 
