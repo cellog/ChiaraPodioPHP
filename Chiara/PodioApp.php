@@ -57,6 +57,9 @@ class PodioApp
         if ($var === 'token') {
             return $this->verifyTokenAvailable();
         }
+        if ($var === 'filter') {
+            return new Iterators\PodioItemFilterIterator($this);
+        }
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }
