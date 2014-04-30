@@ -394,8 +394,8 @@ class PodioItem
         $options = Auth::getOptions($options);
         if (!$this->id) {
             $result = Remote::$remote->post('/item/app/' . $this->info['app']['app_id'],
-                                            array('fields' => $jsonarray), $options);
-            $this->id = $result['item_id'];
+                                            array('fields' => $jsonarray), $options)->json_body();
+            $this->info['item_id'] = $result['item_id'];
         } else {
             Remote::$remote->post('/item/' . $this->id . '/values', $jsonarray, $options);
         }
