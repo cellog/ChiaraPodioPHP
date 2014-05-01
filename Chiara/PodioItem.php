@@ -221,6 +221,9 @@ class PodioItem
                 if (!$this->structure) {
                     throw new \Exception('Cannot retrieve fields, no structure available');
                 }
+                if (!isset($this->info['fields'])) {
+                    $this->info['fields'] = $this->structure->getNewFields();
+                }
             }
             return new ItemFieldIterator($this);
         }

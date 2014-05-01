@@ -274,6 +274,20 @@ class PodioApplicationStructure
         );
     }
 
+    function getNewFields()
+    {
+        $ret = array();
+        $already = array();
+        foreach ($this->structure as $id => $info) {
+            if ($already[$info['id']]) {
+                continue;
+            }
+            $already[$info['id']] = 1;
+            $ret[] = $this->getNewField($id);
+        }
+        return $ret;
+    }
+
     /**
      * Format a value for creating a new item
      */
