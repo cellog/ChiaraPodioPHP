@@ -213,7 +213,13 @@ class PodioItem
     function __get($var)
     {
         if ($var == 'fields') {
-            $this->retrieve();
+            if (isset($this->info) && isset($this->info['id'])) {
+                $this->retrieve();
+            } else {
+                if (!isset($this->structure)) {
+                    throw new \Exception('Cannot retrieve fields, no structure available');
+                }
+            }
             return new ItemFieldIterator($this);
         }
         if ($var == 'info') {
