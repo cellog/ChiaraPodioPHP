@@ -210,6 +210,11 @@ class PodioItem
         }
     }
 
+    function setStructure(PodioApplicationStructure $structure)
+    {
+        $this->structure = $structure;
+    }
+
     function __get($var)
     {
         if ($var == 'fields') {
