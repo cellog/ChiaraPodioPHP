@@ -335,7 +335,7 @@ class PodioItem
             throw new \Exception('Cannot find field, no existing fields or structure class found');
         }
         // create the field on the fly
-        $this->info['fields'][] = $this->structure->getNewField($field);
+        $this->info['fields'][] = $this->structure->getNewField($index);
         return 0;
     }
 
