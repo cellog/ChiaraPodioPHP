@@ -328,6 +328,12 @@ class PodioItem
                 return $i;
             }
         }
+        if (!$this->structure) {
+            throw new \Exception('Cannot find field, no existing fields or structure class found');
+        }
+        // create the field on the fly
+        $this->info['fields'][] = $this->structure->getNewField($field);
+        return 0;
     }
 
     function setFieldValue($index, $value)
@@ -337,17 +343,6 @@ class PodioItem
         }
         $o = $index;
         $index = $this->getIndex($index);
-        if (!$index) {
-            $index = $o;
-            // we have to guess here
-            if ($value == $this->info['fields'][$index]['values']) {
-                return;
-            } else {
-                $this->dirty[$index] = true;
-            }
-            $this->info['fields'][$index]['values'] = $value;
-            return;
-        }
         $newvalue = $this->structure->formatValue($this->info['fields'][$index]['field_id'], $value);
         if ($newvalue == $this->info['fields'][$index]['values']) {
             return;

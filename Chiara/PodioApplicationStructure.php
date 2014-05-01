@@ -261,6 +261,20 @@ class PodioApplicationStructure
     }
 
     /**
+     * If we are creating an item, we need to grab the field structure
+     */
+    function getNewField($id)
+    {
+        return array(
+            'status' => 'active',
+            'type' => $this->structure[$id]['type'],
+            'field_id' => $this->structure[$id]['id'],
+            'external_id' => $this->structure[$id]['name'],
+            'values' => array()
+        );
+    }
+
+    /**
      * Format a value for creating a new item
      */
     function formatValue($id, $value)
