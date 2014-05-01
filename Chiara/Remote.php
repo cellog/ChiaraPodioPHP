@@ -8,7 +8,7 @@ class Remote
     function mergeOptions($attributes, $options)
     {
         if (isset($options['hook'])) {
-            $attributes['hook'] = $options['hook'] ? 'true' : 'false';
+            $attributes['hook'] = $options['hook'] ? '1' : '0';
         }
         if (isset($options['silent'])) {
             $attributes['silent'] = $options['silent'] ? '1' : '0';
