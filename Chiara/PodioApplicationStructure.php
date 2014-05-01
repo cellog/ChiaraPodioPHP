@@ -268,6 +268,9 @@ class PodioApplicationStructure
         if (!is_string($id) && !is_int($id)) {
             throw new \Exception('Internal error: invalid input ' . var_export($id, 1));
         }
+        if (!isset($this->structure[$id])) {
+            throw new \Exception('Internal error: ' . get_class($this) . ' has no field named "' . $id . '"');
+        }
         return array(
             'status' => 'active',
             'type' => $this->structure[$id]['type'],
