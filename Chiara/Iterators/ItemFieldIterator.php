@@ -47,4 +47,18 @@ class ItemFieldIterator extends \ArrayIterator
         }
         $this->item->setFieldValue($index, $value);
     }
+
+    function offsetExists($index)
+    {
+        if (is_int($index) && $index < 30) {
+            if (!isset($this[$index])) {
+                return false;
+            }
+        } else {
+            if (!isset($this->map[$index])) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
