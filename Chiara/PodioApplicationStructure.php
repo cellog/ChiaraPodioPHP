@@ -265,7 +265,7 @@ class PodioApplicationStructure
      */
     function getNewField($id)
     {
-        if (!is_string($id) || !is_int($id)) {
+        if (!is_string($id) && !is_int($id)) {
             throw new \Exception('Internal error: invalid input ' . var_export($id, 1));
         }
         return array(
@@ -282,7 +282,7 @@ class PodioApplicationStructure
         $ret = array();
         $already = array();
         foreach ($this->structure as $id => $info) {
-            if ($already[$info['id']]) {
+            if (isset($already[$info['id']])) {
                 continue;
             }
             $already[$info['id']] = 1;
