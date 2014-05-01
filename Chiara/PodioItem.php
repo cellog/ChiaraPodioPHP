@@ -213,10 +213,12 @@ class PodioItem
     function __get($var)
     {
         if ($var == 'fields') {
-            if (isset($this->info) && isset($this->info['id'])) {
+            if (isset($this->info) && (isset($this->info['id']) ||
+                                       $this->useExternalIds && isset($this->info['external_id']) ||
+                                       isset($this->info['app_item_id']))) {
                 $this->retrieve();
             } else {
-                if (!isset($this->structure)) {
+                if (!$this->structure) {
                     throw new \Exception('Cannot retrieve fields, no structure available');
                 }
             }
