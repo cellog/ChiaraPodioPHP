@@ -151,7 +151,7 @@ class HookServer implements Router
             throw new \Exception('Handler must be callable for podio action "' . $podioaction . '"');
         }
         if (!$action) {
-            if (is_array($this->handles[$podioaction])) {
+            if (is_array($this->handlers[$podioaction])) {
                 throw new \Exception('Cannot set handler for podio action "' . $podioaction .
                                      '", handlers for specific actions exist');
             }
