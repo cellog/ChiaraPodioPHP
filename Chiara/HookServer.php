@@ -24,7 +24,7 @@ class HookServer implements Router
             $this->server = $_SERVER;
         }
         $this->registerRouter($this);
-        $this->handlers['hook.verify'] = array($this, 'hookVerify');
+        $this->handlers['hook.verify'][0] = array($this, 'hookVerify');
     }
 
     function setBaseUrl($url)
@@ -150,6 +150,9 @@ class HookServer implements Router
 
     function getHookUrl($action)
     {
+        if (!$action) {
+            $action = '';
+        }
         return $this->baseurl . '/' . $action;
     }
 

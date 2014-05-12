@@ -37,7 +37,7 @@ class a extends Chiara\PodioItem
 }
 
 $b = new a;
-$b->setup($test, $v);
+$b->setup($test);
 $item->on['item.create'] = $b;
 Hook::$hookserver->perform();
 
