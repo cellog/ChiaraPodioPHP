@@ -24,7 +24,7 @@ class PodioItem
      * Note that fields may exist that are not in the definition (legacy deleted fields)
      * @var Chiara\PodioApplicationStructure
      */
-    protected $structure = null;
+    protected $mystructure = null;
     /**
      * The cached return of a call to the get references API call
      * @var array
@@ -38,7 +38,7 @@ class PodioItem
     function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true, $externalid = false)
     {
         if ($structure) {
-            $this->structure = $structure;
+            $this->mystructure = $structure;
         }
         $this->hasfields = false;
         $this->useExternalIds = $externalid;
@@ -97,7 +97,7 @@ class PodioItem
      */
     function __invoke($post, $params)
     {
-        $this->info['item_id'] = $post['item_id'];
+        $this->info['item_id'] = (int) $post['item_id'];
         if (isset($post['item_revision_id'])) {
             $this->info['item_revision_id'] = $post['item_revision_id'];
         }
@@ -105,7 +105,7 @@ class PodioItem
             $this->info['external_id'] = $post['external_id'];
         }
         $func = explode('.', $post['type']);
-        $func = array_map($func, function($a){return ucfirst($a);});
+        $func = array_map(function($a){return ucfirst($a);}, $func);
         $function = 'on' . implode('', $func);
         $this->$function($params);
     }
@@ -212,16 +212,38 @@ class PodioItem
 
     function setStructure(PodioApplicationStructure $structure)
     {
-        $this->structure = $structure;
+        $this->mystructure = $structure;
+    }
+
+    private $_nostructure = false;
+    function doNotGetStructure()
+    {
+        $this->_nostructure = true;
+        return $this;
     }
 
     function __get($var)
     {
         if ($var == 'fields') {
-            if (isset($this->info) && (isset($this->info['id']) ||
+            if (isset($this->info) && (isset($this->info['item_id']) ||
                                        $this->useExternalIds && isset($this->info['external_id']) ||
                                        isset($this->info['app_item_id']))) {
-                $this->retrieve();
+                if (!$this->hasfields) {
+                    $this->retrieve();
+                }
+                if (!$this->_nostructure && !isset($this->mystructure)) {
+                    try {
+                        $this->mystructure = PodioApplicationStructure::getStructure($this->info['app']['app_id'], true);
+                    } catch (\Exception $e) {
+                        $makestruc = $this->simpleClone()->doNotGetStructure();
+                        // php does not like recursive __get() calls
+                        $this->mystructure = PodioApplicationStructure::fromItem($makestruc);
+                    }
+                }
+                if ($this->mystructure) {
+                    $newfields = $this->mystructure->getNewFields($this->info['fields']);
+                    $this->info['fields'] = array_merge($this->info['fields'], $newfields);
+                }
             } else {
                 if (!$this->structure) {
                     throw new \Exception('Cannot retrieve fields, no structure available');
@@ -245,7 +267,15 @@ class PodioItem
             return new ReferenceIterator($this, $this->references);
         }
         if ($var === 'structure') {
-            return $this->structure;
+            if (!isset($this->mystructure)) {
+                // try to construct it on the fly
+                try {
+                    $this->mystructure = PodioApplicationStructure::getStructure($this->info['app']['app_id'], true);
+                } catch (\Exception $e) {
+                    $this->mystructure = PodioApplicationStructure::fromItem($this);
+                }
+            }
+            return $this->mystructure;
         }
         if ($var == 'app') {
             if (!$this->myapp) {
@@ -346,9 +376,6 @@ class PodioItem
 
     function setFieldValue($index, $value)
     {
-        if (!$this->structure) {
-            $this->structure = PodioApplicationStructure::fromItem($this);
-        }
         $o = $index;
         $index = $this->getIndex($index);
         $newvalue = $this->structure->formatValue($this->info['fields'][$index]['field_id'], $value);

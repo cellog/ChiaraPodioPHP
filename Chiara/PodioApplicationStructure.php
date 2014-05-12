@@ -182,13 +182,12 @@ class PodioApplicationStructure
     static function fromItem(PodioItem $item)
     {
         $app = $item->app;
-        $id = $app->space_id . '/' . $app->app_id;
+        $id = $app->id;
         if (isset(self::$structures[$id])) {
             return self::$structures[$id];
         }
         $ret = new self;
-        $ret->structureFromItem($item);
-        return $ret;
+        return $ret->structureFromItem($item);
     }
 
     /**
@@ -243,8 +242,8 @@ class PodioApplicationStructure
                     break;
             }
         }
-        if (!$addToList) return;
-        self::$structures[$app->space_id . '/' . $app->app_id] = array($this->structure, get_class($this));
+        if (!$addToList) return $this;
+        self::$structures[$app->app_id] = array($this->structure, get_class($this));
     }
 
     static function getStructure($appname, $strict = false, $overrideclassname = false)
@@ -280,10 +279,13 @@ class PodioApplicationStructure
         );
     }
 
-    function getNewFields()
+    function getNewFields($existing = array())
     {
-        $ret = array();
         $already = array();
+        foreach ($existing as $field) {
+            $already[$field['field_id']] = 1;
+        }
+        $ret = array();
         foreach ($this->structure as $id => $info) {
             if (isset($already[$info['id']])) {
                 continue;
@@ -529,7 +531,7 @@ class PodioApplicationStructure
         }
         $ret .= "class $classname extends \\" . get_class($this) . "\n";
         $ret .= "{\n";
-        $ret .= '    const APPNAME = "' . $spaceid . '/' . $appid . "\";\n";
+        $ret .= '    const APPNAME = "' . $appid . "\";\n";
         $ret .= '    protected $structure = ';
         $structure = explode("\n", $this->dumpStructure());
         $ret .= $structure[0] . "\n";

@@ -18,6 +18,21 @@ try {
 }
 
 $test->assertEquals(array (), Chiara\Remote::$remote->queries, 'queries');
+
+Hook::$hookserver = new Hook('', array('type' => 'item.create',
+                                                                 'item_id' => '3',
+                                                                ),
+                                                       array('PATH_INFO' => '/'
+                                                            ));
+
+try {
+    Hook::$hookserver->perform();
+    $test->assertFail('no exception thrown');
+} catch (\Exception $e) {
+    $test->assertException($e, 'Exception', 'Unhandled route action for "item.create"', 'exception');
+}
+
+$test->assertEquals(array (), Chiara\Remote::$remote->queries, 'queries');
 echo "done\n";
 ?>
 --EXPECT--

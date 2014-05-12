@@ -8,7 +8,7 @@ class Manager implements \ArrayAccess
     protected $context;
     protected $action;
     protected $podioaction;
-    function __construct($context, $action = null, $podioaction = null)
+    function __construct($context, $action = 0, $podioaction = null)
     {
         $this->context = $context;
         $this->action = $action;
@@ -80,6 +80,8 @@ class Manager implements \ArrayAccess
         $action = $this->action;
         if ($action) {
             $action .= '/';
+        } else {
+            $action = '';
         }
         return new static($this->context, $action . $var);
     }

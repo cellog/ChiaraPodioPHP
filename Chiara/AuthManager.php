@@ -41,6 +41,7 @@ class AuthManager
         }
         if (self::$currentapp == $appid) return; // we are already authenticated as this app
         Remote::$remote->authenticate_with_app($appid, self::$tokenmanager->getToken($appid));
+        self::$currentapp = $appid;
     }
 
     static function attemptPasswordLogin($logoutvariable = false)

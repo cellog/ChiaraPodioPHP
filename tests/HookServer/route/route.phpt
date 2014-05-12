@@ -14,6 +14,7 @@ $test->assertEquals(array (
   ),
 ), $server->route(), 'basic test');
 
+$server->registerHandler('item.create', false, function(){});
 $server->registerHandler('item.create', 'one/two', function(){});
 $server->registerHandler('item.create', 'one/two/three', function(){});
 
@@ -33,6 +34,18 @@ $test->assertEquals(array (
     0 => 'three',
   ),
 ), $server->route(), 'one/two');
+
+$server->unregisterHandler('item.create', 'one/two');
+
+$test->assertEquals(array (
+  'action' => 0,
+  'params' => 
+  array (
+    0 => 'one',
+    1 => 'two',
+    2 => 'three',
+  ),
+), $server->route(), 'generic');
 
 echo "done\n";
 ?>

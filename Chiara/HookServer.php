@@ -48,20 +48,29 @@ class HookServer implements Router
             if (isset($this->handlers[$this->input['type']])) {
                 $t = $this->handlers[$this->input['type']];
                 if (is_array($t)) {
-                    $actual = array();
-                    array_unshift($params, $action);
-                    do {
-                        while (count($params)) {
-                            $test = implode('/', $params);
-                            if (isset($t[$test])) {
-                                $action = $test;
-                                $params = $actual;
-                                break 2;
+                    if (isset($t[0])) {
+                        // this is the handler for generic, no specific action
+                        unset($t[0]);
+                    }
+                    if (count($t)) {
+                        $actual = array();
+                        array_unshift($params, $action);
+                        do {
+                            while (count($params)) {
+                                $test = implode('/', $params);
+                                if (isset($t[$test])) {
+                                    $action = $test;
+                                    $params = $actual;
+                                    break 2;
+                                }
+                                array_unshift($actual, array_pop($params));
                             }
-                            array_unshift($actual, array_pop($params));
-                        }
-                        $params = $info; // not found
-                    } while (false);
+                            $params = $info; // not found
+                        } while (false);
+                    } else {
+                        array_unshift($params, $action);
+                        $action = 0;
+                    }
                 }
             }
             return array('action' => $action, 'params' => $params);
@@ -150,12 +159,11 @@ class HookServer implements Router
         if (!is_callable($handler)) {
             throw new \Exception('Handler must be callable for podio action "' . $podioaction . '"');
         }
+        if (!isset($this->handlers[$podioaction])) {
+            $this->handlers[$podioaction] = array();
+        }
         if (!$action) {
-            if (is_array($this->handlers[$podioaction])) {
-                throw new \Exception('Cannot set handler for podio action "' . $podioaction .
-                                     '", handlers for specific actions exist');
-            }
-            $this->handlers[$podioaction] = $handler;
+            $action = 0;
         }
         $this->handlers[$podioaction][$action] = $handler;
     }
@@ -163,20 +171,12 @@ class HookServer implements Router
     function unregisterHandler($podioaction, $action)
     {
         if (!$this->handlerExists($podioaction, $action)) return;
-        if ($action) {
-            unset($this->handlers[$podioaction][$action]);
-            if (!count($this->handlers[$podioaction])) {
-                unset($this->handlers[$podioaction]);
-            }
-        } else {
-            $keys = array_keys($this->handlers[$podioaction]);
-            // ensure that no other handlers exist before unsetting
-            foreach ($keys as $key) {
-                if (!is_int($key)) {
-                    throw new \Exception('Cannot unset handler for podio action "' . $podioaction .
-                                         '", handlers for specific actions exist');
-                }
-            }
+        if (!$action) {
+            $action = 0;
+        }
+        unset($this->handlers[$podioaction][$action]);
+        if (!count($this->handlers[$podioaction])) {
+            unset($this->handlers[$podioaction]);
         }
     }
 
@@ -188,20 +188,17 @@ class HookServer implements Router
             }
             throw new \Exception('Handler for podio action "' . $podioaction . '" does not exist');
         }
-        if ($action) {
-            return $this->handlers[$podioaction][$action];
-        }
-        return $this->handlers[$podioaction];
+        if (!$action) $action = 0;
+        return $this->handlers[$podioaction][$action];
     }
 
-    function handlerExists($podioaction, $action = null)
+    function handlerExists($podioaction, $action = 0)
     {
         $this->validHook($podioaction);
-        if ($action) {
-            return isset($this->handlers[$podioaction]) &&
-            is_array($this->handlers[$podioaction]) && isset($this->handlers[$podioaction][$action]);
+        if (!$action) {
+            $action = 0;
         }
-        return isset($this->handlers[$podioaction]) && is_callable($this->handles[$podioaction]);
+        return isset($this->handlers[$podioaction]) && isset($this->handlers[$podioaction][$action]);
     }
 
     function perform()
@@ -209,12 +206,14 @@ class HookServer implements Router
         Auth::beginHook(); // ensure that hook = false is passed in options
         $info = $this->router->route();
         if (isset($this->handlers[$this->input['type']])) {
-            if (is_callable($this->handlers[$this->input['type']])) {
-                return call_user_func($this->handlers[$this->input['type']], $this->input, $info['params']);
+            if (isset($info['action'])) {
+                if (isset($this->handlers[$this->input['type']][$info['action']])) {
+                    $action = $this->handlers[$this->input['type']][$info['action']];
+                    return call_user_func($action, $this->input, $info['params']);
+                }
             }
-            if (isset($this->handlers[$this->input['type']][$info['action']])) {
-                $action = $this->handlers[$this->input['type']][$info['action']];
-                return call_user_func($action, $this->input, $info['params']);
+            if (isset($this->handlers[$this->input['type']][0]) && is_callable($this->handlers[$this->input['type']][0])) {
+                return call_user_func($this->handlers[$this->input['type']][0], $this->input, $info['params']);
             }
         }
         if ($info['action']) {
