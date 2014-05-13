@@ -39,9 +39,17 @@ and apps is fully implemented.
 > * [item revisions](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#revisions)
 > * [special features](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#special-item-features)
 
+#Working with Search
+
+> [searching podio](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md)
+> * [global search](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#global)
+> * [organization search](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#organization)
+> * [workspace search](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#workspace)
+> * [app search](https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#app)
+
 #Unimplemented features
- - tasks
- - statuses
+ - tasks (partially implemented, undocumented)
+ - statuses (partially implemented, undocumented)
  - actions
  - app market
  - most application features
@@ -73,9 +81,8 @@ and apps is fully implemented.
  - linked accounts
  - notifications and subscriptions
  - most organization features
- - status questions
+ - status questions (implemented, undocumented)
  - ratings
- - search
  - most space features
  - tags
  - views

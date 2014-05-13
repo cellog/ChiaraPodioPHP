@@ -8,10 +8,15 @@ class PodioEmbed
     {
         if (is_array($embedid)) {
             $this->info = $embedid;
-            $this->embedid = $this->info['embed']['embed_id'];
+            $this->id = $this->info['embed']['embed_id'];
             return;
         }
-        $this->embedid = $embedid;
+        $this->info = array('embed' => array());
+        if (is_string($embedid)) {
+            $this->url = $embedid;
+        } else if (is_int($embedid)) {
+            $this->id = $embedid;
+        }
     }
 
     function __get($var)

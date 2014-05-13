@@ -21,6 +21,11 @@ class PodioWorkspace
         return HookServer::$hookserver->makeHook($this, $action, $podioaction);
     }
 
+    function search($match, $limit = 20, $offset = 0)
+    {
+        return Remote::$remote->search($this, $match, $limit, $offset);
+    }
+
     function __invoke($post, $params)
     {
         if (isset($post['app_id'])) {

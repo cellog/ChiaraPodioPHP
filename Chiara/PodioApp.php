@@ -1,6 +1,6 @@
 <?php
 namespace Chiara;
-use Podio, Chiara\AuthManager as Auth, Chiara\HookServer;
+use Podio, Chiara\AuthManager as Auth, Chiara\HookServer, Chiara\Remote;
 class PodioApp
 {
     protected $info;
@@ -41,18 +41,7 @@ class PodioApp
 
     function search($match, $limit = 20, $offset = 0)
     {
-        Auth::prepareRemote($this->id);
-        $options = array('query' => (string) $match);
-        if ($limit != 20) {
-            $options['limit'] = $limit;
-        }
-        if ($offset) {
-            $options['offset'] = $offset;
-        }
-        $ret = Remote::$remote->post('/search/app/' . $this->id . '/',
-                                            $options)->json_body();
-        // TODO: implement an iterator for search results
-        return $ret;
+        return Remote::$remote->search($this, $match, $limit, $offset);
     }
 
     function createHook($podioaction, $action = null)

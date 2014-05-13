@@ -45,4 +45,9 @@ class PodioOrganization
         $orgs = Remote::$remote->get('/org/shared/' . $user)->json_body();
         return new Iterators\OrganizationIterator($orgs);
     }
+
+    function search($match, $limit = 20, $offset = 0)
+    {
+        return Remote::$remote->search($this, $match, $limit, $offset);
+    }
 }
