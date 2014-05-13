@@ -1,8 +1,14 @@
 <?php
 namespace Chiara\PodioItem\Fields;
-use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection, Chiara\PodioItem\Values\Option;
+use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection, Chiara\PodioItem\Values\Option,
+    Chiara\PodioItem;
 class Category extends Field
 {
+    function __construct(PodioItem $parent, array $info = array())
+    {
+        parent::__construct($parent, $info, $info['config']['settings']['multiple']);
+    }
+
     function getValue()
     {
         if (!$this->info['config']['settings']['multiple']) {

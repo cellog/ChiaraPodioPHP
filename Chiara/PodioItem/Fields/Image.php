@@ -1,7 +1,7 @@
 <?php
 namespace Chiara\PodioItem\Fields;
-use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection;
-class Image extends Field
+use Chiara\PodioItem\IteratableField, Chiara\PodioItem\Values\Collection;
+class Image extends IteratableField
 {
     function getValue()
     {

@@ -1,7 +1,7 @@
 <?php
 namespace Chiara\PodioItem\Fields;
-use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection;
-class Contact extends Field
+use Chiara\PodioItem\IteratableField, Chiara\PodioItem\Values\Collection;
+class Contact extends IteratableField
 {
     function getValue()
     {

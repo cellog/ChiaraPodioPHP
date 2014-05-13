@@ -1,7 +1,8 @@
 <?php
 class Test extends \Chiara\PodioApplicationStructure
 {
-    const APPNAME = "1234/2345";
+    protected $APPID = "2345";
+    protected $APPNAME = "Testing";
     protected $structure = array (
       51928207 => 
       array (

@@ -6,7 +6,8 @@ namespace Chiara;
  */
 class PodioApplicationStructure
 {
-    const APPNAME = '';
+    protected $APPNAME = '';
+    protected $APPID = '';
     /**
      * Use this variable to define your application's structure offline
      *
@@ -24,13 +25,17 @@ class PodioApplicationStructure
     function __construct()
     {
         if (count($this->structure)) {
-            if (!static::APPNAME) {
+            if (!$this->APPNAME) {
                 // TODO: convert this to a Chiara-specific exception
-                throw new \Exception('Error: the APPNAME constant must be overridden and set to the app\'s name');
+                throw new \Exception('Error: the APPNAME variable must be overridden and set to the app\'s name');
             }
-            self::$structures[static::APPNAME] = array($this->structure, get_class($this));
-        } elseif (static::APPNAME && isset(self::$structures[static::APPNAME])) {
-            $this->structure = self::$structures[static::APPNAME][0];
+            if (!$this->APPID) {
+                // TODO: convert this to a Chiara-specific exception
+                throw new \Exception('Error: the APPID variable must be overridden and set to the app\'s name');
+            }
+            self::$structures[$this->APPID] = array($this->structure, get_class($this));
+        } elseif ($this->APPID && isset(self::$structures[$this->APPID])) {
+            $this->structure = self::$structures[$this->APPID][0];
         }
     }
 
@@ -205,6 +210,8 @@ class PodioApplicationStructure
     
     protected function genericStructure($app, $addToList = true)
     {
+        $this->APPNAME = $app->app->name;
+        $this->APPID = $app->app->id;
         foreach ($app->fields as $field) {
             switch ($field->type()) {
                 case 'state' :
@@ -244,18 +251,19 @@ class PodioApplicationStructure
         }
         if (!$addToList) return $this;
         self::$structures[$app->app_id] = array($this->structure, get_class($this));
+        return $this;
     }
 
-    static function getStructure($appname, $strict = false, $overrideclassname = false)
+    static function getStructure($appid, $strict = false, $overrideclassname = false)
     {
-        if (!isset(self::$structures[$appname])) {
+        if (!isset(self::$structures[$appid])) {
             if ($strict) {
                 // TODO: convert this to a Chiara-specific exception
-                throw new \Exception('No structure found for app "' . $appname . '"');
+                throw new \Exception('No structure found for app "' . $appid . '"');
             }
             return new self;
         }
-        $class = self::$structures[$appname][1];
+        $class = self::$structures[$appid][1];
         return new $class;
     }
 
@@ -268,7 +276,7 @@ class PodioApplicationStructure
             throw new \Exception('Internal error: invalid input ' . var_export($id, 1));
         }
         if (!isset($this->structure[$id])) {
-            throw new \Exception('Internal error: ' . get_class($this) . ' has no field named "' . $id . '"');
+            throw new \Exception('Internal error: application "' . $this->APPNAME . '" has no field named "' . $id . '"');
         }
         return array(
             'status' => 'active',
@@ -498,7 +506,7 @@ class PodioApplicationStructure
         if (isset($this->structure[$field])) {
             return $this->structure[$field]['type'];
         }
-        throw new \Exception('Unknown field: "' . $field . '" requested for app ' . static::APPNAME);
+        throw new \Exception('Unknown field: "' . $field . '" requested for app ' . $this->APPNAME);
     }
 
     function getName($field)
@@ -520,10 +528,10 @@ class PodioApplicationStructure
         if (isset($this->structure[$field])) {
             return $this->structure[$field]['config'];
         }
-        throw new \Exception('Unknown field: "' . $field . '" configuration requested for app ' . static::APPNAME);
+        throw new \Exception('Unknown field: "' . $field . '" configuration requested for app ' . $this->APPNAME);
     }
 
-    function generateStructureClass($spaceid, $appid, $classname, $namespace = null, $filename = null)
+    function generateStructureClass($appname, $appid, $classname, $namespace = null, $filename = null)
     {
         $ret = "<?php\n";
         if ($namespace) {
@@ -531,7 +539,8 @@ class PodioApplicationStructure
         }
         $ret .= "class $classname extends \\" . get_class($this) . "\n";
         $ret .= "{\n";
-        $ret .= '    const APPNAME = "' . $appid . "\";\n";
+        $ret .= '    protected $APPID = "' . $appid . "\";\n";
+        $ret .= '    protected $APPNAME = "' . $appname . "\";\n";
         $ret .= '    protected $structure = ';
         $structure = explode("\n", $this->dumpStructure());
         $ret .= $structure[0] . "\n";

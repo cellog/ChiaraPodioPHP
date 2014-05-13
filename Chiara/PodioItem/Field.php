@@ -2,12 +2,12 @@
 namespace Chiara\PodioItem;
 use Chiara\PodioItem;
 
-abstract class Field
+abstract class Field extends \IteratorIterator
 {
     protected $info;
     protected $parent;
     protected $mytype;
-    function __construct(PodioItem $parent, array $info = array())
+    function __construct(PodioItem $parent, array $info = array(), $iteration = false)
     {
         $this->info = $info;
         $this->parent = $parent;
@@ -18,6 +18,9 @@ abstract class Field
         }
         if (isset($this->mytype)) {
             $this->info['type'] = $this->mytype;
+        }
+        if ($iteration) {
+            parent::__construct($this->getValue());
         }
     }
 

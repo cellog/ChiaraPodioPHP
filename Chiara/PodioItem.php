@@ -234,15 +234,11 @@ class PodioItem
                 if (!$this->_nostructure && !isset($this->mystructure)) {
                     try {
                         $this->mystructure = PodioApplicationStructure::getStructure($this->info['app']['app_id'], true);
+                        $newfields = $this->mystructure->getNewFields($this->info['fields']);
+                        $this->info['fields'] = array_merge($this->info['fields'], $newfields);
                     } catch (\Exception $e) {
-                        $makestruc = $this->simpleClone()->doNotGetStructure();
-                        // php does not like recursive __get() calls
-                        $this->mystructure = PodioApplicationStructure::fromItem($makestruc);
+                        // we do not need structure immediately so we will ignore
                     }
-                }
-                if ($this->mystructure) {
-                    $newfields = $this->mystructure->getNewFields($this->info['fields']);
-                    $this->info['fields'] = array_merge($this->info['fields'], $newfields);
                 }
             } else {
                 if (!$this->structure) {

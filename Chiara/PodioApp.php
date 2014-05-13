@@ -77,6 +77,11 @@ class PodioApp
         if ($var === 'filter') {
             return new Iterators\PodioItemFilterIterator($this);
         }
+        if ($var === 'app') {
+            // used to make it easier to access app metadata from either
+            // this or a PodioItem as in "$thing->app->name" will always work
+            return $this;
+        }
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }
@@ -94,7 +99,7 @@ class PodioApp
     {
         $structure = new PodioApplicationStructure;
         $structure->structureFromApp($this);
-        return $structure->generateStructureClass($this->space_id, $this->app_id, $classname, $namespace, $filename);
+        return $structure->generateStructureClass($this->name, $this->app_id, $classname, $namespace, $filename);
     }
 
     function generateClass($classname, $appid, $structureclass, $namespace = null, array $implements = array(), $filename = null,

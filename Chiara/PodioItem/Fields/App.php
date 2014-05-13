@@ -1,7 +1,7 @@
 <?php
 namespace Chiara\PodioItem\Fields;
-use Chiara\PodioItem\Field, Chiara\PodioItem\Values\Collection, Chiara\PodioApp\Field\App as AppField;
-class App extends Field
+use Chiara\PodioItem\IteratableField, Chiara\PodioItem\Values\Collection, Chiara\PodioApp\Field\App as AppField;
+class App extends IteratableField
 {
     function getValue()
     {

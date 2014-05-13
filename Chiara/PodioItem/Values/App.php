@@ -5,7 +5,7 @@ class App extends Reference
 {
     function retrieveReference()
     {
-        $class = Auth::getTokenManager()->getAppClass($this->info['value']['app_id']);
+        $class = Auth::getTokenManager()->getAppClass($this->info['value']['app']['app_id']);
         return new $class($this->info['value'], null, 'force');
     }
 

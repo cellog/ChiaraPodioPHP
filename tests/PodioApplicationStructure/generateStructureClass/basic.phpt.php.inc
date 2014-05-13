@@ -2,7 +2,8 @@
 namespace My\NamespaceName;
 class Classy extends \Chiara\PodioApplicationStructure
 {
-    const APPNAME = "2345";
+    protected $APPID = "2345";
+    protected $APPNAME = "Application";
     protected $structure = array (
       'title' => 
       array (

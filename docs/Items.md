@@ -202,7 +202,7 @@ if (isset($item->fields['location']->value[0])) {
     $value = $item->fields['location']->value[0];
 }
 
-foreach ($item->fields['location']->value as $location) {
+foreach ($item->fields['location'] as $location) {
     $value = $location->value;
 }
 ?>
@@ -234,7 +234,7 @@ if (isset($item->fields['multiplecategory']->value[1])) {
     $value = $item->fields['multiplecategory']->value[1]; // get category field
 }
 
-foreach ($item->fields['multiplcategory']->value as $value) {
+foreach ($item->fields['multiplcategory'] as $value) {
     $val = $value->text;
 }
 ?>
@@ -256,7 +256,7 @@ $item->fields['embedfield'] = array('embed' => array('embed_id' => 1), 'file' =>
 $item->fields['embedfield'] = $anotheritem->fields['embedfield']->value;
 $item->fields['embedfield'] = $anotheritem->fields['embedfield']->value[123456]; // set to the value of a single embed in a collection
 
-foreach ($item->fields['embedfield']->value as $embed) {
+foreach ($item->fields['embedfield'] as $embed) {
     $link = $embed->original_url;
 }
 ?>
@@ -319,8 +319,13 @@ $item->fields['contact'] = 13245; // interpreted as a profile_id
 $item->fields['contact'] = array(1325, 453254);
 $item->fields['contact'] = new Chiara\PodioContact(12345);
 $item->fields['contact'] = $anotheritem->fields['contact2']->value;
+```
 
-foreach ($item->fields['contact']->value as $contact) {
+Contacts can be iterated over as well
+
+```php
+<?php
+foreach ($item->fields['contact'] as $contact) {
     // do something
 }
 $contact = $item->fields['contact']->value[13245]; // indexed by profile_id
@@ -358,6 +363,20 @@ $item = $item->fields['app-reference']->value[0]; // indexed by order
 
 // access a field within a referenced item
 $info = $item->fields['app-reference']->value[13245]->fields['text']->value;
+?>
+```
+
+App references can be iterated over as well
+
+```php
+<?php
+foreach ($item->fields['app-reference'] as $ref) {
+    // $ref is a Chiara\Podio\Value\App object
+    // it can be accessed as if it were a Chiara\PodioItem object
+    $ref->fields['parent-ref'] = $item;
+    // access the internal Chiara\PodioItem object directly
+    $obj = $ref->getValue();
+}
 ?>
 ```
 

@@ -316,7 +316,7 @@ $test->assertEquals(array (
 ), $structure->getRawStructure(), 'before');
 
 $test->assertFileNotExists(__DIR__ . '/thing.php', 'before generate');
-$test->assertEquals($a = file_get_contents(__DIR__ . '/basic.phpt.php.inc'), $structure->generateStructureClass(1234, 2345, 'Classy', 'My\NamespaceName', __DIR__ . '/thing.php'), 'output');
+$test->assertEquals($a = file_get_contents(__DIR__ . '/basic.phpt.php.inc'), $structure->generateStructureClass('Application', 2345, 'Classy', 'My\NamespaceName', __DIR__ . '/thing.php'), 'output');
 $test->assertFileExists(__DIR__ . '/thing.php', 'after generate');
 
 $test->assertEquals($a, file_get_contents(__DIR__ . '/thing.php'), 'contents match');
