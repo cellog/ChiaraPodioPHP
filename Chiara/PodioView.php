@@ -11,9 +11,14 @@ class PodioView
             $this->info = $viewid;
             if ($retrieve !== 'force') return;
         } else {
-            $this->info = array('view_id' => $viewid);
+            $this->info = array('view_id' => $viewid,
+                                'name' => 'no name',
+                                'sort_by' => 'created_on',
+                                'filters' => array(),
+                                'layout' => 'badge',
+                                'fields' => array());
         }
-        if (!$retrieve) return;
+        if (!$retrieve || !$this->id) return;
         $this->retrieve();
     }
 
@@ -28,5 +33,15 @@ class PodioView
             return $this->info['view_id'];
         }
         return $this->info[$var];
+    }
+
+    function save()
+    {
+        $info = $this->info;
+        if ($info['id']) {
+            // update
+        } else {
+            $this->info['view_id'] = Remote::$remote->post('/view/app/' . $this->appid, $info)->json_body();
+        }
     }
 }

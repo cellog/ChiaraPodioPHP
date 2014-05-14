@@ -1,7 +1,8 @@
 <?php
 namespace Chiara\Iterators;
 use Chiara\PodioItem as Item, Chiara\PodioApp as App,
-    Chiara\PodioView as View, Chiara\Remote, Chiara\AuthManager as Auth;
+    Chiara\PodioView as View, Chiara\Remote, Chiara\AuthManager as Auth,
+    Chiara\Iterators\PodioItemFilterIterator\Fields;
 class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 {
     protected $app;
@@ -11,15 +12,39 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
     protected $cursor = 0;
     protected $offset = 0;
     protected $limit = 30;
+    protected $remember = false;
     function __construct(App $app, View $view = null)
     {
         $this->app = $app;
         $this->view = $view;
     }
 
+    function getView()
+    {
+        return $this->view;
+    }
+
     function limit($newlimit)
     {
         $this->limit = (int) $newlimit;
+        return $this;
+    }
+
+    function offset($newoffset)
+    {
+        $this->offset = (int) $newoffset;
+        return $this;
+    }
+
+    function remember()
+    {
+        $this->remember = true;
+        return $this;
+    }
+
+    function forget()
+    {
+        $this->remember = false;
         return $this;
     }
 
@@ -32,6 +57,9 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         }
         if ($this->offset) {
             $arr['offset'] = $this->offset;
+        }
+        if ($this->remember) {
+            $arr['remember'] = '1';
         }
         return $arr;
     }
@@ -46,6 +74,16 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         $this->data = Remote::$remote->post('/item/app/' . $this->app->id . '/filter/' . $view,
                                             $this->getAttributes())->json_body();
         $this->count = $this->data['filtered'];
+    }
+
+    function __get($var)
+    {
+        if ($var === 'fields') {
+            return new Fields($this->app, $this);
+        }
+        if ($var === 'pseudofields') {
+            return new Fields($this->app, $this, true);
+        }
     }
 
     function offsetGet($var)
