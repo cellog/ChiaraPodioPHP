@@ -2,7 +2,8 @@
 namespace Chiara\Podio;
 class Testing extends \Chiara\PodioApplicationStructure
 {
-    const APPNAME = "1802053/6686618";
+    protected $APPID = "6686618";
+    protected $APPNAME = "Testing";
     protected $structure = array (
       51928207 => 
       array (

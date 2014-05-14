@@ -15,6 +15,11 @@ abstract class Reference extends Value
         return $this->retrieveReference();
     }
 
+    function save()
+    {
+        $this->retrieveReference()->save();
+    }
+
     function __get($var)
     {
         if ($this->info == null) {

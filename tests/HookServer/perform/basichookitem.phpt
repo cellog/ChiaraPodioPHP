@@ -5,11 +5,13 @@ HookServer->perform registered handler, no path, set using item object
 use Chiara\HookServer as Hook, Chiara\Remote as Remote, Chiara\AuthManager as Auth;
 include __DIR__ . '/../setup.php.inc';
 Remote::$remote->expectRequest('GET', '/item/3', $x = file_get_contents(__DIR__ . '/item.json'));
+Remote::$remote->expectRequest('GET', '/item/112732193', file_get_contents(__DIR__ . '/item2.json'));
 $x = json_decode($x, 1);
-Remote::$remote->expectRequest('POST', '/item/112732201/value/51928207', '', array('title' => 'hello'));
+Remote::$remote->expectRequest('PUT', '/item/112732193/value', '', array('title' => 'hi'));
 Auth::setAuthMode(Auth::APP);
 $tokens = new TestTokenManager;
 $tokens->saveToken(5, 123);
+$tokens->saveToken(6686618, 123);
 Auth::setTokenManager($tokens);
 Hook::$hookserver = new Hook('', $a = array('type' => 'item.create',
                                                                  'item_id' => '3',
@@ -26,8 +28,10 @@ class a extends Chiara\PodioItem
     {
         $this->test->assertEquals(array('my', 'hook'), $params, 'params');
         $this->test->assertEquals(3, $this->id, 'verify input is used');
-        $this->fields['title'] = 'hello';
-        $this->fields['title']->save();
+        foreach ($this->fields['app-reference'] as $item) {
+            $item->fields['title'] = "hi";
+            $item->save();
+        }
     }
 
     function setup($test)
@@ -81,17 +85,35 @@ $test->assertEquals(array (
   ),
   3 => 
   array (
-    0 => 'post',
+    'authenticate_with_app' => 
+    array (
+      0 => 6686618,
+      1 => 123,
+    ),
+  ),
+  4 => 
+  array (
+    0 => 'get',
     1 => 
     array (
-      0 => '/item/112732201/value/51928207',
+      0 => '/item/112732193',
       1 => 
       array (
-        'title' => 'hello',
       ),
       2 => 
       array (
-        'hook' => false,
+      ),
+    ),
+  ),
+  5 => 
+  array (
+    0 => 'put',
+    1 => 
+    array (
+      0 => '/item/112732193/value',
+      1 => 
+      array (
+        'title' => 'hi',
       ),
     ),
   ),

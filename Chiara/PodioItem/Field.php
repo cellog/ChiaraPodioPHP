@@ -68,9 +68,14 @@ abstract class Field extends \IteratorIterator
         return $this->info['values'][0]['value'];
     }
 
-    function save(array $options = array())
+    function saveFieldValue(array $options = array())
     {
         $this->parent->saveField($this, $options);
+    }
+
+    function save(array $options = array())
+    {
+        return $this->saveFieldValue($options);
     }
 
     static function newField(PodioItem $parent, array $info)

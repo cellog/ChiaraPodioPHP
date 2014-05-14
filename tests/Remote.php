@@ -56,7 +56,7 @@ class TestRemote extends Chiara\Remote
 
     function put($url, $attributes = array())
     {
-        $this->queries[] = array('post', array($url, $attributes, $options));
+        $this->queries[] = array('put', array($url, $attributes));
         return $this->getReturn($url . '?' . http_build_query($attributes), 'PUT');
     }
 

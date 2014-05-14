@@ -3,14 +3,16 @@ namespace Chiara\PodioItem\Values;
 use Chiara\PodioContact;
 class Contact extends Reference
 {
+    protected $mycontact;
     function retrieveReference()
     {
-        return new PodioContact($this->info['value']);
+        if ($this->mycontact) return $this->mycontact;
+        return $this->mycontact = new PodioContact($this->info['value']);
     }
 
     function extendedGet($var)
     {
-        return $this->getValue()->__get($var);
+        return $this->retrieveReference()->__get($var);
     }
 
     function getIndices()
