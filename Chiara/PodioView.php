@@ -35,6 +35,29 @@ class PodioView
         return $this->info[$var];
     }
 
+    protected function setField($name, $hidden, $x, $y, $width = null, $delta_offset = 0)
+    {
+        foreach ($this->fields as $i => $field) {
+            if ($x && $field['use'] == 'x_axis') {
+                unset($this->fields[$i]);
+            }
+            if ($y && $field['use'] == 'y_axis') {
+                unset($this->fields[$i]);
+            }
+        }
+        $this->fields[$name] = array(
+            'delta_offset' => $delta_offset,
+            'width' => $width,
+            'hidden' => $hidden ? true : false,
+            'use' => ($x ? 'use_x' : ($y ? 'use_y' : null))
+        );
+    }
+
+    protected function getField($name)
+    {
+        return isset($this->fields[$name]) ? $this->fields[$name] : null;
+    }
+
     function save()
     {
         $info = $this->info;
