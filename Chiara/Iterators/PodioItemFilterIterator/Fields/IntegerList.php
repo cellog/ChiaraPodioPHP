@@ -15,5 +15,11 @@ abstract class IntegerList extends Field
         $this->saveFilter();
     }
 
-    abstract function validate($value);
+    function validate($value)
+    {
+        if (!is_int($value)) {
+            throw new \Exception('Invalid value, must be an integer');
+        }
+        return $value;
+    }
 }

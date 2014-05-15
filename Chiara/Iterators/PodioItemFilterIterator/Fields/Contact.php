@@ -1,10 +1,7 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\Fields;
 use Chiara\PodioApp as App, Chiara\PodioView as View;
-class Contact extends IntegerList
+class Contact extends App
 {
-    function __construct(App $app, View $view, $info)
-    {
-        parent::__construct($app, $view, $info);
-    }
+    protected $objname = 'PodioContact';
 }

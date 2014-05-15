@@ -4,6 +4,7 @@ use Chiara\PodioApp as PApp, Chiara\PodioView as View;
 
 class App extends IntegerList
 {
+    protected $objname = 'PodioApp';
     function __construct(PApp $app, View $view, $info)
     {
         parent::__construct($app, $view, $info);
@@ -22,7 +23,7 @@ class App extends IntegerList
             }
         }
         if (!is_int($value)) {
-            throw new \Exception('Can only use an integer, a PodioItem object, or a json array from the API as a filter');
+            throw new \Exception('Can only use an integer, a ' . $this->objname . ' object, or a json array from the API as a filter');
         }
         return $value;
     }

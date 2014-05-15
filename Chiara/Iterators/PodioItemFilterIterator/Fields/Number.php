@@ -7,4 +7,9 @@ class Number extends FromTo
     {
         parent::__construct($app, $view, $info);
     }
+
+    function validate($value)
+    {
+        return (float) $value;
+    }
 }

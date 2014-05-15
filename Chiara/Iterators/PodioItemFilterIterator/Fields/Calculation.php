@@ -7,4 +7,9 @@ class Calculation extends FromTo
     {
         parent::__construct($app, $view, $info);
     }
+
+    function validate($value)
+    {
+        return $value;
+    }
 }
