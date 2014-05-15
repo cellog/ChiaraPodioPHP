@@ -84,6 +84,9 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
         if ($var === 'pseudofields') {
             return new Fields($this->app, $this, true);
         }
+        if ($var === 'view') {
+            return $this->view;
+        }
     }
 
     function offsetGet($var)

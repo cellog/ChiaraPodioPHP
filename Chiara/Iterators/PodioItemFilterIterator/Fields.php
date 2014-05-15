@@ -31,6 +31,10 @@ class Fields extends \ArrayIterator
         $this->app = $app;
         $this->filter = $filter;
         $this->pseudo = $pseudo;
+        if ($pseudo) {
+            parent::__construct($this->pseudoMap);
+            return;
+        }
         parent::__construct($app->info['fields']);
         foreach ($this->getArrayCopy() as $i => $field) {
             $this->map[$field['field_id']] = $this->map[$field['external_id']] = $i;
@@ -40,12 +44,16 @@ class Fields extends \ArrayIterator
     function current()
     {
         $info = parent::current();
+        if ($pseudo) {
+            return $this->getPseudoField($this->key());
+        }
         return Field::newField($this->app, $this->filter, $info);
     }
 
     function getPseudoField($index)
     {
-        
+        $class = $this->pseudomap[$index];
+        Field::newPseudoField($this->app, $this->filter, $index, $class);
     }
 
     function offsetGet($index)
