@@ -1,12 +1,12 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\Fields;
-use Chiara\PodioApp as App, Chiara\Iterators\PodioItemFilterIterator as Filter,
+use Chiara\PodioApp as App, Chiara\PodioView as View,
     Chiara\Iterators\PodioItemFilterIterator\Field;
 abstract class FromTo extends Field
 {
-    function __construct(App $app, Filter $filter, $info)
+    function __construct(App $app, View $view, $info)
     {
-        parent::__construct($app, $filter, $info);
+        parent::__construct($app, $view, $info);
     }
 
     function from($value)
