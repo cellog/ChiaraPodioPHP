@@ -349,7 +349,7 @@ class PodioItem
         return null;
     }
 
-    protected function getIndex($index)
+    function getIndex($index)
     {
         if (is_int($index) && $index < 30) {
             return $index;
@@ -363,11 +363,12 @@ class PodioItem
             }
         }
         if (!$this->structure) {
-            throw new \Exception('Cannot find field, no existing fields or structure class found');
+            throw new \Exception('Cannot find field "' . $index . '" for app "' . $this->app->name .
+                                 '", no existing fields or structure class found');
         }
         // create the field on the fly
         $this->info['fields'][] = $this->structure->getNewField($index);
-        return 0;
+        return count($this->info['fields']) - 1;
     }
 
     function setFieldValue($index, $value)

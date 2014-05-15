@@ -5,6 +5,9 @@ class Number extends Field
 {
     function getValue()
     {
-        return (float) parent::getValue();
+        if (null == $a = parent::getValue()) {
+            return null;
+        }
+        return (float) $a;
     }
 }

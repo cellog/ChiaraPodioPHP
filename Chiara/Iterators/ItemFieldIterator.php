@@ -23,6 +23,15 @@ class ItemFieldIterator extends \ArrayIterator
         return Field::newField($this->item, $info);
     }
 
+    function constructFieldJIT($index)
+    {
+        $index = $this->item->getIndex($index);
+        $info = $this->item->info['fields'][$index];
+        $this->map[$info['field_id']] = $this->map[$info['external_id']] = count($this);
+        $this->reverse_map[count($this)] = $info['external_id'];
+        parent::offsetSet(count($this), $info);
+    }
+
     function offsetGet($index)
     {
         if (is_int($index) && $index < 30) {
@@ -32,7 +41,7 @@ class ItemFieldIterator extends \ArrayIterator
             $info = parent::offsetGet($index);
         } else {
             if (!isset($this->map[$index])) {
-                throw new \Exception("Unknown field \"" . $index . "\"");
+                $this->constructFieldJIT($index); // exception is thrown if this fails
             }
             $info = parent::offsetGet($this->map[$index]);
         }
@@ -45,6 +54,9 @@ class ItemFieldIterator extends \ArrayIterator
         if (is_int($index) && isset($this->reverse_map[$index])) {
             $index = $this->reverse_map[$index];
         }
+        if (!isset($this->map[$index])) {
+            $this->constructFieldJIT($index); // exception is thrown if this fails
+        }
         $this->item->setFieldValue($index, $value);
     }
 
@@ -56,6 +68,12 @@ class ItemFieldIterator extends \ArrayIterator
             }
         } else {
             if (!isset($this->map[$index])) {
+                try {
+                    $this->constructFieldJIT($index);
+                    return true;
+                } catch (\Exception $e) {
+                    
+                }
                 return false;
             }
         }
