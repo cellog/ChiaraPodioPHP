@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Chiarapodiophp by cellog</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Chiarapodiophp</h1>
+          <h2>Advanced PHP library for Podio based on the existing Podio API</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/cellog/ChiaraPodioPHP/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/cellog/ChiaraPodioPHP/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/cellog/ChiaraPodioPHP" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="chiarapodiophp" class="anchor" href="#chiarapodiophp"><span class="octicon octicon-link"></span></a>ChiaraPodioPHP</h1>
+
+<p>Advanced PHP library for Podio based on the existing Podio API</p>
+
+<p>This library is designed to simplify some of the annoying tasks that must be repeated for each
+podio API task.  It is useful both for web hooks and for more general-purpose Podio
+applications.  To begin, it focuses primarily on interacting with items and applications.
+There is extensive built-in support for application-based authentication and web hooks, basic
+support for handling organizations and drilling down through to workspaces and apps within them.
+All of this code is designed to support the interaction with items, but future plans include adding
+ancillary API code such as tasks and messages.</p>
+
+<p>The library uses the Podio class heavily for the actual authentication to Podio and requests
+to the API, and is fully compatible with the existing API, so you can mix and match if this
+library does not fully do what you need.</p>
+
+<p>Documentation is in the <a href="https://github.com/cellog/ChiaraPodioPHP/tree/master/docs">docs</a> directory</p>
+
+<h1>
+<a name="working-with-web-hooks" class="anchor" href="#working-with-web-hooks"><span class="octicon octicon-link"></span></a>Working with Web Hooks</h1>
+
+<p>This is the primary focus of the library at this stage, and support for web hooks, working with items
+and apps is fully implemented.</p>
+
+<blockquote>
+<p><a href="https://github.com/cellog/ChiaraPodioPHP/tree/master/docs/WebHooks.md">web hooks</a></p>
+
+<ul>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/WebHooks.md#handling-a-web-hook">handling a web hook</a></li>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/WebHooks.md#creating-a-web-hook">creating a web hook</a></li>
+</ul>
+</blockquote>
+
+<h1>
+<a name="authentication" class="anchor" href="#authentication"><span class="octicon octicon-link"></span></a>Authentication</h1>
+
+<blockquote>
+<p><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Authentication.md">authentication</a></p>
+</blockquote>
+
+<h1>
+<a name="working-with-applications" class="anchor" href="#working-with-applications"><span class="octicon octicon-link"></span></a>Working with Applications</h1>
+
+<blockquote>
+<p><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/ApplicationStructure.md">application structure</a></p>
+</blockquote>
+
+<h1>
+<a name="working-with-items" class="anchor" href="#working-with-items"><span class="octicon octicon-link"></span></a>Working with Items</h1>
+
+<blockquote>
+<p><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md">items and fields and their values</a></p>
+
+<ul>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#references">item references</a></li>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#revisions">item revisions</a></li>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Items.md#special-item-features">special features</a></li>
+</ul>
+</blockquote>
+
+<h1>
+<a name="working-with-search" class="anchor" href="#working-with-search"><span class="octicon octicon-link"></span></a>Working with Search</h1>
+
+<blockquote>
+<p><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md">searching podio</a></p>
+
+<ul>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#global">global search</a></li>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#organization">organization search</a></li>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#workspace">workspace search</a></li>
+<li><a href="https://github.com/cellog/ChiaraPodioPHP/blob/master/docs/Search.md#app">app search</a></li>
+</ul>
+</blockquote>
+
+<h1>
+<a name="unimplemented-features" class="anchor" href="#unimplemented-features"><span class="octicon octicon-link"></span></a>Unimplemented features</h1>
+
+<ul>
+<li>tasks (partially implemented, undocumented)</li>
+<li>statuses (partially implemented, undocumented)</li>
+<li>actions</li>
+<li>app market</li>
+<li>most application features</li>
+<li>batches</li>
+<li>calendar</li>
+<li>comments</li>
+<li>most contact features</li>
+<li>conversations</li>
+<li>adding an embed</li>
+<li>uploading a file</li>
+<li>web forms</li>
+<li>grants</li>
+<li>importer</li>
+<li>integrations</li>
+<li>item features
+
+<ul>
+<li>Get references to item by field</li>
+<li>Bulk delete items (will be implemented as app method)</li>
+<li>Delete item reference</li>
+<li>Export items (will be implemented as app method)</li>
+<li>Filter Items (and by view) (will be implemented as app method)</li>
+<li>Find referenceable items</li>
+<li>Get field ranges (will be implemented as app method)</li>
+<li>Get item preview for field reference</li>
+<li>Get item count (will be implemented as app method)</li>
+<li>Get items (will not be implemented)</li>
+<li>Get items as Xlsx (will not be implemented)</li>
+<li>Set participation</li>
+<li>Update item reference</li>
+</ul>
+</li>
+<li>linked accounts</li>
+<li>notifications and subscriptions</li>
+<li>most organization features</li>
+<li>status questions (implemented, undocumented)</li>
+<li>ratings</li>
+<li>most space features</li>
+<li>tags</li>
+<li>views</li>
+<li>widgets</li>
+</ul><p>Here is some sample code showing how it works:</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">include</span> <span class="s1">'autoload.php'</span><span class="p">;</span> <span class="c1">// now you can use any class from Podio or from ChiaraPodio</span>
+
+<span class="c1">// authentication via server (webpage)</span>
+<span class="nv">$tokenmanager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chiara\AuthManager\File</span><span class="p">(</span><span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/localtokens.json'</span><span class="p">,</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/mylocaltest.json'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">setTokenManager</span><span class="p">(</span><span class="nv">$tokenmanager</span><span class="p">);</span>
+<span class="c1">// the first parameter is the address podio should redirect to upon success</span>
+<span class="c1">// the next is a true/false that is used to determine whether the user has attempted to log out</span>
+<span class="c1">// the final is either the code returned from podio's OAuth, or false if none</span>
+<span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">attemptServerLogin</span><span class="p">(</span><span class="s1">'http://localhost'</span> <span class="o">.</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'PHP_SELF'</span><span class="p">],</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">'logout'</span><span class="p">]),</span>
+                                       <span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">'code'</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'code'</span><span class="p">]</span> <span class="o">:</span> <span class="k">false</span><span class="p">);</span>
+<span class="c1">// if you plan to do any work with organizations or workspaces as a whole, or contacts,</span>
+<span class="c1">// you must use this authentication model.</span>
+
+<span class="c1">// This example shows how helper classes can be generated for a specific subset of workspaces</span>
+<span class="c1">// in 3 lines of code</span>
+<span class="nv">$myorganizations</span> <span class="o">=</span> <span class="nx">Chiara\PodioOrganization</span><span class="o">::</span><span class="na">mine</span><span class="p">();</span>
+
+<span class="c1">// the matching() method takes a regular expression with optional starting/ending ^ and $</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$myorganizations</span><span class="p">[</span><span class="s1">'unledu'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">workspaces</span><span class="o">-&gt;</span><span class="na">matching</span><span class="p">(</span><span class="s1">'^SOM: Chamber Music'</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$space</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$ret</span> <span class="o">=</span> <span class="nv">$space</span><span class="o">-&gt;</span><span class="na">generateClasses</span><span class="p">(</span><span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/modeltest'</span><span class="p">,</span> <span class="s1">'SOM\Models'</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="nv">$space</span><span class="p">,</span> <span class="s2">" processed&lt;br&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// *********************************** web hook API examples **************************************** //</span>
+
+<span class="c1">// authentication via app (this is what you will use in web hooks)</span>
+<span class="c1">// token managers allow you to keep your app tokens out of your public source code</span>
+<span class="c1">// to avoid the security risk</span>
+<span class="nv">$tokenmanager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chiara\AuthManager\File</span><span class="p">(</span><span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/tokens.json'</span><span class="p">,</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/api.json'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">// authentication modes are app and user.</span>
+<span class="c1">// app authentication automatically switches context to the app you are</span>
+<span class="c1">// requesting information from, so you can use this to retrieve a value from</span>
+<span class="c1">// an app reference and the library silently switches context in the background</span>
+<span class="c1">// as needed</span>
+<span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">setAuthMode</span><span class="p">(</span><span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">APP</span><span class="p">);</span>
+<span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">setTokenManager</span><span class="p">(</span><span class="nv">$tokenmanager</span><span class="p">);</span>
+
+<span class="c1">// create items for specific applications based on the application ID</span>
+<span class="k">class</span> <span class="nc">ThisApp</span> <span class="k">extends</span> <span class="nx">Chiara\PodioItem</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$MYAPPID</span> <span class="o">=</span> <span class="mi">15436</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">AnotherApp</span> <span class="k">extends</span> <span class="nx">Chiara\PodioItem</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$MYAPPID</span> <span class="o">=</span> <span class="mi">26463</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ThisApp</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mi">12345</span><span class="p">);</span> <span class="c1">// retrieve the item with ID 12345</span>
+<span class="nv">$item2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AnotherApp</span><span class="p">(</span><span class="mi">25346</span><span class="p">);</span> <span class="c1">// retrieve the item with ID 12345</span>
+
+<span class="c1">// simple access to change a field and save it by its external ID</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'app-reference'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23456</span><span class="p">;</span>
+<span class="c1">// or by its field id</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="mi">4582763485</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23456</span><span class="p">;</span>
+
+<span class="c1">// you can pass any logical value in</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'app-reference'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item2</span><span class="p">;</span>
+<span class="c1">// or minimally, the json_decoded output of another API call as long as the item_id field is set</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'app-reference'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'item_id'</span> <span class="o">=&gt;</span> <span class="mi">152423</span><span class="p">);</span>
+
+<span class="c1">// No hassle, no mess.  Only changed fields are updated</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">();</span>
+<span class="c1">// Or, force all the fields to be explicitly saved</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+
+<span class="c1">// easy access to app reference values</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'managercontact'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'app-reference'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">value</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'ownercontact'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">value</span><span class="p">;</span>
+
+<span class="c1">// easy access to references to this item</span>
+<span class="nv">$item2</span><span class="o">-&gt;</span><span class="na">references</span><span class="p">[</span><span class="s1">'appname'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">retrieve</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'manageritem'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+<span class="c1">// access a specific known item by its item_id</span>
+<span class="nv">$item2</span><span class="o">-&gt;</span><span class="na">references</span><span class="p">[</span><span class="s1">'appname'</span><span class="p">][</span><span class="mi">12345</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">retrieve</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'manageritem'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+<span class="c1">// access reference by app_id instead of url_label</span>
+<span class="nv">$item2</span><span class="o">-&gt;</span><span class="na">references</span><span class="p">[</span><span class="mi">65431</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">retrieve</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'manageritem'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+<span class="c1">// access reference by known app_item_id</span>
+<span class="nv">$item2</span><span class="o">-&gt;</span><span class="na">references</span><span class="p">[</span><span class="s1">'appname'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">retrieve</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'manageritem'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+
+<span class="c1">// easy iteration</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'managercontact'</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$contact</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$contact</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// date objects can be managed as built-in DateTime objects</span>
+
+<span class="k">echo</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'datefield'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">value</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'Y-m-d'</span><span class="p">);</span>
+
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'datefield'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'2014-02-06'</span><span class="p">;</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'datefield'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'start'</span> <span class="o">=&gt;</span> <span class="s1">'2014-02-06 12:43'</span><span class="p">,</span> <span class="s1">'end'</span> <span class="o">=&gt;</span> <span class="s1">'2014-03-06'</span><span class="p">);</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'duration'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'datefield'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getDuration</span><span class="p">();</span>
+
+<span class="c1">// currency can be parsed directly from text:</span>
+
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'currency'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'$45.30'</span><span class="p">;</span>
+<span class="c1">// any locale is parseable</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'currency'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'45.345,30 €'</span><span class="p">;</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'currency'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'₭ 45 345/30'</span><span class="p">;</span>
+
+<span class="c1">// or an array</span>
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'currency'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'MNT'</span><span class="p">,</span> <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'24353.43'</span><span class="p">);</span>
+
+<span class="c1">// or another currency field</span>
+
+<span class="nv">$item</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'currency'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item2</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'currency'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">value</span><span class="p">;</span>
+
+<span class="c1">// generate helper classes for your items:</span>
+
+<span class="c1">// this will create a class named "MyApp" in the "MyNamespace" namespace, expecting</span>
+<span class="c1">// a structure class as MyStructure object in the constructor.  More about structure below</span>
+<span class="c1">// arguments are class name, app id, structure class name, namespace name, array of interfaces to implement,</span>
+<span class="c1">// and the path to the file to save it in</span>
+<span class="k">echo</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">generateClass</span><span class="p">(</span><span class="s1">'MyApp'</span><span class="p">,</span> <span class="mi">54321</span><span class="p">,</span> <span class="s1">'MyStructure'</span><span class="p">,</span> <span class="s1">'MyNamespace'</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/MyApp.php'</span><span class="p">);</span>
+
+<span class="c1">// Much of the magic of this app is performed by a Chiara\PodioApplicationStructure object.</span>
+<span class="c1">// These objects define metadata that is used to retrieve values as the correct data structure</span>
+<span class="c1">// so that app references always retrieve a Chiara\PodioItem\Fields\App object, dates always</span>
+<span class="c1">// retrieve a Chiara\PodioItem\Fields\Date object and so on.</span>
+
+<span class="c1">// This is also essential when setting values.  A great deal of intelligence by the library</span>
+<span class="c1">// can be achieved this way (such as the currency parsing)</span>
+
+<span class="c1">// determine the structure of an app from an item.  Be aware this can include deleted fields and will</span>
+<span class="c1">// NOT include any fields that have not been set yet</span>
+<span class="c1">// you should use this if an item might have fields that do not exist in the application because</span>
+<span class="c1">// they have been deleted</span>
+<span class="nv">$structure</span> <span class="o">=</span> <span class="nx">Chiara\PodioApplicationStructure</span><span class="o">::</span><span class="na">fromItem</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+
+<span class="c1">// you can also determine the app structure directly from the app:</span>
+<span class="c1">// retrieve an app from its ID number.  This is better, it will include</span>
+<span class="c1">// all of the fields including ones that have not yet been set</span>
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chiara\PodioApp</span><span class="p">(</span><span class="mi">12345</span><span class="p">);</span>
+<span class="nv">$structure</span> <span class="o">=</span> <span class="nx">Chiara\PodioApplicationStructure</span><span class="o">::</span><span class="na">fromApp</span><span class="p">(</span><span class="nv">$app</span><span class="p">);</span>
+
+<span class="c1">// arguments are workspace id, app id, class name, namespace name, file name</span>
+<span class="k">echo</span> <span class="nv">$structure</span><span class="o">-&gt;</span><span class="na">generateStructureClass</span><span class="p">(</span><span class="mi">12345</span><span class="p">,</span> <span class="mi">54321</span><span class="p">,</span> <span class="s1">'MyAppStructure'</span><span class="p">,</span> <span class="s1">'MyNamespace'</span><span class="p">,</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/MyAppStructure.php'</span><span class="p">;</span>
+<span class="k">include</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/MyAppStructure.php'</span><span class="p">;</span>
+<span class="k">include</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/MyApp.php'</span><span class="p">;</span>
+
+<span class="nv">$item3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyApp</span><span class="p">(</span><span class="mi">54321</span><span class="p">);</span>
+<span class="nv">$item3</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'complex-app-reference-field'</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="nv">$item2</span><span class="p">);</span>
+
+<span class="c1">// hooks can be easily created</span>
+<span class="nx">Chiara\Hookserver</span><span class="o">::</span><span class="nv">$server</span><span class="o">-&gt;</span><span class="na">setBaseUrl</span><span class="p">(</span><span class="s1">'http://example.com/hook.php'</span><span class="p">);</span>
+
+<span class="c1">// creates a hook at "http://example.com/hook.php"</span>
+<span class="nx">Chiara\HookServer</span><span class="o">::</span><span class="nv">$server</span><span class="o">-&gt;</span><span class="na">makeHook</span><span class="p">(</span><span class="nv">$app</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">'item.create'</span><span class="p">);</span>
+<span class="c1">// creates a hook at "http://example.com/hook.php/suburl"</span>
+<span class="nx">Chiara\HookServer</span><span class="o">::</span><span class="nv">$server</span><span class="o">-&gt;</span><span class="na">makeHook</span><span class="p">(</span><span class="nv">$app</span><span class="p">,</span> <span class="s1">'suburl'</span><span class="p">,</span> <span class="s1">'item.create'</span><span class="p">);</span>
+<span class="c1">// creates a hook at "http://example.com/hook.php/sub/url"</span>
+<span class="nx">Chiara\HookServer</span><span class="o">::</span><span class="nv">$server</span><span class="o">-&gt;</span><span class="na">makeHook</span><span class="p">(</span><span class="nv">$app</span><span class="p">,</span> <span class="s1">'suburl/deeper'</span><span class="p">,</span> <span class="s1">'item.create'</span><span class="p">);</span>
+
+<span class="nx">Other</span> <span class="nx">convenient</span> <span class="nx">ways</span> <span class="nx">to</span> <span class="nx">make</span> <span class="nx">a</span> <span class="nx">hook</span><span class="o">:</span>
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chiara\PodioApp</span><span class="p">(</span><span class="nv">$appid</span><span class="p">);</span>
+
+<span class="c1">// creates a hook at "http://example.com/hook.php"</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">hook</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+<span class="c1">// creates a hook at "http://example.com/hook.php/suburl"</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">hook</span><span class="o">-&gt;</span><span class="na">suburl</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+<span class="c1">// creates a hook at "http://example.com/hook.php/suburl"</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">hook</span><span class="o">-&gt;</span><span class="na">suburl</span><span class="o">-&gt;</span><span class="na">deeper</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+
+<span class="c1">// The same API works for item fields and workspaces:</span>
+
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'fieldname'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">hook</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+
+<span class="nv">$space</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chiara\PodioWorkspace</span><span class="p">(</span><span class="nv">$spaceid</span><span class="p">);</span>
+<span class="nv">$space</span><span class="o">-&gt;</span><span class="na">hook</span><span class="p">[</span><span class="s1">'app.create'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+
+<span class="c1">// inside hook.php you should use code like:</span>
+
+<span class="k">include</span> <span class="s1">'autoload.php'</span><span class="p">;</span>
+<span class="k">include</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/MyAppStructure.php'</span><span class="p">;</span>
+<span class="k">include</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/MyApp.php'</span><span class="p">;</span>
+<span class="nv">$tokenmanager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chiara\AuthManager\File</span><span class="p">(</span><span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/tokens.json'</span><span class="p">,</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">'/api.json'</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">setAuthMode</span><span class="p">(</span><span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">APP</span><span class="p">);</span>
+<span class="nx">Chiara\AuthManager</span><span class="o">::</span><span class="na">setTokenManager</span><span class="p">(</span><span class="nv">$tokenmanager</span><span class="p">);</span>
+
+<span class="c1">// hooks can then be easily handled directly from apps or from items</span>
+<span class="k">class</span> <span class="nc">MyApp2</span> <span class="k">extends</span> <span class="nx">MyApp</span>
+<span class="p">{</span>
+    <span class="c1">// this code can also be placed directly in MyApp.php instead of extending it again</span>
+    <span class="k">function</span> <span class="nf">onItemCreate</span><span class="p">(</span><span class="nv">$params</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'app-reference'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'foo'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'number'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">value</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">fields</span><span class="p">[</span><span class="s1">'app-reference'</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyApp2</span><span class="p">;</span>
+<span class="nv">$app</span> <span class="o">=</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">app</span><span class="p">;</span>
+
+<span class="c1">// this automatically registers a handler for the hook at "http://example.com/hook.php"</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">on</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+
+<span class="c1">// this automatically registers a handler for the hook at "http://example.com/hook.php/suburl"</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">on</span><span class="o">-&gt;</span><span class="na">suburl</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+
+<span class="c1">// this automatically registers a handler for the hook at "http://example.com/hook.php/suburl/deeper"</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">on</span><span class="o">-&gt;</span><span class="na">suburl</span><span class="o">-&gt;</span><span class="na">deeper</span><span class="p">[</span><span class="s1">'item.create'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+        </section>
+
+        <footer>
+          Chiarapodiophp is maintained by <a href="https://github.com/cellog">cellog</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
