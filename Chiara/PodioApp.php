@@ -5,6 +5,7 @@ class PodioApp
 {
     protected $info;
     protected $hookmanager = null;
+    protected $filter = null;
     function __construct($appid = null, $retrieve = true)
     {
         if (is_array($appid)) {
@@ -64,7 +65,10 @@ class PodioApp
             return $this->verifyTokenAvailable();
         }
         if ($var === 'filter') {
-            return new Iterators\PodioItemFilterIterator($this);
+            if ($this->filter) {
+                return $filter;
+            }
+            return $this->filter = new Iterators\PodioItemFilterIterator($this);
         }
         if ($var === 'app') {
             // used to make it easier to access app metadata from either

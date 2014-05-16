@@ -74,6 +74,13 @@ class PodioView
         return $this->info[$var];
     }
 
+    function __set($var, $value)
+    {
+        if (isset($this->info[$var])) {
+            $this->info[$var] = $value;
+        }
+    }
+
     protected function setField($name, $hidden, $x, $y, $width = null, $delta_offset = 0)
     {
         foreach ($this->info['fields'] as $i => $field) {

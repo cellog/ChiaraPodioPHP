@@ -68,7 +68,7 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
     {
         Auth::prepareRemote($this->app->id);
         $view = '';
-        if ($this->view) {
+        if ($this->view && $this->view->id) {
             $view = '/' . $this->view->id;
         }
         $this->data = Remote::$remote->post('/item/app/' . $this->app->id . '/filter/' . $view,
@@ -85,7 +85,24 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
             return new Fields($this->app, $this, true);
         }
         if ($var === 'view') {
+            if (!$this->view) {
+                $this->view = new View($this->app);
+            }
             return $this->view;
+        }
+        if ($var === 'by') {
+            $this->by($var);
+            return $this;
+        }
+    }
+
+    function by($var)
+    {
+        if (is_string($var) || is_int($var)) {
+            $var = new View($this->app, $var);
+        }
+        if ($var instanceof View) {
+            $this->view = $var;
         }
     }
 

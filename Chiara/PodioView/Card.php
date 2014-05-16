@@ -8,14 +8,14 @@ class Card extends PodioView
         parent::__construct($app, $viewid, $retrieve);
     }
 
-    function setXAxisField($field)
+    function groupRowsBy($field)
     {
         $field = $this->app->fields[$field];
         $this->setField($field->id, false, true, false);
         return $this;
     }
 
-    function setYAxisField($field)
+    function groupColsBy($field)
     {
         $field = $this->app->fields[$field];
         $this->setField($field->id, false, false, true);
