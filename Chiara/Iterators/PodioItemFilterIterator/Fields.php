@@ -1,6 +1,7 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator;
-use Chiara\PodioApp as App, Chiara\Iterators\PodioItemFilterIterator\Field;
+use Chiara\PodioApp as App, Chiara\Iterators\PodioItemFilterIterator\Field,
+    Chiara\Iterators\PodioItemFilterIterator as Filter;
 class Fields extends \ArrayIterator
 {
     protected $app;
