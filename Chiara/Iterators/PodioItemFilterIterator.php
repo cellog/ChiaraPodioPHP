@@ -50,8 +50,13 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 
     function getAttributes()
     {
-        // TODO: add support for sorting and other view options
         $arr = array();
+        if ($this->view && !$this->view->id) {
+            // ad hoc filter
+            $arr['filters'] = $this->view->info['filters'];
+            $arr['sort_by'] = $this->view->info['sort_by'];
+            $arr['sort_desc'] = $this->view->info['sort_desc'];
+        }
         if ($this->limit) {
             $arr['limit'] = $this->limit;
         }
