@@ -18,6 +18,7 @@ class Field
     {
         $this->app = $app;
         $this->view = $filter->view;
+        $this->filterinfo = $this->view->getFilter($info['field_id']);
         $this->filter = $filter;
         $this->info = $info;
     }

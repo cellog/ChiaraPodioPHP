@@ -110,6 +110,16 @@ class PodioView
         $this->info['filters'][] = array('key' => $key, 'values' => $values);
     }
 
+    function getFilter($key)
+    {
+        foreach ($this->info['filters'] as $i => $filter) {
+            if ($filter['key'] == $key) {
+                return $filter['values'];
+            }
+        }
+        return null;
+    }
+
     function sort($field, $desc = true)
     {
         $this->info['sort_by'] = $field;

@@ -7,8 +7,7 @@ class TrueFalse extends Field
 {
     function __construct(App $app, Filter $filter, $name)
     {
-        parent::__construct($app, $filter, $name);
-        $this->info = array('field_id' => $name);
+        parent::__construct($app, $filter, array('field_id' => $name));
     }
 
     function isTrue()
