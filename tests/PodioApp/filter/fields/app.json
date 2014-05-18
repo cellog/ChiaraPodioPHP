@@ -100,14 +100,26 @@
           "options": [
             {
               "status": "active",
-              "text": "1",
+              "text": "one",
               "id": 1,
               "color": "DCEBD8"
             },
             {
               "status": "active",
-              "text": "2",
+              "text": "two",
               "id": 2,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "three",
+              "id": 3,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "four",
+              "id": 4,
               "color": "DCEBD8"
             }
           ],
