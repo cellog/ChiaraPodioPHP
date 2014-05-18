@@ -15,7 +15,7 @@ class PodioContact
             return;
         }
         if (is_int($info)) {
-            $info = array('profile_id' => $info);
+            $this->info = array('profile_id' => $info);
         }
         if (!$retrieve) return;
         $this->retrieve();
