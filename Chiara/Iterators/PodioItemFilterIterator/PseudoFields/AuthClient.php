@@ -1,6 +1,6 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\PseudoFields;
-use Chiara\PodioApp as App, Chiara\PodioView as View;
+
 class AuthClient extends Auth
 {
     function app($app_id)

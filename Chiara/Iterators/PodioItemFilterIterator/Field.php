@@ -1,21 +1,24 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator;
 use Chiara\PodioApp as App, Chiara\Iterators\PodioItemFilterIterator\Field,
-    Chiara\PodioView as View;
+    Chiara\PodioView as View,
+    Chiara\Iterators\PodioItemFilterIterator as Filter;
 class Field
 {
     protected $app;
     protected $view;
+    protected $filter;
     protected $info;
     /**
      * Used to store information by child classes for passing a new filter
      * upstream to the parent Filter object.
      */
     protected $filterinfo = array();
-    function __construct(App $app, View $filter, array $info)
+    function __construct(App $app, Filter $filter, array $info)
     {
         $this->app = $app;
-        $this->view = $view;
+        $this->view = $filter->view;
+        $this->filter = $filter;
         $this->info = $info;
     }
 

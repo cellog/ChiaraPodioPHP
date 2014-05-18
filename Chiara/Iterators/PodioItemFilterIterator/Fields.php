@@ -36,6 +36,10 @@ class Fields extends \ArrayIterator
             parent::__construct($this->pseudoMap);
             return;
         }
+        $fields = $app->info;
+        if (!isset($fields['fields'])) {
+            $app->retrieve();
+        }
         parent::__construct($app->info['fields']);
         foreach ($this->getArrayCopy() as $i => $field) {
             $this->map[$field['field_id']] = $this->map[$field['external_id']] = $i;

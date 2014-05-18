@@ -1,12 +1,12 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\PseudoFields;
-use Chiara\PodioApp as App, Chiara\PodioView as View,
+use Chiara\PodioApp as App, Chiara\Iterators\PodioItemFilterIterator as Filter,
     Chiara\Iterators\PodioItemFilterIterator\Field;
 class Auth extends Field
 {
-    function __construct(App $app, View $view, $name)
+    function __construct(App $app, Filter $filter, $name)
     {
-        parent::__construct($app, $view, $name);
+        parent::__construct($app, $filter, $name);
         $this->info = array('field_id' => $name);
     }
 

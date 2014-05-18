@@ -25,13 +25,16 @@ class TestRemote extends Chiara\Remote
         $this->map[$type][$url . '?' . http_build_query($attributes)] = $result;
     }
 
-    function getReturn($url, $type)
+    function getReturn($url, $type, $attributes = null, $baseurl = null)
     {
         if (isset($this->map[$type]) && isset($this->map[$type][$url])) {
             $response = new PodioResponse();
             $response->body = $this->map[$type][$url];
             $response->status = 200;
             return $response;
+        }
+        if ($attributes) {
+            throw new \Exception('Unexpected ' . $type . ': ' . $baseurl . ' ' . var_export($attributes, 1));
         }
         throw new \Exception('Unexpected ' . $type . ': ' . $url);
     }
@@ -51,7 +54,7 @@ class TestRemote extends Chiara\Remote
     function post($url, $attributes = array(), $options = array())
     {
         $this->queries[] = array('post', array($url, $attributes, $options));
-        return $this->getReturn($url . '?' . http_build_query($attributes), 'POST');
+        return $this->getReturn($url . '?' . http_build_query($attributes), 'POST', $attributes, $url);
     }
 
     function put($url, $attributes = array())

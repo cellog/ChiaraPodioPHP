@@ -17,7 +17,31 @@ for ($i = 0; $i < 30; $i++) {
     $filterjson['items'][$i]['title'] = 'item ' . $i;
     $filterjson['items'][$i]['fields'][0]['values'][0]['value'] = 'item ' . $i;
 }
-TestRemote::$remote->expectRequest('post', '/item/app/6686618/filter/', json_encode($filterjson, 1), array('limit' => 30));
+TestRemote::$remote->expectRequest('post', '/item/app/6686618/filter/', json_encode($filterjson, 1), array (
+  'filters' => 
+  array (
+    0 => 
+    array (
+      'key' => 51928210,
+      'values' => 
+      array (
+        0 => 1,
+      ),
+    ),
+    1 => 
+    array (
+      'key' => 51928211,
+      'values' => 
+      array (
+        'from' => '+3wr',
+        'to' => NULL,
+      ),
+    ),
+  ),
+  'sort_by' => 'created_on',
+  'sort_desc' => '1',
+  'limit' => 30,
+));
 $j = $filterjson;
 $j['items'] = array();
 for ($i = 30; $i < 41; $i++) {
@@ -25,7 +49,33 @@ for ($i = 30; $i < 41; $i++) {
     $j['items'][$i - 30]['title'] = 'item ' . $i;
     $j['items'][$i - 30]['fields'][0]['values'][0]['value'] = 'item ' . $i;
 }
-TestRemote::$remote->expectRequest('post', '/item/app/6686618/filter/', json_encode($j, 1), array('limit' => 30, 'offset' => 30));
+TestRemote::$remote->expectRequest('post', '/item/app/6686618/filter/', json_encode($j, 1), array (
+  'filters' => 
+  array (
+    0 => 
+    array (
+      'key' => 51928210,
+      'values' => 
+      array (
+        0 => 1,
+      ),
+    ),
+    1 => 
+    array (
+      'key' => 51928211,
+      'values' => 
+      array (
+        'from' => '+3wr',
+        'to' => NULL,
+      ),
+    ),
+  ),
+  'sort_by' => 'created_on',
+  'sort_desc' => '1',
+  'limit' => 30,
+  'offset' => 30,
+));
+TestRemote::$remote->expectRequest('get', '/app/6686618', $x = file_get_contents(__DIR__ . '/app.json'));
 
 $item = new Chiara\PodioItem(1, null, false);
 $item->app_id = 1;
@@ -33,7 +83,7 @@ $item->retrieve();
 $refs = array();
 $filter = $item->app->filter;
 $filter->fields['category']->add(1);
-$filter->fields['date']->past(3)->days();
+$filter->fields['date']->past(3)->weeks()->rounded();
 foreach ($item->app->filter as $ref) {
     $refs[] = $ref->title;
 }
@@ -129,13 +179,12 @@ $test->assertEquals(array (
   ),
   4 => 
   array (
-    0 => 'post',
+    0 => 'get',
     1 => 
     array (
-      0 => '/item/app/6686618/filter/',
+      0 => '/app/6686618',
       1 => 
       array (
-        'limit' => 30,
       ),
       2 => 
       array (
@@ -150,6 +199,65 @@ $test->assertEquals(array (
       0 => '/item/app/6686618/filter/',
       1 => 
       array (
+        'filters' => 
+        array (
+          0 => 
+          array (
+            'key' => 51928210,
+            'values' => 
+            array (
+              0 => 1,
+            ),
+          ),
+          1 => 
+          array (
+            'key' => 51928211,
+            'values' => 
+            array (
+              'from' => '+3wr',
+              'to' => NULL,
+            ),
+          ),
+        ),
+        'sort_by' => 'created_on',
+        'sort_desc' => '1',
+        'limit' => 30,
+      ),
+      2 => 
+      array (
+      ),
+    ),
+  ),
+  6 => 
+  array (
+    0 => 'post',
+    1 => 
+    array (
+      0 => '/item/app/6686618/filter/',
+      1 => 
+      array (
+        'filters' => 
+        array (
+          0 => 
+          array (
+            'key' => 51928210,
+            'values' => 
+            array (
+              0 => 1,
+            ),
+          ),
+          1 => 
+          array (
+            'key' => 51928211,
+            'values' => 
+            array (
+              'from' => '+3wr',
+              'to' => NULL,
+            ),
+          ),
+        ),
+        'sort_by' => 'created_on',
+        'sort_desc' => '1',
         'limit' => 30,
         'offset' => 30,
       ),

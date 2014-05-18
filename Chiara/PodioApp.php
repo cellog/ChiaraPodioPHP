@@ -66,7 +66,7 @@ class PodioApp
         }
         if ($var === 'filter') {
             if ($this->filter) {
-                return $filter;
+                return $this->filter;
             }
             return $this->filter = new Iterators\PodioItemFilterIterator($this);
         }

@@ -1,15 +1,9 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\Fields;
-use Chiara\PodioApp as PApp, Chiara\PodioView as View;
 
 class App extends IntegerList
 {
     protected $objname = 'PodioApp';
-    function __construct(PApp $app, View $view, $info)
-    {
-        parent::__construct($app, $view, $info);
-    }
-
     function validate($value)
     {
         if (is_object($value)) {

@@ -1,26 +1,19 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\Fields;
-use Chiara\PodioApp as App, Chiara\PodioView as View;
+
 class Date extends FromTo
 {
-    protected $relativefrom = false;
-    protected $relativeto = false;
-    protected $settingfrom = false;
-    protected $settingto = false;
-    function __construct(App $app, View $view, $info)
-    {
-        parent::__construct($app, $view, $info);
-    }
-
+    protected $setting = false;
+    protected $mostrecent = false;
     /**
      * Set the from value to a relative date
      */
     function past($value, $units = 'd', $round = false)
     {
-        $this->relativefrom = true;
-        $this->settingfrom = true;
+        $this->setting = 'from';
         $this->from($this->relative($value, $units, $round));
-        $this->settingfrom = false;
+        $this->setting = 'from';
+        $this->mostrecent = 'past';
         return $this;
     }
 
@@ -29,25 +22,23 @@ class Date extends FromTo
      */
     function future($value, $units = 'd', $round = false)
     {
-        $this->relativeto = true;
-        $this->settingto = true;
+        $this->setting = 'to';
         $this->to($this->relative($value, $units, $round));
-        $this->settingto = false;
+        $this->setting = 'to';
+        $this->mostrecent = 'future';
         return $this;
     }
 
     function rounded()
     {
-        if ($this->relativefrom) {
-            if (isset($this->info['from']) && !strpos($this->info['from'], 'r')) {
-                $this->info['from'] .= 'r';
-            }
+        $var = ($this->mostrecent === 'past' ? 'from' : ($this->mostrecent === 'future' ? 'to' : false));
+        if (!$var || !isset($this->filterinfo[$var])) {
+            return $this;
         }
-        if ($this->relativeto) {
-            if (isset($this->info['to']) && !strpos($this->info['to'], 'r')) {
-                $this->info['to'] .= 'r';
-            }
+        if (!strpos($this->filterinfo[$var], 'r')) {
+            $this->filterinfo[$var] .= 'r';
         }
+        $this->saveFilter();
         return $this;
     }
 
@@ -77,22 +68,18 @@ class Date extends FromTo
 
     protected function replace($units)
     {
-        if ($this->relativefrom) {
-            if (isset($this->info['from'])) {
-                $this->info['from'] = preg_replace('/([-+]\d+)[dwmy](r)?/', '$1' . $units . '$2', $this->info['from']);
-            }
+        $var = ($this->mostrecent === 'past' ? 'from' : ($this->mostrecent === 'future' ? 'to' : false));
+        if (!$var || !isset($this->filterinfo[$var])) {
+            return $this;
         }
-        if ($this->relativeto) {
-            if (isset($this->info['to'])) {
-                $this->info['to'] = preg_replace('/([-+]\d+)[dwmy](r)?/', '$1' . $units . '$2', $this->info['to']);
-            }
-        }
+        $this->filterinfo[$var] = preg_replace('/([-+]\d+)[dwmy](r?)/', '\\1' . $units . '\\2', $this->filterinfo[$var]);
+        $this->saveFilter();
     }
 
     protected function relative($value, $units, $round)
     {
         $value = (int) $value;
-        if ($units !== 'd' || $units !== 'w' || $units !== 'm' || $units !== 'y') {
+        if ($units !== 'd' && $units !== 'w' && $units !== 'm' && $units !== 'y') {
             throw new \Exception('Relative units must by d, w, m or y (days, weeks, months or years)');
         }
         $round = $round ? 'r' : '';
@@ -102,7 +89,7 @@ class Date extends FromTo
 
     function validate($value)
     {
-        if ($this->settingfrom || $this->settingto) {
+        if (false !== $this->setting) {
             if (!preg_match('/^[-+]\d+[dwmy]r?$/', $value)) {
                 throw new \Exception('Invalid relative date value "' . $value . '"');
             }

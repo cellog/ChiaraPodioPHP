@@ -6,7 +6,9 @@ use Chiara\PodioItem as Item, Chiara\PodioApp as App,
 class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
 {
     protected $app;
-    protected $view;
+    protected $view = false;
+    protected $fields = false;
+    protected $pseudofields = false;
     protected $count;
     protected $data = array();
     protected $cursor = 0;
@@ -84,10 +86,16 @@ class PodioItemFilterIterator implements \ArrayAccess, \Countable, \Iterator
     function __get($var)
     {
         if ($var === 'fields') {
-            return new Fields($this->app, $this);
+            if (!$this->fields) {
+                $this->fields = new Fields($this->app, $this);
+            }
+            return $this->fields;
         }
         if ($var === 'pseudofields') {
-            return new Fields($this->app, $this, true);
+            if (!$this->pseudofields) {
+                $this->pseudofields = new Fields($this->app, $this, true);
+            }
+            return $this->pseudofields;
         }
         if ($var === 'view') {
             if (!$this->view) {
