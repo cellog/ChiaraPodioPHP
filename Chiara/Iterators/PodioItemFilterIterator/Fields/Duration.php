@@ -3,6 +3,11 @@ namespace Chiara\Iterators\PodioItemFilterIterator\Fields;
 
 class Duration extends Number
 {
+    function validateAgainstRange()
+    {
+        throw new \Exception('Range is unsupported for duration fields');
+    }
+
     function validate($value)
     {
         $value = parent::validate($value);

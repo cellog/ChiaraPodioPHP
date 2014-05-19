@@ -1,10 +1,6 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\Fields;
 
-class Calculation extends FromTo
+class Calculation extends Number
 {
-    function validate($value)
-    {
-        return $value;
-    }
 }
