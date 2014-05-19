@@ -3,6 +3,7 @@ namespace Chiara\PodioApp\Fields;
 use Chiara\PodioApp\Field, Chiara\PodioApp;
 class Money extends Field
 {
+    protected $canDoRange = true;
     function __construct(PodioApp $parent, array $info = array())
     {
         parent::__construct($parent, $info);

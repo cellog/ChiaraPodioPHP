@@ -1,11 +1,14 @@
 <?php
 namespace Chiara\PodioApp;
-use Chiara\Hook, Chiara\PodioApp;
+use Chiara\Hook, Chiara\PodioApp, Chiara\AuthManager as Auth,
+    Chiara\Remote;
 class Field
 {
     protected $info;
     protected $parent;
     protected $hookmanager = null;
+    protected $canDoRange = false;
+    protected $range = false;
     function __construct(PodioApp $parent, array $info = array())
     {
         $this->parent = $parent;
@@ -21,6 +24,17 @@ class Field
             return $this->info['field_id'];
         }
         if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        if ($var === 'range') {
+            if ($this->range) {
+                return $this->range;
+            }
+            if (!$this->canDoRange) {
+                throw new \Exception('Error: only Number, Calculation and Money fields can retrieve range information');
+            }
+            Auth::prepareRemote($this->parent->id);
+            $this->range = Remote::$remote->get('/item/field/' . $this->info['field_id'] . '/range')->json_body();
+            return $this->range;
+        }
         if (isset($this->info[$var])) {
             return $this->info[$var];
         }
