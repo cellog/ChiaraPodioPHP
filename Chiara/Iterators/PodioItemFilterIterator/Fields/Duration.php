@@ -10,6 +10,9 @@ class Duration extends Number
 
     function validate($value)
     {
+        if (is_string($value)) {
+            $value = strtotime($value, 0);
+        }
         $value = parent::validate($value);
         if ($value < 0) {
             throw new \Exception('invalid duration "' . $value . '", must be > 0');
