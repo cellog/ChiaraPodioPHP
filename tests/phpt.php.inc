@@ -142,6 +142,16 @@ class phpt
         return true;
     }
 
+    function runException($func, $class, $emessage, $message)
+    {
+        try {
+            $ret = $func();
+            $this->assertFail('No exception thrown: ' . $message);
+        } catch (\Exception $e) {
+            $this->assertException($e, $class, $emessage, $message);
+        }
+    }
+
     function assertException($exception, $class, $emessage, $message)
     {
         if (!($exception instanceof $class)) {
