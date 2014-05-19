@@ -236,6 +236,18 @@
               "text": "4",
               "id": 2,
               "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "5",
+              "id": 3,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "6",
+              "id": 4,
+              "color": "DCEBD8"
             }
           ],
           "display": "list"

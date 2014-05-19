@@ -15,7 +15,7 @@ class Category extends IntegerList
             throw new \Exception('Invalid category option value type: ' . gettype($value));
         }
         foreach ($this->info['config']['settings']['options'] as $option) {
-            if ($option['id'] == $value || $option['text'] == $value) {
+            if ($option['id'] === $value || $option['text'] === $value) {
                 return $option['id'];
             }
         }
