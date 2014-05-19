@@ -25,6 +25,9 @@ class AppFieldIterator extends \ArrayIterator
         if (is_int($index) && $index < 30) {
             $info = parent::offsetGet($index);
         } else {
+            if (!isset($this->map[$index])) {
+                throw new \Exception('Unknown field "' . $index . '"');
+            }
             $info = parent::offsetGet($this->map[$index]);
         }
         return Field::newField($this->app, $info);
