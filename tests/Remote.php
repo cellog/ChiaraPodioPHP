@@ -100,6 +100,9 @@ class TestTokenManager implements Chiara\Interfaces\AuthTokenManager
     public $classmap = array();
     function getToken($appid)
     {
+        if (!isset($this->tokenmap[$appid])) {
+            throw new \Exception('call saveToken with the fake token for app ' . $appid);
+        }
         return $this->tokenmap[$appid];
     }
 

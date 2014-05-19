@@ -63,7 +63,7 @@ class Fields extends \ArrayIterator
 
     function offsetGet($index)
     {
-        if ($pseudo) {
+        if ($this->pseudo) {
             return $this->getPseudoField($index);
         }
         if (is_int($index) && $index < 30) {

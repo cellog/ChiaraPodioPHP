@@ -28,6 +28,12 @@ class Field
         return $this->info['type'];
     }
 
+    function reset()
+    {
+        $this->filterinfo = array();
+        return $this;
+    }
+
     function sortBy($desc = true)
     {
         $this->view->sort($this->info['field_id'], $desc);

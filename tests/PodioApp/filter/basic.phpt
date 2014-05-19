@@ -8,6 +8,7 @@ Auth::setAuthMode(Auth::APP);
 $tokens = new TestTokenManager;
 $item = new Chiara\PodioItem();
 $tokens->saveToken(1, 123);
+$tokens->saveToken(6686618, 123);
 Auth::setTokenManager($tokens);
 TestRemote::$remote->expectRequest('get', '/item/1', $x = file_get_contents(__DIR__ . '/item.json'));
 $x = json_decode($x, 1);
@@ -121,7 +122,7 @@ $test->assertEquals(array (
     'authenticate_with_app' => 
     array (
       0 => 6686618,
-      1 => NULL,
+      1 => 123,
     ),
   ),
   4 => 

@@ -45,6 +45,9 @@ abstract class Field extends \IteratorIterator
 
     function getValue()
     {
+        if (!isset($this->info['values'][0])) {
+            return null;
+        }
         return $this->info['values'][0]['value'];
     }
 

@@ -8,6 +8,7 @@ Auth::setAuthMode(Auth::APP);
 $tokens = new TestTokenManager;
 $item = new Chiara\PodioItem();
 $tokens->saveToken(1, 123);
+$tokens->saveToken(6686618, 123);
 Auth::setTokenManager($tokens);
 TestRemote::$remote->expectRequest('get', '/item/1', $x = file_get_contents(__DIR__ . '/item.json'));
 $x = json_decode($x, 1);
@@ -33,8 +34,8 @@ TestRemote::$remote->expectRequest('post', '/item/app/6686618/filter/', json_enc
       'key' => 51928211,
       'values' => 
       array (
-        'from' => '+3wr',
-        'to' => NULL,
+        'from' => '-3wr',
+        'to' => '+0dr',
       ),
     ),
   ),
@@ -65,8 +66,8 @@ TestRemote::$remote->expectRequest('post', '/item/app/6686618/filter/', json_enc
       'key' => 51928211,
       'values' => 
       array (
-        'from' => '+3wr',
-        'to' => NULL,
+        'from' => '-3wr',
+        'to' => '+0dr',
       ),
     ),
   ),
@@ -83,7 +84,7 @@ $item->retrieve();
 $refs = array();
 $filter = $item->app->filter;
 $filter->fields['category']->add(1);
-$filter->fields['date']->past(3)->weeks()->rounded();
+$filter->fields['date']->past(3)->weeks();
 foreach ($item->app->filter as $ref) {
     $refs[] = $ref->title;
 }
@@ -174,7 +175,7 @@ $test->assertEquals(array (
     'authenticate_with_app' => 
     array (
       0 => 6686618,
-      1 => NULL,
+      1 => 123,
     ),
   ),
   4 => 
@@ -214,8 +215,8 @@ $test->assertEquals(array (
             'key' => 51928211,
             'values' => 
             array (
-              'from' => '+3wr',
-              'to' => NULL,
+              'from' => '-3wr',
+              'to' => '+0dr',
             ),
           ),
         ),
@@ -251,8 +252,8 @@ $test->assertEquals(array (
             'key' => 51928211,
             'values' => 
             array (
-              'from' => '+3wr',
-              'to' => NULL,
+              'from' => '-3wr',
+              'to' => '+0dr',
             ),
           ),
         ),

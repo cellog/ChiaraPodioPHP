@@ -8,36 +8,42 @@ class Date extends FromTo
     /**
      * Set the from value to a relative date
      */
-    function past($value, $units = 'd', $round = false)
+    function past($value, $units = 'd', $round = true)
     {
         $this->setting = 'from';
-        $this->from($this->relative($value, $units, $round));
+        $this->from($this->relative(-$value, $units, $round));
         $this->setting = 'from';
         $this->mostrecent = 'past';
+        if (!$this->filterinfo['to']) {
+            $this->filterinfo['to'] = '+0dr';
+        }
+        $this->saveFilter();
         return $this;
     }
 
     /**
      * Set the to value to a relative date
      */
-    function future($value, $units = 'd', $round = false)
+    function future($value, $units = 'd', $round = true)
     {
         $this->setting = 'to';
         $this->to($this->relative($value, $units, $round));
         $this->setting = 'to';
         $this->mostrecent = 'future';
+        if (!$this->filterinfo['from']) {
+            $this->filterinfo['from'] = '+0dr';
+        }
+        $this->saveFilter();
         return $this;
     }
 
-    function rounded()
+    function notRounded()
     {
         $var = ($this->mostrecent === 'past' ? 'from' : ($this->mostrecent === 'future' ? 'to' : false));
         if (!$var || !isset($this->filterinfo[$var])) {
             return $this;
         }
-        if (!strpos($this->filterinfo[$var], 'r')) {
-            $this->filterinfo[$var] .= 'r';
-        }
+        $this->filterinfo[$var] = str_replace('r', '', $this->filterinfo[$var]);
         $this->saveFilter();
         return $this;
     }
@@ -83,7 +89,7 @@ class Date extends FromTo
             throw new \Exception('Relative units must by d, w, m or y (days, weeks, months or years)');
         }
         $round = $round ? 'r' : '';
-        $value = (($value >= 0) ? '+' . $value : '-' . $value);
+        $value = (($value >= 0) ? '+' . $value : $value);
         return $value . $units . $round;
     }
 
@@ -96,8 +102,8 @@ class Date extends FromTo
             return $value;
         }
         try {
-            new \DateTime($value);
-            return $value;
+            $value = new \DateTime($value);
+            return $value->format('Y-m-d');
         } catch (\Exception $e) {
             throw new \Exception('Invalid date "' . $value . '"');
         }

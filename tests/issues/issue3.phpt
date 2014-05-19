@@ -3,7 +3,7 @@ ChiaraPodioPHP Issue #3 regression test
 --FILE--
 <?php
 use Chiara\HookServer as Hook, Chiara\Remote as Remote, Chiara\AuthManager as Auth;
-include __DIR__ . '/../setup.php.inc';
+include __DIR__ . '/setup.php.inc';
 Auth::setAuthMode(Auth::APP);
 $tokens = new TestTokenManager;
 $item = new Chiara\PodioItem();
