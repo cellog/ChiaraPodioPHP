@@ -14,5 +14,6 @@ class Rating extends Field
     {
         $this->filterinfo[] = $value;
         $this->saveFilter();
+        return $this;
     }
 }

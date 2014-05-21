@@ -204,3 +204,113 @@ $app->filter->fields['category']->add(3)->add('Option text')
     ->add($item->fields['category']->value);
 ?>
 ```
+
+##Filtering by Pseudofield
+
+Podio also allows filtering by meta-data, or pseudofields, such as the creation
+date of items, who or which api client created them, or by external id, tags,
+or any rating of items.
+
+in the ChiarPodioPhp library, accessing this meta-data is performed by the
+pseudofields member of an app's filter.  The pseudofields member is an
+associative array indexed by the name of each variable
+
+```php
+<?php
+$app->filter->pseudofields['created_by']; // for example
+?>
+```
+
+###Creation pseudofields (created_by/last_edit_by/created_via/last_edit_via)
+
+The `created_by` and `last_edit_by` pseudofields allow filtering by 3 possible
+values:
+
+ 1. an integer representing the user_id of the user
+ 2. an array containing index 'user_id' as returned by the Podio API
+ 3. a Chiara\PodioContact object whose user_id is set to the id of the user
+
+The `user()` method is used to set this psuedofield's filter value.
+
+```php
+<?php
+$app->filter->pseudofields['created_by']->user(5);
+$app->filter->pseudofields['created_by']->user(array('user_id' => 5));
+$app->filter->pseudofields['created_by']->user(new Chiara\PodioContact(array('user_id' => 5)));
+?>
+```
+
+To set the value to the currently authenticated user, use the `me()` method:
+
+```php
+<?php
+$app->filter->pseudofields['last_edit_by']->me();
+?>
+```
+
+The `created_via` and `last_edit_via` pseudofields allow filtering by the client
+ID of the API that created the item through the `app()` method:
+
+```php
+<?php
+$app->filter->pseudofields['created_via']->app('test-client');
+?>
+```
+
+###created_on pseudofield
+
+The `created_on` pseudofield accepts the same formatting as a
+(Date field)[#date-fields] field.  Refer to that documentation for detail.
+
+```php
+<?php
+$app->filter->pseudofields['created_on']->past(3)->weeks(); // for example
+?>
+```
+
+###external_id pseudofield
+
+The `external_id` pseudofield allows filtering based on IDs from an external app.
+Add ids to filter using the `add()` method:
+
+```php
+<?php
+$app->filter->pseudofields['external_id']->add(3)->add(5);
+?>
+```
+
+###tags pseudofield
+
+The `tags` pseudofield allows filtering based on item tags.  Add tags using the
+`add()` method
+
+```php
+<?php
+$app->filter->pseudofields['tags']->add('pending')->add('delegated');
+?>
+```
+
+###True/false pseudofields (pinned, like)
+
+You can filter by items that have been pinned or have received likes using
+the `pinned` and `like` pseudofields.  Set the state using the `isTrue()` or
+`isFalse()` methods
+
+```php
+<?php
+$app->filter->pseudofields['pinned']->isTrue(); // items that are pinned
+$app->filter->pseudofields['like']->isFalse(); // items that have no likes
+?>
+```
+
+###Rating pseudofields (approved/rsvp/fivestar/yesno/thumbs)
+
+Podio also allows filtering by commentary on items, via special ratings.  Each
+value desired should be added with the `add()` method
+
+```php
+<?php
+$app->filter->pseudofields['approved']->add('yes');
+$app->filter->pseudofields['fivestor']->add(5)->add(4)->add(3);
+?>
+```

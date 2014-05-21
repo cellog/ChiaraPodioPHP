@@ -1,0 +1,522 @@
+{
+  "status": "active",
+  "subscribed": false,
+  "original_revision": null,
+  "rights": [
+    "reference",
+    "add_hook",
+    "share",
+    "add_widget",
+    "view",
+    "export",
+    "add_task",
+    "subscribe",
+    "view_structure",
+    "add_filter",
+    "add_flow",
+    "add_item",
+    "update",
+    "install",
+    "delete"
+  ],
+  "url": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing",
+  "fields": [
+    {
+      "status": "active",
+      "type": "text",
+      "field_id": 51928207,
+      "label": "Title",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "size": "small"
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Title",
+        "visible": true,
+        "delta": 0,
+        "hidden": false
+      },
+      "external_id": "title"
+    },
+    {
+      "status": "active",
+      "type": "contact",
+      "field_id": 51928208,
+      "label": "Contact",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "type": "space_users",
+          "valid_types": [
+            "user"
+          ]
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Contact",
+        "visible": true,
+        "delta": 1,
+        "hidden": false
+      },
+      "external_id": "contact"
+    },
+    {
+      "status": "active",
+      "type": "contact",
+      "field_id": 51928209,
+      "label": "Contact",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "type": "space_contacts",
+          "valid_types": [
+            "space"
+          ]
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Contact",
+        "visible": true,
+        "delta": 2,
+        "hidden": false
+      },
+      "external_id": "contact-2"
+    },
+    {
+      "status": "active",
+      "type": "category",
+      "field_id": 51928210,
+      "label": "Category",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "multiple": false,
+          "options": [
+            {
+              "status": "active",
+              "text": "one",
+              "id": 1,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "two",
+              "id": 2,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "three",
+              "id": 3,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "four",
+              "id": 4,
+              "color": "DCEBD8"
+            }
+          ],
+          "display": "inline"
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Category",
+        "visible": true,
+        "delta": 3,
+        "hidden": false
+      },
+      "external_id": "category"
+    },
+    {
+      "status": "active",
+      "type": "date",
+      "field_id": 51928211,
+      "label": "Date",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "calendar": true,
+          "end": "enabled",
+          "time": "enabled"
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Date",
+        "visible": true,
+        "delta": 4,
+        "hidden": false
+      },
+      "external_id": "date"
+    },
+    {
+      "status": "active",
+      "type": "embed",
+      "field_id": 51928212,
+      "label": "Link",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": null,
+        "required": false,
+        "mapping": null,
+        "label": "Link",
+        "visible": true,
+        "delta": 5,
+        "hidden": false
+      },
+      "external_id": "link"
+    },
+    {
+      "status": "active",
+      "type": "image",
+      "field_id": 51928213,
+      "label": "Image",
+      "config": {
+        "default_value": null,
+        "description": "Supported image types: .jpg .gif .png .bmp",
+        "settings": {
+          "allowed_mimetypes": [
+            "image/png"
+          ]
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Image",
+        "visible": true,
+        "delta": 6,
+        "hidden": false
+      },
+      "external_id": "image"
+    },
+    {
+      "status": "active",
+      "type": "location",
+      "field_id": 51928214,
+      "label": "Google Maps",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": null,
+        "required": false,
+        "mapping": null,
+        "label": "Google Maps",
+        "visible": true,
+        "delta": 7,
+        "hidden": false
+      },
+      "external_id": "google-maps"
+    },
+    {
+      "status": "active",
+      "type": "category",
+      "field_id": 51928215,
+      "label": "Question",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "multiple": false,
+          "options": [
+            {
+              "status": "active",
+              "text": "3",
+              "id": 1,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "4",
+              "id": 2,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "5",
+              "id": 3,
+              "color": "DCEBD8"
+            },
+            {
+              "status": "active",
+              "text": "6",
+              "id": 4,
+              "color": "DCEBD8"
+            }
+          ],
+          "display": "list"
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Question",
+        "visible": true,
+        "delta": 8,
+        "hidden": false
+      },
+      "external_id": "question"
+    },
+    {
+      "status": "active",
+      "type": "number",
+      "field_id": 51928216,
+      "label": "Number",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "decimals": 4
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Number",
+        "visible": true,
+        "delta": 9,
+        "hidden": false
+      },
+      "external_id": "number"
+    },
+    {
+      "status": "active",
+      "type": "money",
+      "field_id": 51928217,
+      "label": "Money",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "allowed_currencies": [
+            "EUR",
+            "DKK",
+            "USD"
+          ]
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Money",
+        "visible": true,
+        "delta": 10,
+        "hidden": false
+      },
+      "external_id": "money"
+    },
+    {
+      "status": "active",
+      "type": "duration",
+      "field_id": 51928218,
+      "label": "Duration",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "fields": [
+            "hours",
+            "minutes",
+            "seconds"
+          ]
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Duration",
+        "visible": true,
+        "delta": 11,
+        "hidden": false
+      },
+      "external_id": "duration"
+    },
+    {
+      "status": "active",
+      "type": "progress",
+      "field_id": 51928219,
+      "label": "Progress slider",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": null,
+        "required": false,
+        "mapping": null,
+        "label": "Progress slider",
+        "visible": true,
+        "delta": 12,
+        "hidden": false
+      },
+      "external_id": "progress-slider"
+    },
+    {
+      "status": "active",
+      "type": "calculation",
+      "field_id": 51928244,
+      "label": "Calculation",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "time": "enabled",
+          "expression": {
+            "right": {
+              "field_id": 51928216,
+              "type": "field"
+            },
+            "type": "plus",
+            "left": {
+              "field_id": 51928217,
+              "type": "field"
+            }
+          },
+          "return_type": "number",
+          "script": "@[Money](field_51928217) + @[Number](field_51928216)",
+          "decimals": 4,
+          "unit": ""
+        },
+        "required": false,
+        "mapping": null,
+        "label": "Calculation",
+        "visible": true,
+        "delta": 13,
+        "hidden": false
+      },
+      "external_id": "calculation"
+    },
+    {
+      "status": "active",
+      "type": "app",
+      "field_id": 51928220,
+      "label": "App reference",
+      "config": {
+        "default_value": null,
+        "description": null,
+        "settings": {
+          "apps": [
+            {
+              "status": "active",
+              "name": "Testing",
+              "rights": [
+                "reference",
+                "add_hook",
+                "share",
+                "add_widget",
+                "view",
+                "export",
+                "add_task",
+                "subscribe",
+                "view_structure",
+                "add_filter",
+                "add_flow",
+                "add_item",
+                "update",
+                "install",
+                "delete"
+              ],
+              "item_name": "thing",
+              "url_add": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/new",
+              "icon_id": 251,
+              "space": {
+                "name": "ChiaraPodio",
+                "url": "https://podio.com/chiaraquartetnet/chiarapodio",
+                "url_label": "chiarapodio",
+                "space_id": 1802053,
+                "org_id": 490461,
+                "type": "regular"
+              },
+              "link_add": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/new",
+              "app_id": 6686618,
+              "current_revision": 4,
+              "url": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing",
+              "link": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing",
+              "url_label": "testing",
+              "config": {
+                "item_name": "thing",
+                "icon_id": 251,
+                "type": "standard",
+                "name": "Testing",
+                "icon": "251.png"
+              },
+              "space_id": 1802053,
+              "icon": "251.png"
+            }
+          ],
+          "referenceable_types": [
+            6686618
+          ]
+        },
+        "required": false,
+        "mapping": null,
+        "label": "App reference",
+        "visible": true,
+        "delta": 14,
+        "hidden": false
+      },
+      "external_id": "app-reference"
+    }
+  ],
+  "space_id": 1802053,
+  "current_revision": 4,
+  "link_add": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/new",
+  "integration": null,
+  "app_id": 6686618,
+  "pinned": false,
+  "token": "6b236efd6920431687b139fddab701e2",
+  "link": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing",
+  "url_label": "testing",
+  "owner": {
+    "user_id": 1834391,
+    "space_id": null,
+    "image": {
+      "hosted_by": "podio",
+      "hosted_by_humanized_name": "Podio",
+      "thumbnail_link": "https://d3szoh0f46td6t.cloudfront.net/public/97560914",
+      "link": "https://d3szoh0f46td6t.cloudfront.net/public/97560914",
+      "file_id": 97560914,
+      "link_target": "_blank"
+    },
+    "profile_id": 98265149,
+    "org_id": null,
+    "link": "https://podio.com/users/1834391",
+    "avatar": 97560914,
+    "type": "user",
+    "last_seen_on": "2014-05-17 13:55:54",
+    "name": "Gregory Beaver"
+  },
+  "mailbox": "testing.fc3f2444",
+  "config": {
+    "allow_edit": true,
+    "tasks": [
+
+    ],
+    "yesno": false,
+    "silent_creates": false,
+    "yesno_label": null,
+    "thumbs": false,
+    "app_item_id_padding": 1,
+    "show_app_item_id": false,
+    "default_view": "badge",
+    "allow_tags": true,
+    "item_name": "thing",
+    "allow_attachments": true,
+    "allow_create": true,
+    "app_item_id_prefix": null,
+    "disable_notifications": false,
+    "fivestar": false,
+    "thumbs_label": null,
+    "type": "standard",
+    "rsvp": false,
+    "description": "",
+    "usage": "",
+    "fivestar_label": null,
+    "approved": false,
+    "icon": "251.png",
+    "allow_comments": true,
+    "name": "Testing",
+    "icon_id": 251,
+    "silent_edits": false,
+    "rsvp_label": null,
+    "external_id": null
+  },
+  "original": null,
+  "url_add": "https://podio.com/chiaraquartetnet/chiarapodio/apps/testing/items/new"
+}

@@ -57,8 +57,11 @@ class Fields extends \ArrayIterator
 
     function getPseudoField($index)
     {
-        $class = $this->pseudomap[$index];
-        Field::newPseudoField($this->app, $this->filter, $index, $class);
+        if (!isset($this[$index])) {
+            throw new \Exception('Not a supported pseudofield: "' . $index . '"');
+        }
+        $class = parent::offsetGet($index);
+        return Field::newPseudoField($this->app, $this->filter, $index, $class);
     }
 
     function offsetGet($index)

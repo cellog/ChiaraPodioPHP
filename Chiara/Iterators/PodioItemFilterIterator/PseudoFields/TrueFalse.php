@@ -12,13 +12,13 @@ class TrueFalse extends Field
 
     function isTrue()
     {
-        $this->filterinfo['values'] = true;
+        $this->filterinfo = true;
         $this->saveFilter();
     }
 
     function isFalse()
     {
-        $this->filterinfo['values'] = false;
+        $this->filterinfo = false;
         $this->saveFilter();
     }
 }

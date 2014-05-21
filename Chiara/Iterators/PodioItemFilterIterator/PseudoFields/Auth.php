@@ -12,7 +12,7 @@ class Auth extends Field
     function user($user_id)
     {
         if (is_object($user_id)) {
-            $user_id = $user_id->id;
+            $user_id = $user_id->user_id;
         }
         if (is_array($user_id)) {
             $user_id = $user_id['user_id'];

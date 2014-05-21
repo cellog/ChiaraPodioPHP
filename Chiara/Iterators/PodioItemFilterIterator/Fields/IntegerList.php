@@ -8,6 +8,7 @@ abstract class IntegerList extends Field
     {
         $this->filterinfo[] = $this->validate($item);
         $this->saveFilter();
+        return $this;
     }
 
     function validate($value)
