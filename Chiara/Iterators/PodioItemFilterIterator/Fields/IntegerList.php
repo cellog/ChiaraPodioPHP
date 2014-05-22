@@ -7,6 +7,7 @@ abstract class IntegerList extends Field
     function add($item)
     {
         $this->filterinfo[] = $this->validate($item);
+        $this->filterinfo = array_unique($this->filterinfo);
         $this->saveFilter();
         return $this;
     }

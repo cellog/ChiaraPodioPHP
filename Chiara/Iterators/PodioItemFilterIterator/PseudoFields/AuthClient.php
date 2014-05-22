@@ -1,15 +1,31 @@
 <?php
 namespace Chiara\Iterators\PodioItemFilterIterator\PseudoFields;
 
-class AuthClient extends IntegerList
+class AuthClient extends StringList
 {
+    protected function addInteger($item)
+    {
+        $this->filterinfo[] = (int) $item;
+        $this->filterinfo = array_unique($this->filterinfo);
+        $this->saveFilter();
+        return $this;
+    }
+
     function podio()
     {
-        $this->add(1);
+        $this->addInteger(1);
+        return $this;
     }
 
     function excelImport()
     {
-        $this->add(57);
+        $this->addInteger(57);
+        return $this;
+    }
+
+    function client($name)
+    {
+        $this->add($name);
+        return $this;
     }
 }

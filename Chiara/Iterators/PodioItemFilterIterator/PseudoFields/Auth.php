@@ -11,6 +11,9 @@ class Auth extends Field
 
     protected function addIdentity($id, $type)
     {
+        if (!$this->filterinfo) {
+            $this->filterinfo = array();
+        }
         foreach ($this->filterinfo as $i => $info) {
             if ($info['type'] != $type) {
                 continue;
@@ -46,17 +49,14 @@ class Auth extends Field
             $app_id = $app_id['app_id'];
         }
         $app_id = (int) $app_id;
-        $this->addIdentity($user_id, 'app');
+        $this->addIdentity($app_id, 'app');
         $this->saveFilter();
         return $this;
     }
 
     function me()
     {
-        $this->filterinfo = array(
-            'type' => 'user',
-            'id' => 0
-        );
+        $this->addIdentity(0, 'user');
         $this->saveFilter();
         return $this;
     }
