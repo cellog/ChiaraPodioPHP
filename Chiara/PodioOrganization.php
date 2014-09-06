@@ -12,8 +12,10 @@ class PodioOrganization
     function __get($var)
     {
         if ($var === 'workspaces') {
-            var_dump($this->info);
             return new WorkspaceIterator($this, $this->info['spaces']);
+        }
+        if ($var === 'id') {
+            return $this->info['org_id'];
         }
         if (is_array($this->info) && isset($this->info[$var])) {
             return $this->info[$var];
