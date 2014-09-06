@@ -38,7 +38,7 @@ class PodioContact
     {
         if ($var === 'id') return $this->info['profile_id'];
         if ($var === 'myorganizations') {
-            return PodioOrganization::getMyOrganizations();
+            return PodioOrganization::mine();
         }
         if (isset($this->info[$var])) {
             return $this->info[$var];
