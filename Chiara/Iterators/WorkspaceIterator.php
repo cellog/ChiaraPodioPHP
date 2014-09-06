@@ -24,7 +24,7 @@ class WorkspaceIterator extends \ArrayIterator
     function current()
     {
         $info = parent::current();
-        return new Workspace($info);
+        return new Workspace($info['space_id']);
     }
 
     function rawCurrent()
@@ -39,6 +39,6 @@ class WorkspaceIterator extends \ArrayIterator
         } else {
             $info = parent::offsetGet($this->map[$index]);
         }
-        return new Workspace($info);
+        return new Workspace($info['space_id']);
     }
 }

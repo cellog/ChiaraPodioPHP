@@ -16,6 +16,15 @@ class PodioWorkspace
         $this->info = $info;
     }
 
+    function retrieve()
+    {
+        if (!isset($this->info['space_id'])) {
+            throw new \Exception('unknown space_id, cannot retrieve');
+        }
+        Auth::verifyNonApp('workspace');
+        $this->info = Remote::$remote->get('/space/' . $this->info['space_id']);
+    }
+
     function createHook($podioaction, $action = null)
     {
         return HookServer::$hookserver->makeHook($this, $action, $podioaction);
@@ -55,6 +64,10 @@ class PodioWorkspace
     {
         if (count($this->myapps)) {
             return $this->myapps;
+        }
+        if (!isset($this->info['space_id'])) {
+            var_dump($this->info);
+            throw new \Exception('unknown space_id, cannot retrieve apps');
         }
         Auth::verifyNonApp('workspace');
         $this->myapps = Remote::$remote->get('/app/space/' . $this->info['space_id'] . '/',
