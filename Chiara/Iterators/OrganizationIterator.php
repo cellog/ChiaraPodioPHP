@@ -8,7 +8,7 @@ class OrganizationIterator extends \ArrayIterator
     {
         parent::__construct($orginfo);
         foreach ($orginfo as $i => $org) {
-            $this->map[$org['url_label']] = $this->map[$field['org_id']] = $i;
+            $this->map[$org['url_label']] = $this->map[$org['org_id']] = $i;
         }
     }
 
