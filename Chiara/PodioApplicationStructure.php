@@ -60,11 +60,13 @@ class PodioApplicationStructure
         return $this->Flex;
     }
 
-    function duplicateForAnotherApp($appid, $appname)
+    function duplicateForAnotherApp($appid, $appname = null)
     {
         $save = array($this->APPID, $this->APPNAME);
         $this->APPID = $appid;
-        $this->APPNAME = $appname;
+        if ($appname) {
+            $this->APPNAME = $appname;
+        }
         $ret = clone $this;
         $this->APPID = $save[0];
         $this->APPNAME = $save[1];
