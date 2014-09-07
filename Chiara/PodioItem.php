@@ -37,6 +37,9 @@ class PodioItem
 
     function __construct($info = null, PodioApplicationStructure $structure = null, $retrieve = true, $externalid = false)
     {
+        if (is_numeric($info)) {
+            $info = (int) filter_var($info, FILTER_SANITIZE_NUMBER_INT);
+        }
         if ($structure) {
             $this->mystructure = $structure;
             if ($structure->isFlex()) {
@@ -61,6 +64,7 @@ class PodioItem
             return;
         }
         if (is_int($info)) {
+            
             $info = array('item_id' => $info);
         }
         $this->info = $info;
