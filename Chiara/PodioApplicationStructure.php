@@ -8,6 +8,7 @@ class PodioApplicationStructure
 {
     protected $APPNAME = '';
     protected $APPID = '';
+    protected $flex = false;
     /**
      * Use this variable to define your application's structure offline
      *
@@ -22,8 +23,15 @@ class PodioApplicationStructure
      */
     static private $structures = array();
 
-    function __construct()
+    /**
+     * @param bool $flexid if true, then the application structure will cause
+     *                     the PodioItem to adjust its application id.  This is
+     *                     most useful for apps that have the same shared
+     *                     structure, but reside in different workspaces
+     */
+    function __construct($flexid = false)
     {
+        $this->flex = $flexid;
         if (count($this->structure)) {
             if (!$this->APPNAME) {
                 // TODO: convert this to a Chiara-specific exception
@@ -45,6 +53,27 @@ class PodioApplicationStructure
     function dumpStructure()
     {
         return var_export($this->structure, 1);
+    }
+
+    function isFlex()
+    {
+        return $this->Flex;
+    }
+
+    function duplicateForAnotherApp($appid, $appname)
+    {
+        $save = array($this->APPID, $this->APPNAME);
+        $this->APPID = $appid;
+        $this->APPNAME = $appname;
+        $ret = clone $this;
+        $this->APPID = $save[0];
+        $this->APPNAME = $save[1];
+        return $ret;
+    }
+
+    function getId()
+    {
+        return $this->APPID;
     }
 
     function getRawStructure()

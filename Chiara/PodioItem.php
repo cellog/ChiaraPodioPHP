@@ -39,6 +39,10 @@ class PodioItem
     {
         if ($structure) {
             $this->mystructure = $structure;
+            if ($structure->isFlex()) {
+                // the structure defines our own APPID
+                $this->MYAPPID = $structure->getId();
+            }
         }
         $this->hasfields = false;
         $this->useExternalIds = $externalid;
