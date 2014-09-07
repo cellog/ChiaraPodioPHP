@@ -57,7 +57,7 @@ class PodioApplicationStructure
 
     function isFlex()
     {
-        return $this->Flex;
+        return $this->flex;
     }
 
     function duplicateForAnotherApp($appid, $appname = null)
