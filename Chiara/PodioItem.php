@@ -67,7 +67,6 @@ class PodioItem
             $info = array('item_id' => $info);
         }
         $this->info = $info;
-        var_dump($info);
         if ($this->MYAPPID) {
             if (!$this->info) {
                 $this->info = array('app' => array('app_id' => $this->MYAPPID));
