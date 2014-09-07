@@ -359,7 +359,7 @@ class PodioApplicationStructure
                 }
                 return array($value);
             case 'app' :
-                $idname = 'app_id';
+                $idname = 'item_id';
             case 'contact' :
                 if (!isset($idname)) {
                     $idname = 'profile_id';
