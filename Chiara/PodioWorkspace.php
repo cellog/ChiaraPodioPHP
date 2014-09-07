@@ -22,7 +22,7 @@ class PodioWorkspace
             throw new \Exception('unknown space_id, cannot retrieve');
         }
         Auth::verifyNonApp('workspace');
-        $this->info = Remote::$remote->get('/space/' . $this->info['space_id']);
+        $this->info = Remote::$remote->get('/space/' . $this->info['space_id'])->json_body();
     }
 
     function createHook($podioaction, $action = null)
