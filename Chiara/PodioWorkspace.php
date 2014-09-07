@@ -84,6 +84,9 @@ class PodioWorkspace
             return $this->info['space_id'];
         }
         if ($var === 'on' || $var === 'hook') return $this->hookmanager ? $this->hookmanager : $this->hookmanager = new Hook\Manager($this);
+        if (count($this->info) == 1 && isset($this->info['space_id']) && $var !== 'space_id') {
+            $this->retrieve();
+        }
         return $this->info[$var];
     }
 
