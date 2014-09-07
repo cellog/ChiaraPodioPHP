@@ -9,6 +9,9 @@ class PodioWorkspace
     protected $hookmanager = null;
     function __construct($info = null)
     {
+        if (is_numeric($info)) {
+            $info = filter_var($info, FILTER_SANITIZE_NUMBER_INT);
+        }
         if (is_int($info)) {
             $this->info = array('space_id' => $info);
             return;
