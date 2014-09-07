@@ -12,6 +12,7 @@ class PodioWorkspace
         if (is_numeric($info)) {
             $info = filter_var($info, FILTER_SANITIZE_NUMBER_INT);
         }
+        var_dump($info);
         if (is_int($info)) {
             $this->info = array('space_id' => $info);
             return;
