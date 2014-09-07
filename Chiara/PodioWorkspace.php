@@ -10,9 +10,8 @@ class PodioWorkspace
     function __construct($info = null)
     {
         if (is_numeric($info)) {
-            $info = filter_var($info, FILTER_SANITIZE_NUMBER_INT);
+            $info = (int) filter_var($info, FILTER_SANITIZE_NUMBER_INT);
         }
-        var_dump($info);
         if (is_int($info)) {
             $this->info = array('space_id' => $info);
             return;
@@ -70,7 +69,6 @@ class PodioWorkspace
             return $this->myapps;
         }
         if (!isset($this->info['space_id'])) {
-            var_dump($this->info);
             throw new \Exception('unknown space_id, cannot retrieve apps');
         }
         Auth::verifyNonApp('workspace');
