@@ -261,6 +261,7 @@ class PodioItem
             return $this->info;
         }
         if ($var == 'id') {
+            if (!isset($this->info['item_id'])) return null;
             return $this->info['item_id'];
         }
         if ($var == 'references') {
