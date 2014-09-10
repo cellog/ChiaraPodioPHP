@@ -220,6 +220,8 @@ class PodioItem
     function setStructure(PodioApplicationStructure $structure)
     {
         $this->mystructure = $structure;
+        $this->MYAPPID = $structure->getId();
+        $this->info['app']['app_id'] = $this->MYAPPID;
     }
 
     private $_nostructure = false;
