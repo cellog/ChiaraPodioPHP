@@ -31,7 +31,6 @@ class Date extends Field
     function __set($var, $value)
     {
         if ($var === 'duration') {
-            var_dump($this->info['values'][0]);
             $t = strtotime($this->info['values'][0]['start']);
             $t += $value;
             $this->info['values'][0]['end'] = date('Y-m-d H:i:s', $t);
