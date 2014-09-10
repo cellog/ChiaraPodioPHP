@@ -31,7 +31,20 @@ class Date extends Field
     function __set($var, $value)
     {
         if ($var === 'duration') {
-            
+            $t = strtotime($this->info['values'][0]['start']);
+            $t += $value;
+            $this->info['values'][0]['end'] = date('Y-m-d H:i:s', $t);
+            $value = $this->info['values'];
+        } else if ($var === 'start' || $var === 'end') {
+            if (is_numeric($value)) {
+                $result = date('Y-m-d H:i:s', $value);
+            } else if ($value instanceof \DateTime) {
+                $result = $value->format('Y-m-d H:i:s');
+            } else if (is_string($value)) {
+                $result = date('Y-m-d H:i:s', strtotime($value));
+            }
+            $this->info['values'][0][$var] = $result;
+            $value = $this->info['values'];
         }
         return parent::__set($var, $value);
     }
