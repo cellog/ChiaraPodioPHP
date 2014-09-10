@@ -45,6 +45,6 @@ class Date extends Field
             }
             $this->info['values'][0][$var] = $result;
         }
-        $this->parent->setFieldValue($this->info['field_id'], $this->info['values']);
+        $this->parent->setFieldValue($this->info['field_id'], $this->info['values'][0]);
     }
 }
