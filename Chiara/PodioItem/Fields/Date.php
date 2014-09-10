@@ -34,7 +34,6 @@ class Date extends Field
             $t = strtotime($this->info['values'][0]['start']);
             $t += $value;
             $this->info['values'][0]['end'] = date('Y-m-d H:i:s', $t);
-            $value = $this->info['values'];
         } else if ($var === 'start' || $var === 'end') {
             if (is_numeric($value)) {
                 $result = date('Y-m-d H:i:s', $value);
@@ -44,8 +43,7 @@ class Date extends Field
                 $result = date('Y-m-d H:i:s', strtotime($value));
             }
             $this->info['values'][0][$var] = $result;
-            $value = $this->info['values'];
         }
-        return parent::__set($var, $value);
+        $this->parent->setFieldValue($this->info['field_id'], $this->info['values']);
     }
 }
